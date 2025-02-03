@@ -1,36 +1,8 @@
 import { colors, fontStyles } from '@styles';
-import { SplashScreen, Stack } from 'expo-router';
-import { useEffect } from 'react';
-import { useFonts } from 'expo-font';
-import {
-    OpenSans_400Regular,
-    OpenSans_400Regular_Italic,
-    OpenSans_600SemiBold,
-    OpenSans_700Bold,
-} from '@expo-google-fonts/open-sans'
-import { Montserrat_500Medium } from '@expo-google-fonts/montserrat';
-import { SafeAreaView, Text } from 'react-native';
-
-SplashScreen.preventAutoHideAsync();
+import { Stack } from 'expo-router';
+import { SafeAreaView } from 'react-native';
 
 export default function Layout() {
-    const [loaded, error] = useFonts({
-        OpenSans_400Regular,
-        OpenSans_400Regular_Italic,
-        OpenSans_600SemiBold,
-        OpenSans_700Bold,
-        Montserrat_500Medium,
-    });
-
-    useEffect(() => {
-        if (loaded || error) {
-            SplashScreen.hideAsync();
-        }
-    }, [loaded, error]);
-
-    if (!loaded && !error) {
-        return <Text>Loading...</Text>;
-    }
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: colors.light }}>

@@ -13,18 +13,18 @@ export const HabitsProvider = ({ children }) => {
     // Pobranie wszystkich nawyków po uruchomieniu aplikacji
     useEffect(() => {
         const fetchHabits = async () => {
-            const habitsSnapshot = await getDocs(collection(db, 'habits'));
-            const habitList = habitsSnapshot.docs.map(doc => new Habit({ ...doc.data() }));
-            setHabits(habitList);
+            try {
+                const habitsSnapshot = await getDocs(collection(db, 'habits'));
+                const habitList = habitsSnapshot.docs.map(doc => new Habit({ ...doc.data() }));
+                setHabits(habitList);
+            } catch (error) {
+                setError(error);
+            } finally {
+                setIsLoading(false);
+            }
         };
 
-        try {
-            fetchHabits();
-        } catch (error) {
-            setError(error);
-        } finally {
-            setIsLoading(false);
-        }
+        fetchHabits();
     }, []);
 
     // Dodanie nowego nawyku
