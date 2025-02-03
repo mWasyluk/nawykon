@@ -71,7 +71,13 @@ export function StateManagerProvider({ children }) {
                             : '') + '...';
             setLoading(message);
         } else if (habitsError || reportsError || fontError) {
-            setError("Nie udało mi się pobrać danych. Sprawdź połączenie z Internetem i spróbuj ponownie.");
+            console.error(habitsError || reportsError || fontError);
+            const message = 'Napotkałem problem' +
+                (habitsError ? ' z pobieraniem danych o nawykach'
+                    : reportsError ? ' z pobieraniem danych o raportach'
+                        : fontError ? ' z pobieraniem czcionek'
+                            : '') + '. Sprawdź połączenie z Internetem i spróbuj ponownie.';
+            setError(message);
         } else {
             setLoading('');
             setError('');
