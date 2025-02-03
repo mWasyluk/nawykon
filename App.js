@@ -9,7 +9,7 @@ export default function App() {
     const { user } = useUser();
     const { loading, error } = useStateManager();
 
-    const message = loading || error;
+    const message = error || loading;
 
     if (message) {
         return <Text>{message}</Text>;
