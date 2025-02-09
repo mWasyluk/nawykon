@@ -2,13 +2,13 @@ import "@expo/metro-runtime";
 import App from './App.js';
 import DataProviders from './src/context/DataProviders';
 import { registerRootComponent } from 'expo';
-import { ErrorProvider } from "src/context/ErrorContext.js";
+import { ModalProvider } from "src/context/ModalContext.js";
 
 const Root = () => (
     <DataProviders>
-        <ErrorProvider>
+        <ModalProvider>
             <App />
-        </ErrorProvider>
+        </ModalProvider>
     </DataProviders>
 );
 

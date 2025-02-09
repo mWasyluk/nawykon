@@ -1,6 +1,6 @@
 import { colors } from '@styles';
 import { useEffect, useRef, useState } from 'react';
-import { Animated, StyleSheet, Text, Modal } from 'react-native';
+import { Animated, StyleSheet, Text } from 'react-native';
 
 export default function ErrorModal(props) {
     const { message, onHide } = props;
@@ -11,7 +11,7 @@ export default function ErrorModal(props) {
     useEffect(() => {
         let hideTimeout;
 
-        if (message) { // Pokazuje modal tylko, jeśli jest wiadomość
+        if (message) {
             setIsRendered(true);
             Animated.timing(slideAnim, {
                 toValue: 10,
@@ -26,7 +26,7 @@ export default function ErrorModal(props) {
                     useNativeDriver: false,
                 }).start(() => {
                     setIsRendered(false);
-                    onHide && onHide();  // Powiadom rodzica o zakończeniu
+                    onHide && onHide();
                 });
             }, 3000);
         }
@@ -37,11 +37,13 @@ export default function ErrorModal(props) {
     if (!isRendered) return null;
 
     return (
-        <Modal transparent visible={isRendered} animationType="none">
-            <Animated.View style={[styles.toast, { top: slideAnim }]}>
-                <Text style={styles.message}>{message}</Text>
-            </Animated.View>
-        </Modal>
+        <>
+            {isRendered && (
+                <Animated.View style={[styles.toast, { top: slideAnim }]}>
+                    <Text style={styles.message}>{message}</Text>
+                </Animated.View>
+            )}
+        </>
     );
 }
 

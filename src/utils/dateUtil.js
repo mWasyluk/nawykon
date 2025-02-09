@@ -1,4 +1,14 @@
+import { fullMonths } from "@data/time";
+
 export const validateTimestamp = (timestamp) => {
+    if (!timestamp) {
+        throw new Error('Timestamp is empty');
+    }
+
+    if (timestamp instanceof Date) {
+        return timestamp;
+    }
+
     const date = new Date(timestamp);
 
     if (isNaN(date.getTime())) {
@@ -19,7 +29,6 @@ export const formatDate = (date, type = 'date') => {
     const datetimeOptions = { ...dateOptions, ...timeOptions };
 
     try {
-        // return date.toLocaleString('sv', type === 'date' ? dateOptions : type === 'time' ? timeOptions : datetimeOptions);
         switch (type) {
             case 'date':
                 return validDate.toLocaleDateString('sv', dateOptions); // 2021-01-01
@@ -33,4 +42,23 @@ export const formatDate = (date, type = 'date') => {
     } catch (error) {
         throw new Error(`${date} is invalid date format`);
     }
+}
+
+// Handles monday as the first day of week
+export const getFixedDayOfWeek = (date) => {
+    const validDate = validateTimestamp(date);
+
+    return (validDate.getDay() + 6) % 7;
+};
+
+export const getMonthLength = (date) => {
+    const validDate = validateTimestamp(date);
+
+    return new Date(validDate.getFullYear(), validDate.getMonth() + 1, 0).getDate();
+}
+
+export const getMonthName = (date, monthsArray = fullMonths) => {
+    const validDate = validateTimestamp(date);
+
+    return monthsArray[validDate.getMonth()];
 }

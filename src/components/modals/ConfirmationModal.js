@@ -1,5 +1,5 @@
 import Button from '@components/ui/Button';
-import { icons } from '@styles';
+import { colors, icons } from '@styles';
 import React, { useEffect, useRef, useState } from 'react';
 import { Animated, Pressable, View, Text, StyleSheet, Dimensions, Modal } from 'react-native';
 
@@ -14,7 +14,7 @@ export default function ConfirmationModal(props) {
         if (visible) {
             setIsRendered(true);
             Animated.timing(slideAnim, {
-                toValue: 10,
+                toValue: height / 2 - 50,
                 duration: 300,
                 useNativeDriver: false,
             }).start();
@@ -34,7 +34,7 @@ export default function ConfirmationModal(props) {
             <View style={styles.overlay}>
                 <Pressable style={styles.background} onPress={onCancel} />
 
-                <Animated.View style={[styles.modal, { bottom: slideAnim }]}>
+                <Animated.View style={[styles.modal, { top: slideAnim }]}>
                     <Text style={styles.message}>{message}</Text>
 
                     <View style={styles.buttonContainer}>
@@ -63,7 +63,7 @@ export default function ConfirmationModal(props) {
 const styles = StyleSheet.create({
     overlay: {
         flex: 1,
-        justifyContent: 'flex-end',
+        justifyContent: 'center',
     },
     background: {
         ...StyleSheet.absoluteFillObject, // zapewnia pełnoekranowe pokrycie
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         left: 10,
         right: 10,
-        backgroundColor: 'white',
+        backgroundColor: colors.light,
         borderRadius: 10,
         padding: 20,
         elevation: 5,

@@ -23,9 +23,6 @@
             "@assets/*": [
                 "assets/*"
             ],
-            "@web/*": [
-                "src/web/*"
-            ],
             "@services/*": [
                 "src/services/*"
             ],

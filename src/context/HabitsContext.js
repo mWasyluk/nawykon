@@ -1,58 +1,55 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import db from 'src/configs/firebaseConfig';
-import { collection, doc, getDocs, setDoc, updateDoc, deleteDoc } from 'firebase/firestore';
-import { Habit } from '../models/habit/Habit';
+import { deleteDocument } from '@services/firestoreService';
+import { getAllHabits, saveHabit } from '@services/habitsService';
+import { createContext, useContext, useEffect, useState } from 'react';
+import { useUser } from './UserContext';
 
 const HabitsContext = createContext();
 
 export const HabitsProvider = ({ children }) => {
+    const { user } = useUser();
+
     const [habits, setHabits] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    // Pobranie wszystkich nawyków po uruchomieniu aplikacji
+    const addHabit = async (newHabit) => {
+        const savedHabit = await saveHabit(newHabit);
+        setHabits(prev => [...prev, savedHabit]);
+    };
+
+    const updateHabit = async (updatedHabit) => {
+        if (!updatedHabit.id) {
+            throw new Error('Nie można zaktualizować nawyku bez id');
+        }
+        const savedHabit = await saveHabit(updatedHabit);
+        setHabits(prev => prev.map(habit => habit.id === savedHabit.id ? savedHabit : habit)
+        );
+    };
+
+    const deleteHabit = async (habitId) => {
+        await deleteDocument('habits', habitId);
+        setHabits(prev => prev.filter(habit => habit.id !== habitId));
+    };
+
     useEffect(() => {
-        const fetchHabits = async () => {
+        if (!user) {
+            return;
+        }
+
+        const initHabits = async () => {
             try {
-                const habitsSnapshot = await getDocs(collection(db, 'habits'));
-                const habitList = habitsSnapshot.docs.map(doc => new Habit({ ...doc.data() }));
-                setHabits(habitList);
-            } catch (error) {
-                setError(error);
+                setHabits(await getAllHabits());
+            } catch (err) {
+                setError(err);
             } finally {
                 setIsLoading(false);
             }
         };
 
-        fetchHabits();
-    }, []);
-
-    // Dodanie nowego nawyku
-    const addHabit = async (newHabit) => {
-        const habitDocRef = doc(collection(db, 'habits'));
-        const habitToSave = new Habit({ ...newHabit, id: habitDocRef.id, userId: null });
-
-        await setDoc(habitDocRef, JSON.parse(JSON.stringify(habitToSave)));
-        setHabits(prev => [...prev, habitToSave]);
-    };
-
-    // Aktualizacja istniejącego nawyku
-    const updateHabit = async (updatedHabit) => {
-        const habitToSave = new Habit(updatedHabit);
-
-        const habitDocRef = doc(db, 'habits', habitToSave.id);
-        await updateDoc(habitDocRef, JSON.parse(JSON.stringify(habitToSave)));
-        setHabits(prev =>
-            prev.map(habit => (habit.id === habitToSave.id ? habitToSave : habit))
-        );
-    };
-
-    // Usunięcie nawyku
-    const deleteHabit = async (habitId) => {
-        const habitDocRef = doc(db, 'habits', habitId);
-        await deleteDoc(habitDocRef);
-        setHabits(prev => prev.filter(habit => habit.id !== habitId));
-    };
+        if (isLoading) {
+            initHabits();
+        }
+    }, [user]);
 
     return (
         <HabitsContext.Provider value={{ habits, addHabit, updateHabit, deleteHabit, isLoading, error }}>
@@ -61,5 +58,4 @@ export const HabitsProvider = ({ children }) => {
     );
 };
 
-// Hook do korzystania z HabitContext
 export const useHabits = () => useContext(HabitsContext);

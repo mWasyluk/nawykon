@@ -1,12 +1,10 @@
 import { ExpoRoot } from 'expo-router';
 import { Text } from 'react-native';
 import { useStateManager } from 'src/context/StateManagerContext';
-import { useUser } from 'src/context/UserContext';
 
 const ctx = require.context("./src/screens");
 
 export default function App() {
-    const { user } = useUser();
     const { loading, error } = useStateManager();
 
     const message = error || loading;

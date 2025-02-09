@@ -1,17 +1,19 @@
-import { createContext, useContext, useEffect, useState } from "react";
-import { useHabits } from "./HabitsContext";
-import { useReports } from "./ReportsContext";
-import { formatDate } from "@utils/dateUtil";
-import { useFonts } from "expo-font";
+import { Montserrat_500Medium } from '@expo-google-fonts/montserrat';
 import {
     OpenSans_400Regular,
     OpenSans_400Regular_Italic,
     OpenSans_600SemiBold,
     OpenSans_700Bold
-} from '@expo-google-fonts/open-sans'
-import { Montserrat_500Medium } from '@expo-google-fonts/montserrat';
+} from '@expo-google-fonts/open-sans';
+import { Statistics } from "@models/reports/Statistics";
+import { useFonts } from "expo-font";
+import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { Text } from "react-native";
+import { useHabits } from "./HabitsContext";
+import { useReports } from "./ReportsContext";
+import { useUser } from "./UserContext";
 
-const StateManagerContext = createContext();
+const StateManagerContext = createContext({ isReady: false });
 
 export function StateManagerProvider({ children }) {
     const [fontLoaded, fontError] = useFonts({
@@ -22,70 +24,62 @@ export function StateManagerProvider({ children }) {
         Montserrat_500Medium,
     });
 
-    const { habits, isLoading: isHabitsLoading, error: habitsError } = useHabits();
-    const { habitReports, createHabitReports, isLoading: isReportsLoading, error: reportsError } = useReports();
+    const { isLoading: isUserLoading, error: userError } = useUser();
+    const { isLoading: isHabitsLoading, error: habitsError, habits } = useHabits();
+    const { isLoading: isReportsLoading, error: reportsError, dailyReports } = useReports();
+    const [statistics, setStatistics] = useState(null);
 
-    const [loading, setLoading] = useState('Weryfikuje stan aplikacji...');
-    const [error, setError] = useState('');
-
-    // Creates habit reports for a new day automatically at midnight
-    useEffect(() => {
-        const handleMidnight = () => {
-            const now = new Date();
-            const timeUntilMidnight =
-                new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1).getTime() - now.getTime();
-
-            setTimeout(async () => {
-                await createHabitReports(habits);
-                handleMidnight(); // Reset timer for the next day
-            }, timeUntilMidnight);
-        };
-
-        handleMidnight();
-    }, []);
-
-    // Creates habit reports for habits that do not have a report for today yet
-    useEffect(() => {
-        if (isHabitsLoading || isReportsLoading || habitsError || reportsError)
-            return; // Do not run logic if loading or error
-
-        const habitsWithoutReport = habits.filter(habit =>
-            !habitReports.some(report =>
-                report.habitId === habit.id && formatDate(report.date) === formatDate(new Date())
-            )
-        );
-
-        if (habitsWithoutReport.length > 0) {
-            createHabitReports(habitsWithoutReport);
+    const loadingMessage = useMemo(() => {
+        if (isUserLoading || isHabitsLoading || isReportsLoading || !fontLoaded) {
+            return 'Pobieram dane' +
+                (isUserLoading ? ' o użytkowniku'
+                    : isHabitsLoading ? ' o nawykach'
+                        : isReportsLoading ? ' o raportach'
+                            : !fontLoaded ? ' o czcionkach'
+                                : '') + '...';
         }
+        return '';
+    }, [isUserLoading, isHabitsLoading, isReportsLoading, fontLoaded]);
 
-        setLoading('');
-    }, [habits, habitReports]);
+    const errorMessage = useMemo(() => {
+        if (userError || habitsError || reportsError || fontError) {
+            console.error(userError || habitsError || reportsError || fontError);
+            return 'Napotkałem problem' +
+                (userError ? ' z pobieraniem danych o użytkowniku'
+                    : habitsError ? ' z pobieraniem danych o nawykach'
+                        : reportsError ? ' z pobieraniem danych o raportach'
+                            : fontError ? ' z pobieraniem czcionek'
+                                : '') + '. Sprawdź połączenie z Internetem i spróbuj ponownie.';
+        }
+        return '';
+    }, [userError, habitsError, reportsError, fontError]);
 
     useEffect(() => {
-        if (isHabitsLoading || isReportsLoading || !fontLoaded) {
-            const message = 'Pobieram dane' +
-                (isHabitsLoading ? ' o nawykach'
-                    : isReportsLoading ? ' o raportach'
-                        : !fontLoaded ? ' o czcionkach'
-                            : '') + '...';
-            setLoading(message);
-        } else if (habitsError || reportsError || fontError) {
-            console.error(habitsError || reportsError || fontError);
-            const message = 'Napotkałem problem' +
-                (habitsError ? ' z pobieraniem danych o nawykach'
-                    : reportsError ? ' z pobieraniem danych o raportach'
-                        : fontError ? ' z pobieraniem czcionek'
-                            : '') + '. Sprawdź połączenie z Internetem i spróbuj ponownie.';
-            setError(message);
+        if (!dailyReports || !habits) {
+            return;
+        }
+        var stats = statistics;
+        if (stats === null) {
+            stats = new Statistics(dailyReports, habits);
         } else {
-            setLoading('');
-            setError('');
+            stats = statistics.clone();
+            stats.update(dailyReports, habits);
         }
-    }, [isHabitsLoading, isReportsLoading, habitsError, reportsError, fontLoaded, fontError]);
+        setStatistics(stats);
+    }, [dailyReports, habits]);
+
+    if (loadingMessage || errorMessage) {
+        return (
+            <Text> {loadingMessage || errorMessage} </Text>
+        );
+    } else if (statistics === null) {
+        return <Text> {'Przygotowuję statystyki...'} </Text>
+    }
+
+    console.log('All data has been loaded successfully. Rendering the app...');
 
     return (
-        <StateManagerContext.Provider value={{ loading, error }}>
+        <StateManagerContext.Provider value={{ statistics }}>
             {children}
         </StateManagerContext.Provider>
     );

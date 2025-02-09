@@ -3,13 +3,13 @@ export class Preferences {
 
     constructor({ theme, zoom }) {
         if (theme && !Preferences.VALID_THEMES.includes(theme)) {
-            throw new Error(`Invalid theme. Valid options are: ${Preferences.VALID_THEMES.join(', ')}`);
+            throw new Error(`Motyw powinien mieć jedną z następujących wartości: ${Preferences.VALID_THEMES.join(', ')}`);
         }
-        if (zoom && (typeof zoom !== 'number' || zoom < 0)) {
-            throw new Error('Zoom must not be a negative number');
+        if (zoom && (typeof zoom !== 'number' || zoom < 25 || zoom > 200)) {
+            throw new Error(`Wartość przybliżenia ekranu musi być liczbą z zakresu 25-200.`);
         }
 
         this.theme = theme || 'light';
-        this.fontSize = zoom || 100;
+        this.zoom = zoom || 100;
     }
 }

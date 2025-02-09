@@ -1,110 +1,104 @@
-import { createContext, useCallback, useContext, useEffect, useState } from 'react';
-import { getHabitReportsByDateRange, getMoodReportByDate, addNewMoodReport, updateMoodReport, createNewHabitReports, removeAllHabitReports, updateHabitReport } from '@services/reportsService';
+import { DailyReport } from '@models/reports/DailyReport';
+import * as DailyReportService from '@services/reportService';
+import { formatDate } from '@utils/dateUtil';
+import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { useUser } from './UserContext';
 
-const ReportsContext = createContext();
+const DailyReportsContext = createContext();
 
-export const ReportsProvider = ({ children }) => {
-    const [habitReports, setHabitReports] = useState([]);
-    const [moodReport, setMoodReport] = useState(null);
+export const DailyReportsProvider = ({ children }) => {
+    const { user } = useUser();
+
+    const [dailyReports, setDailyReports] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    const fetchHabitReports = useCallback(async (startDate, endDate, habitId = null) => {
-        try {
-            const reports = await getHabitReportsByDateRange(startDate, endDate, habitId);
-            setHabitReports(reports);
-        } catch (error) {
-            setError(error);
+    const todaysReport = useMemo(() => {
+        if (!dailyReports || dailyReports.length === 0) {
+            return undefined;
         }
-    }, []);
+        return dailyReports.find(report => formatDate(report.date, 'date') === formatDate(new Date(), 'date'));
+    }, [dailyReports]);
 
-    const fetchMoodReport = useCallback(async (date) => {
-        try {
-            const report = await getMoodReportByDate(date);
-            setMoodReport(report);
-        } catch (error) {
-            setError(error);
-        }
-    }, []);
-
-
-    const addMoodReport = async (newMoodReport) => {
-        try {
-            const savedReport = await addNewMoodReport(newMoodReport);
-            setMoodReport(savedReport);
-        } catch (error) {
-            setError(error);
-        }
+    const saveDailyReport = async (report) => {
+        await DailyReportService.saveDailyReport(report);
     };
 
-    const editMoodReport = async (moodReport) => {
-        try {
-            const updatedReport = await updateMoodReport(moodReport);
-            setMoodReport(updatedReport);
-        } catch (error) {
-            setError(error);
-        }
+    const setMood = async (date, mood) => {
+        const newReports = dailyReports.map(report => {
+            if (report.date === date) {
+                report.setMood(mood);
+                saveDailyReport(report);
+            }
+            return report;
+        });
+
+        setDailyReports([...newReports]);
     };
 
-    const createHabitReports = async (habits = [], date = new Date()) => {
-        try {
-            const createdReports = await createNewHabitReports(habits, date);
-            setHabitReports(prevReports => [...prevReports, ...createdReports]);
-        } catch (error) {
-            setError(error);
-        }
-    };
+    const setHabitLog = async (date, { id, executions }) => {
+        var updatedDailyReport = null;
+        const updatedDailyReports = dailyReports.map(report => {
+            if (report.date === date) {
+                report.setHabitLog(id, executions);
+                updatedDailyReport = report;
+            }
+            return report;
+        });
 
-    const deleteAllHabitReports = async () => {
-        try {
-            await removeAllHabitReports();
-            setHabitReports([]);
-        } catch (error) {
-            setError(error);
-        }
-    };
+        if (updatedDailyReport) {
+            await saveDailyReport(updatedDailyReport);
+        };
 
-    const editHabitReport = async (habitReport) => {
-        try {
-            const updatedReport = await updateHabitReport(habitReport);
-            setHabitReports([...habitReports.filter(report => report.id !== habitReport.id), updatedReport]);
-        } catch (error) {
-            setError(error);
-        }
+        setDailyReports([...updatedDailyReports]);
     };
 
     useEffect(() => {
-        const fetchTodayReports = async () => {
-            const todaysDate = new Date();
+        if (!user) {
+            return;
+        }
 
-            await fetchMoodReport(todaysDate);
-            await fetchHabitReports(todaysDate, todaysDate);
+        const initDailyReports = async () => {
+            try {
+                // fetch all from database
+                const reports = await DailyReportService.getAllDailyReports();
 
-            setIsLoading(false);
+                // verify todays report and create or update if needed
+                var todaysReport = reports.find(report => report.date === formatDate(new Date(), 'date'));
+                if (!todaysReport) {
+                    todaysReport = new DailyReport({ date: new Date() });
+                    reports.push(todaysReport);
+                    await saveDailyReport(todaysReport);
+                }
+
+                setDailyReports(reports);
+            } catch (error) {
+                setError(error);
+            } finally {
+                setIsLoading(false);
+            }
         };
 
+
         if (isLoading) {
-            fetchTodayReports();
+            initDailyReports();
         }
-    }, [fetchHabitReports, fetchMoodReport]);
+    }, [user]);
 
     return (
-        <ReportsContext.Provider
+        <DailyReportsContext.Provider
             value={{
-                habitReports,
-                editHabitReport,
-                createHabitReports,
-                deleteAllHabitReports,
-                moodReport,
-                addMoodReport,
-                editMoodReport,
+                dailyReports,
+                todaysReport,
+                setHabitLog,
+                setMood,
                 isLoading,
                 error
             }}
         >
             {children}
-        </ReportsContext.Provider>
+        </DailyReportsContext.Provider>
     );
 };
 
-export const useReports = () => useContext(ReportsContext);
+export const useReports = () => useContext(DailyReportsContext);
