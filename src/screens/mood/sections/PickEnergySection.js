@@ -9,7 +9,7 @@ export default function PickEnergySection(props) {
     } = props;
 
     return (
-        <ScreenSection title="Ile masz energii?">
+        <ScreenSection title="Ile masz energii?*">
             <IconToggleGroup
                 icons={[icons.energy0, icons.energy1, icons.energy2]}
                 selected={defaultValue}

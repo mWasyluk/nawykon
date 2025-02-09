@@ -5,53 +5,52 @@ import routes from "@data/router";
 import { icons } from "@styles";
 import { formatDate } from "@utils/dateUtil";
 import { router } from "expo-router";
+import { useMemo } from "react";
 import { useHabits } from "src/context/HabitsContext";
 import { useReports } from "src/context/ReportsContext";
+import { useStateManager } from "src/context/StateManagerContext";
 
 export default function HabitsListSection() {
     const { habits } = useHabits();
-    const { habitReports, editHabitReport } = useReports();
+    const { todaysReport, setHabitLog } = useReports();
+    const { statistics } = useStateManager();
 
-    // collect reports with todays date
-    const todaysReports = habitReports.map(report => {
-        if (formatDate(report.date) === formatDate(new Date())) {
-            return report;
-        }
-    });
-
-    // prepare data for habit cards based on habits and reports
-    const habitListObjects = habits.map(habit => {
-        var requiredExecutions = 0;
-        var remainedExecutions = 0;
-
-        const habitReport = todaysReports.find(report => habit.id === report.habitId);
-
-        if (habitReport && habitReport.goal) {
-            requiredExecutions = habitReport.goal;
-            remainedExecutions = habitReport.goal - habitReport.executions.length;
-            remainedExecutions = remainedExecutions < 0 ? 0 : remainedExecutions;
+    const habitListObjects = useMemo(() => {
+        if (!statistics) {
+            return [];
         }
 
-        const addExecution = () => {
-            try {
-                habitReport.addExecution();
-                editHabitReport(habitReport);
-            } catch (error) {
-                console.error(error);
-            }
-        }
+        const todayStats = statistics.getStatsByDateRange(todaysReport.date, todaysReport.date).dailyStats[todaysReport.date];
+        const objects = [];
+        habits.forEach(habit => {
+            const habitStats = todayStats.habitStats[habit.id];
 
-        return {
-            onPress: () => router.push(routes.habitDetails(habit.id)),
-            onCheck: () => remainedExecutions > 0 ? addExecution() : () => { },
-            type: habit.details.type,
-            name: habit.details.name,
-            description: habit.details.description,
-            streak: habit.streak,
-            requiredExecutions,
-            remainedExecutions,
-        }
-    }).sort((a, b) => b.remains - a.remains);
+            // if (habitStats) {
+            objects.push({
+                onPress: () => router.push(routes.habitDetails(habit.id)),
+                addExecution: () => {
+                    try {
+                        const executions = todaysReport.executions[habit.id] || [];
+                        const newExecutions = [...executions, new Date().getTime()];
+                        const date = formatDate(new Date(), 'date');
+                        setHabitLog(date, { id: habit.id, executions: newExecutions });
+                    } catch (error) {
+                        console.error(error);
+                    }
+                },
+                type: habit.details.type,
+                name: habit.details.name,
+                description: habit.details.description,
+                streak: habit.streak,
+                repetitions: habitStats?.goal,
+                executions: habitStats?.completed,
+            });
+            // }
+        });
+
+        objects.sort((a, b) => b.repetitions - a.repetitions);
+        return objects;
+    }, [statistics]);
 
     return (
         <ScreenSection
@@ -62,7 +61,7 @@ export default function HabitsListSection() {
                     icon={icons.plus}
                     small={true} />
             }>
-            {habitListObjects?.map((obj, index) => (
+            {habitListObjects.map((obj, index) => (
                 <HabitCard key={index} {...obj} />
             ))}
         </ScreenSection>

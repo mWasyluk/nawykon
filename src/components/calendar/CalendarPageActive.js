@@ -11,12 +11,13 @@ export default function CalendarPageActive(props) {
         month = 'NAN',
     } = props;
 
-    const { moodReport } = useReports();
+    const { todaysReport } = useReports();
+    const moodReport = todaysReport?.mood || {};
 
     var moodIcon = icons.mood;
 
-    if (moodReport?.mood) {
-        moodIcon = icons[`mood${moodReport.mood}`];
+    if (moodReport.humor) {
+        moodIcon = icons[`mood${moodReport.humor}`];
     }
 
     return (
@@ -25,7 +26,7 @@ export default function CalendarPageActive(props) {
                 <Text style={styles.day}>{day}</Text>
                 <Text style={styles.month}>{month}</Text>
             </View>
-            <Image source={moodIcon} style={{ width: 32, height: 32, filter: !moodReport?.mood ? 'grayscale(100%)' : undefined }} />
+            <Image source={moodIcon} style={{ width: 32, height: 32, filter: !moodReport?.humor ? 'grayscale(100%)' : undefined }} />
         </TouchableOpacity>
     );
 }

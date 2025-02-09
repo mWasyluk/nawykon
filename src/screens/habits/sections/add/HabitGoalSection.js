@@ -4,81 +4,74 @@ import SelectableWeekDay from '@components/SelectableWeekDays';
 import ErrorMessage from '@components/ui/ErrorMessage';
 import TextInput from '@components/ui/TextInput';
 import TextOption from '@components/ui/TextOption';
-import { defaultHabitGoalProps, Goal } from '@models/habit/Goal';
+import { HabitGoal } from '@models/habit/HabitGoal';
 import { useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
 
 export default function HabitGoalSection(props) {
     const {
-        defaultGoal = defaultHabitGoalProps,
-        onChange = () => { },
+        habitBuilder = {},
     } = props;
 
-    const [timesPerDay, setTimesPerDay] = useState(defaultGoal.timesPerDay);
-    const [daysOfWeek, setDaysOfWeek] = useState(defaultGoal.daysOfWeek);
-    const [endDate, setEndDate] = useState(defaultGoal.endDate);
+    const currentHabitGoal = habitBuilder.habit?.goal;
+    const [repetitions, setRepetitions] = useState(currentHabitGoal?.repetitions || HabitGoal.DEFAULT_REPETITIONS);
+    const [days, setDays] = useState(currentHabitGoal?.days || HabitGoal.DEFAULT_DAYS);
 
-    const [timesPerDayError, setTimesPerDayError] = useState(null);
-    const [daysOfWeekError, setDaysOfWeekError] = useState(null);
+    const [repetitionsError, setRepetitionsError] = useState(null);
+    const [daysError, setDaysError] = useState(null);
 
-    const handleTimesPerDayChange = (value) => {
-        const result = parseInt(value);
-
+    const handleRepetitionsChange = (value) => {
         try {
-            Goal.validateTimesPerDay(result);
-            setTimesPerDay(result);
-            setTimesPerDayError(null);
+            const result = parseInt(value);
+            habitBuilder.withRepetitions(result);
+            setRepetitionsError(null);
         } catch (error) {
-            setTimesPerDay('');
-            setTimesPerDayError(error.message);
+            setRepetitionsError(error.message);
         }
 
-        onChange({ timesPerDay: result });
+        setRepetitions(value);
     };
 
-    const handleDaysOfWeekChange = (value) => {
+    const handleDaysChange = (value) => {
         try {
-            Goal.validateDaysOfWeek(value);
-            setDaysOfWeekError(null);
-            setDaysOfWeek(value);
+            habitBuilder.withDays(value);
+            setDaysError(null);
         } catch (error) {
-            setDaysOfWeekError(error.message);
-            setDaysOfWeek(value);
+            setDaysError(error.message);
         }
 
-        onChange({ daysOfWeek: value });
-    }
-
-    const handleEndDateChange = (value) => {
-        setEndDate(value);
-        onChange({ endDate: value });
+        setDays(value);
     }
 
     useEffect(() => {
-        onChange({ timesPerDay, daysOfWeek, endDate });
-    }, [timesPerDay, daysOfWeek, endDate]);
+        if (!currentHabitGoal) {
+            try {
+                habitBuilder.withRepetitions(repetitions);
+                habitBuilder.withDays(days);
+            } catch (error) { }
+        }
+    }, []);
 
     return (
         <ScreenSection
             title={"Cel"}
             containerStyle={styles.container}>
 
-            <TextInput value={timesPerDay}
-                onChange={handleTimesPerDayChange}
+            <TextInput value={repetitions}
+                onChange={handleRepetitionsChange}
                 returnKeyType={'next'}
                 maxLength={2}
-                error={timesPerDayError} />
+                error={repetitionsError} />
             <TextOption>razy dziennie</TextOption>
-            <ErrorMessage style={{ width: '100%' }}>{timesPerDayError}</ErrorMessage>
+            <ErrorMessage style={{ width: '100%' }}>{repetitionsError}</ErrorMessage>
 
             <SelectableWeekDay
-                defaultDays={daysOfWeek}
-                onChange={handleDaysOfWeekChange} />
-            <ErrorMessage>{daysOfWeekError}</ErrorMessage>
+                defaultDays={days}
+                onChange={handleDaysChange} />
+            <ErrorMessage>{daysError}</ErrorMessage>
 
             <EndDateSelection
-                defaultEndDate={endDate}
-                onChange={handleEndDateChange}
+                habitBuilder={habitBuilder}
             />
         </ScreenSection>
     );

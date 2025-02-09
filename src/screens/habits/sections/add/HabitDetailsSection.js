@@ -1,35 +1,41 @@
-import React, { useState } from 'react';
-import TextInput from '@components/ui/TextInput';
 import ScreenSection from '@components/containers/ScreenSection';
-import { defaultHabitDetailsProps, HabitDetails } from '@models/habit/HabitDetails';
 import ErrorMessage from '@components/ui/ErrorMessage';
+import TextInput from '@components/ui/TextInput';
+import { useEffect, useState } from 'react';
 
 export default function HabitDetailsSection(props) {
     const {
-        defaultName = defaultHabitDetailsProps.name,
-        defaultDescription = defaultHabitDetailsProps.description,
-        onChange = () => { },
+        habitBuilder,
     } = props;
 
-    const [name, setName] = useState(defaultName);
-    const [description, setDescription] = useState(defaultDescription);
+    const currentHabitDetails = habitBuilder.habit?.details;
+    const [name, setName] = useState(currentHabitDetails?.name || '');
+    const [description, setDescription] = useState(currentHabitDetails?.description || '');
     const [nameError, setNameError] = useState(null);
 
     const handleNameChange = (value) => {
         try {
-            HabitDetails.validateName(value);
-            setNameError(null);
+            habitBuilder.withName(value);
+            setNameError('');
         } catch (error) {
             setNameError(error.message);
         }
         setName(value);
-        onChange({ name: value });
     };
 
     const handleDescriptionChange = (value) => {
+        habitBuilder.withDescription(value);
         setDescription(value);
-        onChange({ description: value });
     }
+
+    useEffect(() => {
+        if (!currentHabitDetails) {
+            try {
+                habitBuilder.withName(name);
+                habitBuilder.withDescription(description);
+            } catch (error) { }
+        }
+    }, []);
 
     return (
         <ScreenSection

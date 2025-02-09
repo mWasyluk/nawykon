@@ -152,11 +152,14 @@ export default function LineChart({
     const verticalTop = scaleY(chartMaxY) + 5;
     const verticalBottom = scaleY(chartMinY) - 5;
 
+    const xLabelStep = scaledPoints.length >= 25 ? 4 : scaledPoints.length >= 15 ? 2 : 1;
+    const yLabelStep = yTicks.length >= 25 ? 4 : yTicks.length >= 15 ? 2 : 1;
+
     return (
         <View style={{ alignItems: 'center' }}>
             <Svg width={width} height={height}>
                 {/* Linie poziome (oś Y) i etykiety */}
-                {yTicks.map((val) => (
+                {yTicks.map((val, i) => (
                     <React.Fragment key={`y-${val}`}>
                         <Line
                             x1={margin.left - 5}
@@ -164,19 +167,21 @@ export default function LineChart({
                             x2={width - margin.right + 5}
                             y2={scaleY(val)}
                             stroke={colors.lightGray}
-                            strokeWidth={1}
+                            strokeWidth={i % yLabelStep === 0 ? 2 : 0.5}
                         />
-                        <SvgText
-                            x={margin.left - 10}
-                            y={scaleY(val)}
-                            fill={textColor}
-                            fontFamily={fontStyles.regularNote.fontFamily}
-                            fontSize={fontStyles.regularNote.fontSize}
-                            textAnchor="end"
-                            alignmentBaseline="middle"
-                        >
-                            {val}
-                        </SvgText>
+                        {i % yLabelStep === 0 && (
+                            <SvgText
+                                x={margin.left - 10}
+                                y={scaleY(val)}
+                                fill={textColor}
+                                fontFamily={fontStyles.regularNote.fontFamily}
+                                fontSize={fontStyles.regularNote.fontSize}
+                                textAnchor="end"
+                                alignmentBaseline="middle"
+                            >
+                                {val}
+                            </SvgText>
+                        )}
                     </React.Fragment>
                 ))}
 
@@ -189,18 +194,20 @@ export default function LineChart({
                             x2={p.x}
                             y2={verticalBottom}
                             stroke={colors.lightGray}
-                            strokeWidth={2}
+                            strokeWidth={i % xLabelStep === 0 ? 2 : 0.5}
                         />
-                        <SvgText
-                            x={p.x}
-                            y={verticalBottom + 15}
-                            fill={textColor}
-                            fontFamily={fontStyles.regularNote.fontFamily}
-                            fontSize={fontStyles.regularNote.fontSize}
-                            textAnchor="middle"
-                        >
-                            {p.xVal}
-                        </SvgText>
+                        {i % xLabelStep === 0 && (
+                            <SvgText
+                                x={p.x}
+                                y={verticalBottom + 15}
+                                fill={textColor}
+                                fontFamily={fontStyles.regularNote.fontFamily}
+                                fontSize={fontStyles.regularNote.fontSize}
+                                textAnchor="middle"
+                            >
+                                {p.xVal}
+                            </SvgText>
+                        )}
                     </React.Fragment>
                 ))}
 

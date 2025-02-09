@@ -1,69 +1,51 @@
 import Button from '@components/ui/Button';
 import routes from '@data/router';
+import { HabitBuilder } from '@models/habit/Habit';
 import { icons } from '@styles';
+import { router } from 'expo-router';
+import { useMemo, useState } from 'react';
 import { ScrollView } from 'react-native';
+import { useModal } from 'src/context/ModalContext';
+import { useHabits } from 'src/context/HabitsContext';
 import HabitDetailsSection from './sections/add/HabitDetailsSection';
 import HabitGoalSection from './sections/add/HabitGoalSection';
 import HabitReminderSection from './sections/add/HabitReminderSection';
 import PickHabitSection from './sections/add/PickHabitSection';
-import { useHabits } from 'src/context/HabitsContext';
-import { useUser } from 'src/context/UserContext';
-import { useState, useCallback, useEffect } from 'react';
-import { Habit } from '@models/habit/Habit';
 
 export default function AddHabitScreen() {
-	const { user } = useUser();
+
 	const { addHabit } = useHabits();
+	const { showError } = useModal();
+	const [builderErrors, setBuilderErrors] = useState([]);
 
-	const [habit, setHabit] = useState({ userId: user.id });
-	const [isSaveReady, setIsSaveReady] = useState(false);
-
-	const handleTypeChange = useCallback((type) => {
-		setHabit(prev => ({ ...prev, details: { ...prev.details, type } }));
-	}, []);
-
-	const handleDetailsChange = useCallback((details) => {
-		setHabit(prev => ({ ...prev, details: { ...prev.details, ...details } }));
-	}, []);
-
-	const handleGoalChange = useCallback((goal) => {
-		setHabit(prev => ({ ...prev, goal }));
-	}, []);
-
-	const handleRemindersChange = useCallback((reminders) => {
-		setHabit(prev => ({ ...prev, reminders }));
+	const habitBuilder = useMemo(() => {
+		const hb = new HabitBuilder();
+		hb.setErrors = (newErrors) => setBuilderErrors(newErrors);
+		return hb;
 	}, []);
 
 	const handleHabitSave = () => {
-		addHabit(new Habit(habit));
-	}
-
-	useEffect(() => {
-		const verifyHabit = () => {
-			try {
-				new Habit(habit);
-				setIsSaveReady(true);
-			} catch (err) {
-				setIsSaveReady(false);
-			}
+		try {
+			addHabit(habitBuilder.build());
+			router.push(routes.dashboard);
+		} catch (error) {
+			showError(error.message);
 		}
-
-		verifyHabit();
-	}, [habit]);
+	}
 
 	return (
 		<ScrollView contentContainerStyle={{ alignItems: 'center' }}>
-			<PickHabitSection onChange={handleTypeChange} />
-			<HabitDetailsSection onChange={handleDetailsChange} />
-			<HabitGoalSection onChange={handleGoalChange} />
-			<HabitReminderSection onChange={handleRemindersChange} />
+			<PickHabitSection habitBuilder={habitBuilder} />
+			<HabitDetailsSection habitBuilder={habitBuilder} />
+			<HabitGoalSection habitBuilder={habitBuilder} />
+			<HabitReminderSection habitBuilder={habitBuilder} />
 			<Button
 				title={"Zapisz"}
 				icon={icons.check}
 				onPress={handleHabitSave}
-				href={routes.dashboard}
+				// href={routes.dashboard}
 				style={{ marginVertical: 20 }}
-				disabled={!isSaveReady}
+				disabled={builderErrors.length > 0}
 			/>
 		</ScrollView>
 	);

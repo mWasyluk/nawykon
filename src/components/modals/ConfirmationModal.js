@@ -1,7 +1,7 @@
 import Button from '@components/ui/Button';
 import { colors, icons } from '@styles';
-import React, { useEffect, useRef, useState } from 'react';
-import { Animated, Pressable, View, Text, StyleSheet, Dimensions, Modal } from 'react-native';
+import { useEffect, useRef, useState } from 'react';
+import { Animated, Dimensions, Modal, Pressable, StyleSheet, Text, View } from 'react-native';
 
 const { height } = Dimensions.get('window');
 

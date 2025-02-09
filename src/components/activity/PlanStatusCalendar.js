@@ -1,46 +1,43 @@
 import PlanStatusRecord from '@components/activity/PlanStatusRecord';
 import { colors } from '@styles';
-import { formatDate, validateTimestamp } from '@utils/dateUtil';
+import { formatDate, getFixedDayOfWeek, getMonthLength } from '@utils/dateUtil';
 import { StyleSheet, View } from 'react-native';
+
+const MIN_CALENDAR_ROWS = 5;
 
 export default function PlanStatusCalendar(props) {
     const {
-        records = [],
-        firstDayOfWeek = 0,
-        isLastDayCurrent = false,
-        selectedDate = new Date(),
-        dynamicRows = false,
-        onDaySelect = () => { },
+        dailyStats = {},
+        selectedDate = formatDate(new Date(), date),
+
+        setSelectedDate = () => { },
     } = props;
 
     const recordWidth = 30;
     const recordHeight = 25;
-    const dynamicMinRows = Math.ceil(records.length + firstDayOfWeek / 7);
-    const finalRows = dynamicRows && dynamicMinRows < 6 ? 5 : 6;
 
-    const containerStyle = [
-        styles.container,
-        {
-            width: recordWidth * 7,
-            height: recordHeight * finalRows,
-        }
-    ]
+    const sortedDates = Object.keys(dailyStats).sort((a, b) => new Date(a) - new Date(b));
 
-    const allRecordsAmount = 7 * finalRows;
+    if (sortedDates.length === 0) {
+        return null;
+    }
 
-    const allRecords = [
-    ];
+    const firstGivenDate = new Date(sortedDates[0]);
+    const firstDayOfWeek = getFixedDayOfWeek(formatDate(firstGivenDate).slice(0, 7));
+    const monthLength = getMonthLength(sortedDates[0]);
+
+    const minRows = Math.ceil((monthLength + firstDayOfWeek) / 7);
+    const rows = Math.max(minRows, MIN_CALENDAR_ROWS);
+
+    const allRecordsAmount = 7 * rows;
+    const allRecords = [];
 
     for (let i = 0; i < firstDayOfWeek; i++) {
         allRecords.push(undefined);
     }
 
-    for (let i = 0; i < records.length - 1; i++) {
-        allRecords.push(records[i]);
-    }
-
-    if (isLastDayCurrent) {
-        allRecords.push('current');
+    for (let i = 0; i < sortedDates.length; i++) {
+        allRecords.push({ ...dailyStats[sortedDates[i]], date: sortedDates[i] });
     }
 
     for (let i = allRecords.length; i < allRecordsAmount; i++) {
@@ -48,14 +45,20 @@ export default function PlanStatusCalendar(props) {
     }
 
     const handleDaySelection = (val) => {
-        var date = new Date();
-        try {
-            date = validateTimestamp(val);
-        } catch (error) {
-            console.warn(error);
+        const statsForDate = dailyStats[val];
+        if (!statsForDate) {
+            return;
         }
-        onDaySelect(date);
+        setSelectedDate(val);
     }
+
+    const containerStyle = [
+        styles.container,
+        {
+            width: recordWidth * 7,
+            height: recordHeight * rows,
+        }
+    ]
 
     return (
         <View style={containerStyle}>
@@ -64,7 +67,7 @@ export default function PlanStatusCalendar(props) {
                     key={index}
                     status={record?.status}
                     date={record?.date}
-                    isSelected={record?.date === formatDate(selectedDate)}
+                    isSelected={record?.date === selectedDate}
                     onPress={handleDaySelection}
                 />
             ))}

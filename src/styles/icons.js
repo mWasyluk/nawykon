@@ -21,6 +21,7 @@ const icons = {
     refresh: require('@assets/icons/refresh.png'),
     refreshBold: require('@assets/icons/refresh-bold.png'),
     cancel: require('@assets/icons/cancel.png'),
+    bin: require('@assets/icons/bin.png'),
 
     habit: {
         adventure: require('@assets/icons/habit/adventure.png'),

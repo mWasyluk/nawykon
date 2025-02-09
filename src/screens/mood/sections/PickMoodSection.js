@@ -9,7 +9,7 @@ export default function PickMoodSection(props) {
     } = props;
 
     return (
-        <ScreenSection title="Jaki masz nastrój?" containerStyle={{ justifyContent: 'space-between' }}>
+        <ScreenSection title="Jaki masz nastrój?*" containerStyle={{ justifyContent: 'space-between' }}>
             <IconToggleGroup
                 icons={[icons.mood0, icons.mood1, icons.mood2, icons.mood3, icons.mood4]}
                 selected={defaultValue}

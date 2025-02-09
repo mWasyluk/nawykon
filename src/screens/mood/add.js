@@ -1,73 +1,72 @@
 import Button from '@components/ui/Button';
 import routes from '@data/router';
+import { Mood } from '@models/mood/Mood';
 import { icons } from '@styles';
-import { ScrollView } from 'react-native';
-import NoteSection from './sections/NoteSection';
-import PickMoodSection from './sections/PickMoodSection';
-import PickEnergySection from './sections/PickEnergySection';
-import { useUser } from 'src/context/UserContext';
-import { useReports } from 'src/context/ReportsContext';
-import { MoodReport } from '@models/reports/MoodReport';
+import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
+import { ScrollView } from 'react-native';
+import { useModal } from 'src/context/ModalContext';
+import { useReports } from 'src/context/ReportsContext';
+import NoteSection from './sections/NoteSection';
+import PickEnergySection from './sections/PickEnergySection';
+import PickMoodSection from './sections/PickMoodSection';
 
 export default function AddMoodScreen() {
-    const { user } = useUser();
-    const { moodReport, addMoodReport, editMoodReport } = useReports();
-    const [moodReportDto, setMoodReportDto] = useState({ userId: user.id, ...moodReport });
-    const [isSaveReady, setIsSaveReady] = useState(false);
+    const { todaysReport, setMood } = useReports();
+    const { showError } = useModal();
 
-    const handleMoodChange = (value) => {
-        setMoodReportDto({ ...moodReportDto, mood: value });
+    const todaysMood = todaysReport?.mood || {};
+
+    const [moodDto, setMoodDto] = useState(todaysMood);
+    const [error, setError] = useState(null);
+
+    const handleHumorChange = (value) => {
+        setMoodDto({ ...moodDto, humor: value });
     }
 
     const handleEnergyChange = (value) => {
-        setMoodReportDto({ ...moodReportDto, energy: value });
+        setMoodDto({ ...moodDto, energy: value });
     }
 
     const handleNoteChange = (value) => {
-        setMoodReportDto({ ...moodReportDto, note: value });
+        setMoodDto({ ...moodDto, note: value });
     }
 
     const handleSave = () => {
-        if (moodReport) {
-            editMoodReport(new MoodReport(moodReportDto));
-        } else {
-            addMoodReport(new MoodReport(moodReportDto));
+        try {
+            setMood(todaysReport.date, new Mood(moodDto));
+            router.replace(routes.dashboard);
+        } catch (error) {
+            showError(error.message);
         }
     }
 
     useEffect(() => {
-        const verifyReport = () => {
-            try {
-                new MoodReport(moodReportDto);
-                setIsSaveReady(true);
-            } catch (err) {
-                console.warn(err);
-                setIsSaveReady(false);
-            }
+        try {
+            new Mood(moodDto);
+            setError(false);
+        } catch (error) {
+            setError(true);
         }
-
-        verifyReport();
-    }, [moodReportDto]);
+    }, [moodDto]);
 
     return (
         <ScrollView contentContainerStyle={{ alignItems: 'center' }}>
             <PickMoodSection
-                defaultValue={moodReportDto?.mood}
-                onChange={handleMoodChange} />
+                defaultValue={moodDto?.humor}
+                onChange={handleHumorChange} />
             <PickEnergySection
-                defaultValue={moodReportDto?.energy}
+                defaultValue={moodDto?.energy}
                 onChange={handleEnergyChange} />
             <NoteSection
-                defaultValue={moodReportDto?.note}
+                defaultValue={moodDto?.note}
                 onChange={handleNoteChange} />
 
             <Button title={"Zapisz"}
                 icon={icons.check}
                 onPress={handleSave}
-                href={routes.dashboard}
                 style={{ marginVertical: 20 }}
-                disabled={!isSaveReady} />
+                disabled={error} />
         </ScrollView>
     );
 }

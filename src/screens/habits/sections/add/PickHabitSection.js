@@ -1,24 +1,35 @@
-import React, { use, useEffect, useState } from 'react';
-import { defaultHabitDetailsProps, HabitDetails } from '@models/habit/HabitDetails';
-import SelectableHabitTypeAvatar from '@components/habit/SelectableHabitTypeAvatar';
 import ScreenSection from '@components/containers/ScreenSection';
+import SelectableHabitTypeAvatar from '@components/habit/SelectableHabitTypeAvatar';
+import ErrorMessage from '@components/ui/ErrorMessage';
+import { HabitDetails } from '@models/habit/HabitDetails';
+import { useEffect, useState } from 'react';
 
 export default function PickHabitSection(props) {
     const {
-        defaultType = defaultHabitDetailsProps.type,
-        onChange = () => { },
+        habitBuilder,
     } = props;
 
-    const [habitType, setHabitType] = useState(defaultType);
+    const currentHabitType = habitBuilder.habit?.details?.type;
+    const [habitType, setHabitType] = useState(currentHabitType || HabitDetails.DEFAULT_TYPE);
+
+    const [habitTypeError, setHabitTypeError] = useState(null);
 
     const handleSelect = (habitType) => {
-        onChange(habitType);
+        try {
+            habitBuilder.withType(habitType);
+            setHabitTypeError(null);
+        } catch (error) {
+            setHabitTypeError(error.message);
+        }
+
         setHabitType(habitType);
     };
 
     useEffect(() => {
-        onChange(habitType);
-    }, [habitType]);
+        if (!currentHabitType) {
+            habitBuilder.withType(HabitDetails.DEFAULT_TYPE);
+        }
+    }, []);
 
     return (
         <ScreenSection
@@ -31,6 +42,7 @@ export default function PickHabitSection(props) {
                     isSelected={habitType === type}
                     onPress={() => handleSelect(type)} />
             )}
+            <ErrorMessage>{habitTypeError}</ErrorMessage>
         </ScreenSection>
     );
 }

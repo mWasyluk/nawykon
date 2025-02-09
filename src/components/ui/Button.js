@@ -10,7 +10,9 @@ export default function Button(props) {
         onPress = () => { },
         icon = null,
         small = false,
+        // TODO: implement prim as a variant
         prim = true,
+        variant = undefined,
         disabled = false,
         style = {},
         textStyle = {},
@@ -20,13 +22,22 @@ export default function Button(props) {
     const buttonStyles = [
         small ? uiStyles.smallButton : uiStyles.button,
         {
-            backgroundColor: prim && !disabled ? colors.primBlue : colors.light,
-            borderColor: prim && !disabled ? colors.primBlue : colors.lightGray,
+            backgroundColor: disabled ? colors.light
+                : variant === 'error' ? colors.lightError
+                    : prim ? colors.primBlue
+                        : colors.light,
+            borderColor: disabled ? colors.lightGray
+                : variant === 'error' ? colors.darkError
+                    : prim ? colors.darkBlue
+                        : colors.darkGray,
         },
         style,
     ];
 
-    const textColor = disabled ? colors.lightGray : prim ? colors.light : colors.darkGray;
+    const textColor = disabled ? colors.lightGray
+        : variant === 'error' ? colors.prim
+            : prim ? colors.light
+                : colors.darkGray;
 
     const textStyles = [
         { color: textColor },

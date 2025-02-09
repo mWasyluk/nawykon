@@ -1,10 +1,12 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
 import ScreenSection from '@components/containers/ScreenSection';
-import { colors, fontStyles, icons } from '@styles';
 import HabitTypeAvatar from '@components/habit/HabitTypeAvatar';
 import Button from '@components/ui/Button';
 import routes from '@data/router';
+import { colors, fontStyles, icons } from '@styles';
+import { router } from 'expo-router';
+import { StyleSheet, Text, View } from 'react-native';
+import { useModal } from 'src/context/ModalContext';
+import { useHabits } from 'src/context/HabitsContext';
 
 export default function HabitDetailsSection(props) {
     const {
@@ -13,6 +15,18 @@ export default function HabitDetailsSection(props) {
         description = '<opis_nawyku>',
         type = 'fitness',
     } = props;
+
+    const { showConfirm } = useModal();
+    const { deleteHabit } = useHabits();
+
+    const showConfirmDelete = () => {
+        const message = `Czy chcesz trwale usunąć nawyk "${name}"?`;
+        const onPress = () => {
+            deleteHabit(id);
+            router.replace(routes.dashboard);
+        };
+        showConfirm(message, onPress);
+    }
 
     return (
         <ScreenSection
@@ -29,6 +43,12 @@ export default function HabitDetailsSection(props) {
                 href={routes.editHabit(id)}
                 icon={icons.pen}
                 small={true}
+            />
+            <Button
+                onPress={showConfirmDelete}
+                icon={icons.bin}
+                small={true}
+                variant="error"
             />
         </ScreenSection>
     );

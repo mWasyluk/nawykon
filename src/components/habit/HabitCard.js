@@ -6,13 +6,13 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 export default function HabitCard(props) {
     const {
         onPress = () => { },
-        onCheck = () => { },
+        addExecution = () => { },
         type,
         name,
         streak,
         description,
-        requiredExecutions,
-        remainedExecutions,
+        repetitions = 0,
+        executions = 0,
 
     } = props;
 
@@ -29,7 +29,7 @@ export default function HabitCard(props) {
                 <View style={styles.actionContainer}>
                     <Image source={icons.streak} style={styles.streakIcon} />
                     <Text style={styles.streakText}>{streak}</Text>
-                    <PieButton maxCount={requiredExecutions} count={requiredExecutions - remainedExecutions} onPress={onCheck} />
+                    <PieButton maxCount={repetitions} count={executions} onPress={addExecution} />
                 </View>
             </View>
         </TouchableOpacity>

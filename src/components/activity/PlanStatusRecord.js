@@ -1,5 +1,5 @@
+import { Statistics } from '@models/reports/Statistics';
 import { colors } from '@styles';
-import { STATISTIC_STATUSES } from "@models/reports/HabitReportStatistics";
 import { TouchableOpacity, View } from 'react-native';
 
 export default function PlanStatusRecord(props) {
@@ -15,10 +15,10 @@ export default function PlanStatusRecord(props) {
 
     const pointDiameter = Math.min(width, height) * pointRate;
 
-    const pointColor = status === STATISTIC_STATUSES.completed ? colors.lightSuccess
-        : status === STATISTIC_STATUSES.failed ? colors.lightError
-            : status === STATISTIC_STATUSES.partial ? colors.lightWarning
-                : status === STATISTIC_STATUSES.neutral ? colors.light
+    const pointColor = status === Statistics.STATUSES.completed ? colors.lightSuccess
+        : status === Statistics.STATUSES.failed ? colors.lightError
+            : status === Statistics.STATUSES.partial ? colors.lightWarning
+                : status === Statistics.STATUSES.neutral ? colors.light
                     : status === 'current' ? colors.primBlue
                         : colors.midGray;
 

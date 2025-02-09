@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { colors, fontStyles } from '@styles';
-import { daysOfWeek } from '@data/time';
+import { shortDays } from '@data/time';
 
 export default function SelectableWeekDay(props) {
     const {
@@ -26,7 +26,7 @@ export default function SelectableWeekDay(props) {
 
     return (
         <View style={styles.container}>
-            {daysOfWeek.map((day, index) => {
+            {shortDays.map((day, index) => {
                 const isSelected = selectedDays.includes(index);
                 return (
                     <TouchableOpacity key={index}

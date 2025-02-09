@@ -2,56 +2,52 @@ import ErrorMessage from '@components/ui/ErrorMessage';
 import Switch from '@components/ui/Switch';
 import TextInput from '@components/ui/TextInput';
 import TextOption from '@components/ui/TextOption';
-import { Goal } from '@models/habit/Goal';
 import { colors, fontStyles } from '@styles';
-import { formatDate, validateTimestamp } from '@utils/dateUtil';
-import { useState } from 'react';
+import { formatDate } from '@utils/dateUtil';
+import { useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 const nextWeekDate = new Date(new Date().setDate(new Date().getDate() + 7));
 
 export default function EndDateSelection(props) {
     const {
-        defaultEndDate,
-        onChange = () => { },
-        defaultError = null,
+        habitBuilder,
     } = props;
 
-    const [isPeriodic, setIsPeriodic] = useState(defaultEndDate ? true : false);
-    const [endDateText, setEndDateText] = useState(isPeriodic ? formatDate(defaultEndDate) : formatDate(nextWeekDate));
-    const [error, setError] = useState(defaultError);
+    const currentHabitEndDate = habitBuilder.habit?.endDate;
+    const [isPeriodic, setIsPeriodic] = useState(currentHabitEndDate ? true : false);
+    const [endDateText, setEndDateText] = useState(isPeriodic ? currentHabitEndDate : formatDate(nextWeekDate));
+
+    const [endDateError, setEndDateError] = useState(null);
 
     const handleIsPeriodicChange = () => {
         const newValue = !isPeriodic;
         setIsPeriodic(newValue);
 
-        if (newValue) {
-            try {
-                const newEndDate = validateTimestamp(endDateText);
-                onChange(newEndDate);
-            } catch (error) {
-                onChange(undefined);
-            }
-        } else {
-            onChange(undefined);
+        try {
+            newValue ? habitBuilder.withEndDate(endDateText) : habitBuilder.withEndDate(undefined);
+            setEndDateError(null);
+        } catch (error) {
+            setEndDateError(error.message);
         }
     };
 
     const handleEndDateChange = (value) => {
-        if (!isPeriodic) {
-            return;
-        }
         try {
-            Goal.validateEndDate(value);
-            setEndDateText(value);
-            setError(null);
-            onChange(value);
+            habitBuilder.withEndDate(isPeriodic ? value : undefined);
+            setEndDateError(null);
         } catch (error) {
-            setEndDateText(value);
-            setError(error.message);
-            return;
+            setEndDateError(error.message);
         }
-    };
+
+        setEndDateText(value);
+    }
+
+    useEffect(() => {
+        if (!currentHabitEndDate && isPeriodic) {
+            habitBuilder.withEndDate(endDateText);
+        }
+    }, []);
 
     return (
         <View style={styles.container}>
@@ -68,10 +64,10 @@ export default function EndDateSelection(props) {
                     maxLength={10}
                     disabled={!isPeriodic}
                     short={true}
-                    error={error}
+                    error={endDateError}
                 />
             </View>
-            <ErrorMessage>{error}</ErrorMessage>
+            <ErrorMessage>{endDateError}</ErrorMessage>
         </View>
     );
 }

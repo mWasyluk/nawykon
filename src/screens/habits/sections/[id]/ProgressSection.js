@@ -1,6 +1,6 @@
 import LineChart from '@components/charts/LineChart';
 import ScreenSection from '@components/containers/ScreenSection';
-import StatisticsPresentation from '@components/statistics/StatisticsPresentation';
+import StatisticsPresentation from '@components/sections/activity/StatisticsPresentation';
 import TextOptionPicker from '@components/ui/TextOptionPicker';
 import { useState } from 'react';
 
