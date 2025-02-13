@@ -15,6 +15,7 @@ export default function Layout() {
             }} >
                 <Stack.Screen name="index" options={{ headerShown: false }} />
                 <Stack.Screen name="dashboard/index" options={{ headerShown: false }} />
+                <Stack.Screen name="login/index" options={{ title: 'Logowanie' }} />
                 <Stack.Screen name="habits/add" options={{ title: 'Nowy Nawyk', }} />
                 <Stack.Screen name="habits/[id]/index" options={{ title: 'Informacje O Nawyku' }} />
                 <Stack.Screen name="habits/[id]/edit" options={{ title: 'Edycja Nawyku' }} />

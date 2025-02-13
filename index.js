@@ -5,11 +5,11 @@ import { registerRootComponent } from 'expo';
 import { ModalProvider } from "src/context/ModalContext.js";
 
 const Root = () => (
-    <DataProviders>
-        <ModalProvider>
+    <ModalProvider>
+        <DataProviders>
             <App />
-        </ModalProvider>
-    </DataProviders>
+        </DataProviders>
+    </ModalProvider>
 );
 
 registerRootComponent(Root);

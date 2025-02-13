@@ -1,22 +1,10 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { browserLocalPersistence, initializeAuth } from "firebase/auth";
-import { Platform } from "react-native";
-import { app } from "src/configs/firebaseConfig";
+import { storeService } from "./storeService";
 
-export const auth = initializeAuth(app, {
-    persistence: Platform.OS === 'web'
-        ? browserLocalPersistence
-        : getReactNativePersistence(AsyncStorage),
-});
+export async function getCurrentUid() {
+    const uid = await storeService.getItem('uid', true);
 
-export function isAuth() {
-    return !!auth.currentUser;
-}
-
-export function getCurrentUid() {
-    const uid = auth?.currentUser?.uid;
     if (!uid) {
-        throw new Error('User is not authenticated or uid is not set.');
+        throw new Error('Ta akcja wymaga zalogowania się.');
     }
     return uid;
 }

@@ -7,7 +7,7 @@ export const getAllDocuments = async (collectionName) => {
 }
 
 export const getAllDocumentsByQuery = async (collectionName, queryArgs = []) => {
-    const uid = getCurrentUid();
+    const uid = await getCurrentUid();
     const finalQueryArgs = [...queryArgs, where('uid', '==', uid)];
 
     const collectionRef = collection(db, collectionName);
@@ -17,7 +17,7 @@ export const getAllDocumentsByQuery = async (collectionName, queryArgs = []) => 
 };
 
 export const getDocumentById = async (collectionName, id) => {
-    getCurrentUid();
+    await getCurrentUid();
 
     const docRef = doc(db, collectionName, id);
     const doc = await getDoc(docRef);
@@ -28,7 +28,7 @@ export const getDocumentById = async (collectionName, id) => {
 };
 
 export const setDocument = async (collectionName, data) => {
-    const uid = getCurrentUid();
+    const uid = await getCurrentUid();
 
     const docRefById = data.id ? doc(db, collectionName, data.id) : null;
 
@@ -46,14 +46,14 @@ export const setDocument = async (collectionName, data) => {
 };
 
 export const deleteDocument = async (collectionName, id) => {
-    getCurrentUid();
+    await getCurrentUid();
 
     const docRef = doc(db, collectionName, id);
     await deleteDoc(docRef);
 };
 
 export const deleteAllDocuments = async (collectionName) => {
-    getCurrentUid();
+    await getCurrentUid();
 
     const collectionRef = collection(db, collectionName);
     const snapshot = await getDocs(collectionRef);
@@ -61,7 +61,7 @@ export const deleteAllDocuments = async (collectionName) => {
 };
 
 export const existByQuery = async (collectionName, queryArgs = []) => {
-    const uid = getCurrentUid();
+    const uid = await getCurrentUid();
     const finalQueryArgs = [...queryArgs, where('uid', '==', uid), limit(1)];
 
     const collectionRef = collection(db, collectionName);

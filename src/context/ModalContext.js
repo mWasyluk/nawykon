@@ -10,7 +10,9 @@ export const ModalProvider = ({ children }) => {
 
     const showError = useCallback((message) => {
         setErrorMessage('');
-        setTimeout(() => setErrorMessage(message), 50);
+        if (message) {
+            setErrorMessage(message);
+        }
     }, []);
 
     const hideError = () => {
