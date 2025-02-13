@@ -8,7 +8,7 @@ export default function App() {
     return (
         <RootSiblingParent>
             <ProvidersWrapper>
-                <ExpoRoot context={ctx} />;
+                <ExpoRoot context={ctx} />
             </ProvidersWrapper>
         </RootSiblingParent>
     )
