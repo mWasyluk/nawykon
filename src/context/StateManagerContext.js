@@ -6,9 +6,11 @@ import {
     OpenSans_700Bold
 } from '@expo-google-fonts/open-sans';
 import { Statistics } from "@models/reports/Statistics";
+import { colors, fontStyles } from '@styles';
 import { useFonts } from "expo-font";
+import LottieView from 'lottie-react-native';
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
-import { Text } from "react-native";
+import { Text, View } from "react-native";
 import { useHabits } from "./HabitsContext";
 import { useReports } from "./ReportsContext";
 import { useUser } from "./UserContext";
@@ -68,12 +70,21 @@ export function StateManagerProvider({ children }) {
         setStatistics(stats);
     }, [dailyReports, habits]);
 
-    if (loadingMessage || errorMessage) {
+    if (loadingMessage || errorMessage || statistics === null) {
+        const message = loadingMessage || errorMessage || 'Przygotowuję statystyki...';
         return (
-            <Text> {loadingMessage || errorMessage} </Text>
+            <View style={{ backgroundColor: colors.modalBackground, flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                <View style={{ backgroundColor: colors.modalBackground, justifyContent: 'center', alignItems: 'center', width: 500, height: 300 }}>
+                    <LottieView
+                        autoPlay={true}
+                        loop={true}
+                        style={{ width: '80%', height: '100%' }}
+                        source={require('@assets/logo-loading.json')}
+                    />
+                </View>
+                <Text style={{ ...fontStyles.regular, marginTop: -100 }}>{message}</Text>
+            </View>
         );
-    } else if (statistics === null) {
-        return <Text> {'Przygotowuję statystyki...'} </Text>
     }
 
     console.log('All data has been loaded successfully. Rendering the app...');

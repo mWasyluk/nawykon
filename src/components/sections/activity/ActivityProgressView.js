@@ -2,7 +2,7 @@ import LineChart from "@components/charts/LineChart";
 import { fontStyles, icons } from "@styles";
 import { validateTimestamp } from "@utils/dateUtil";
 import { Image, Text } from "react-native";
-import { View } from "react-native-web";
+import { View } from "react-native";
 
 export const ActivityProgressView = (props) => {
     const {

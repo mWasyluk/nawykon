@@ -4,7 +4,7 @@ import Switch from '@components/ui/Switch';
 import TextInput from '@components/ui/TextInput';
 import TextOption from '@components/ui/TextOption';
 import { useState } from 'react';
-import { View } from 'react-native-web';
+import { View } from 'react-native';
 
 export default function HabitReminderSection(props) {
     const {
@@ -12,7 +12,7 @@ export default function HabitReminderSection(props) {
     } = props;
 
     const [isSet, setIsSet] = useState(habitBuilder.habit?.reminders?.length > 0);
-    const [reminders, setReminders] = useState(isSet ? habitBuilder.habit.reminders : ['08:30']);
+    const [reminders, setReminders] = useState(isSet ? habitBuilder.habit?.reminders : ['08:30']);
 
     const [reminderError, setReminderError] = useState(null);
 
