@@ -87,8 +87,6 @@ export function StateManagerProvider({ children }) {
         );
     }
 
-    console.log('All data has been loaded successfully. Rendering the app...');
-
     return (
         <StateManagerContext.Provider value={{ statistics }}>
             {children}
