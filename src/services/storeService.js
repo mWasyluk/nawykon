@@ -2,7 +2,7 @@ import { Platform } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export const storeService = {
+const StoreService = {
     async setItem(key, data, secured = true) {
         // Serialize data
         const value = JSON.stringify(data);
@@ -56,3 +56,5 @@ export const storeService = {
         }
     }
 };
+
+export default StoreService;

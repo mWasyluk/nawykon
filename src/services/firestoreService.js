@@ -1,13 +1,22 @@
 import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, limit, query, setDoc, where } from 'firebase/firestore';
 import { db } from 'src/configs/firebaseConfig';
-import { getCurrentUid } from './authService';
+import { auth } from './authService';
+import ModalService from './modalService';
+
+function verifyUid() {
+    const uid = auth.currentUser?.uid;
+    if (!uid) {
+        ModalService.showError("Ta akcja wymaga zalogowania się.");
+    }
+    return uid;
+}
 
 export const getAllDocuments = async (collectionName) => {
     return await getAllDocumentsByQuery(collectionName);
 }
 
 export const getAllDocumentsByQuery = async (collectionName, queryArgs = []) => {
-    const uid = await getCurrentUid();
+    const uid = verifyUid();
     const finalQueryArgs = [...queryArgs, where('uid', '==', uid)];
 
     const collectionRef = collection(db, collectionName);
@@ -17,7 +26,7 @@ export const getAllDocumentsByQuery = async (collectionName, queryArgs = []) => 
 };
 
 export const getDocumentById = async (collectionName, id) => {
-    await getCurrentUid();
+    verifyUid();
 
     const docRef = doc(db, collectionName, id);
     const doc = await getDoc(docRef);
@@ -28,7 +37,7 @@ export const getDocumentById = async (collectionName, id) => {
 };
 
 export const setDocument = async (collectionName, data) => {
-    const uid = await getCurrentUid();
+    const uid = verifyUid();
 
     const docRefById = data.id ? doc(db, collectionName, data.id) : null;
 
@@ -46,14 +55,14 @@ export const setDocument = async (collectionName, data) => {
 };
 
 export const deleteDocument = async (collectionName, id) => {
-    await getCurrentUid();
+    await verifyUid();
 
     const docRef = doc(db, collectionName, id);
     await deleteDoc(docRef);
 };
 
 export const deleteAllDocuments = async (collectionName) => {
-    await getCurrentUid();
+    await verifyUid();
 
     const collectionRef = collection(db, collectionName);
     const snapshot = await getDocs(collectionRef);
@@ -61,7 +70,7 @@ export const deleteAllDocuments = async (collectionName) => {
 };
 
 export const existByQuery = async (collectionName, queryArgs = []) => {
-    const uid = await getCurrentUid();
+    const uid = await verifyUid();
     const finalQueryArgs = [...queryArgs, where('uid', '==', uid), limit(1)];
 
     const collectionRef = collection(db, collectionName);
