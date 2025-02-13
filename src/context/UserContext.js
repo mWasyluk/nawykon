@@ -1,11 +1,11 @@
 import { User } from '@models/user/User';
 import { getAllDocuments } from '@services/firestoreService';
+import ModalService from '@services/modalService';
 import { storeService } from '@services/storeService';
 import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { createContext, useContext, useEffect, useState } from 'react';
 import { auth } from 'src/configs/firebaseConfig';
 import LoginScreen from 'src/screens/login';
-import { useModal } from './ModalContext';
 
 const UserContext = createContext();
 
@@ -13,8 +13,6 @@ export const UserProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
-
-    const { showError } = useModal();
 
     const getUserDetails = async () => {
         const userDetails = await getAllDocuments('userDetails').then((docs) => docs[0]);
@@ -67,7 +65,7 @@ export const UserProvider = ({ children }) => {
 
     useEffect(() => {
         if (error) {
-            showError(error.message);
+            ModalService.showError(error.message);
             setError(null);
         }
     }, [error]);

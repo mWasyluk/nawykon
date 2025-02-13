@@ -1,11 +1,11 @@
 import Button from '@components/ui/Button';
 import routes from '@data/router';
 import { HabitBuilder } from '@models/habit/Habit';
+import ModalService from '@services/modalService';
 import { icons } from '@styles';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useMemo, useState } from 'react';
 import { ScrollView } from 'react-native';
-import { useModal } from 'src/context/ModalContext';
 import { useHabits } from 'src/context/HabitsContext';
 import HabitDetailsSection from '../sections/add/HabitDetailsSection';
 import HabitGoalSection from '../sections/add/HabitGoalSection';
@@ -15,7 +15,6 @@ import PickHabitSection from '../sections/add/PickHabitSection';
 export default function EditHabitScreen() {
     const { id } = useLocalSearchParams();
     const { habits, updateHabit } = useHabits();
-    const { showError } = useModal();
     const [builderErrors, setBuilderErrors] = useState([]);
 
     const currentHabit = useMemo(() => {
@@ -33,7 +32,7 @@ export default function EditHabitScreen() {
             updateHabit(habitBuilder.build());
             router.push(routes.habitDetails(id));
         } catch (error) {
-            showError(error.message);
+            ModalService.showError(error.message);
         }
     }
 

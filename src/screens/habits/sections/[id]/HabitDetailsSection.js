@@ -2,10 +2,10 @@ import ScreenSection from '@components/containers/ScreenSection';
 import HabitTypeAvatar from '@components/habit/HabitTypeAvatar';
 import Button from '@components/ui/Button';
 import routes from '@data/router';
+import ModalService from '@services/modalService';
 import { colors, fontStyles, icons } from '@styles';
 import { router } from 'expo-router';
 import { StyleSheet, Text, View } from 'react-native';
-import { useModal } from 'src/context/ModalContext';
 import { useHabits } from 'src/context/HabitsContext';
 
 export default function HabitDetailsSection(props) {
@@ -16,7 +16,6 @@ export default function HabitDetailsSection(props) {
         type = 'fitness',
     } = props;
 
-    const { showConfirm } = useModal();
     const { deleteHabit } = useHabits();
 
     const showConfirmDelete = () => {
@@ -25,7 +24,7 @@ export default function HabitDetailsSection(props) {
             deleteHabit(id);
             router.replace(routes.dashboard);
         };
-        showConfirm(message, onPress);
+        ModalService.showConfirm(message, onPress);
     }
 
     return (

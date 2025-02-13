@@ -2,11 +2,11 @@ import PlanStatusCalendar from "@components/activity/PlanStatusCalendar";
 import StatisticsPresentation from "@components/sections/activity/StatisticsPresentation";
 import Button from "@components/ui/Button";
 import { fullDays, genitiveMonths } from "@data/time";
+import ModalService from "@services/modalService";
 import { fontStyles, icons } from "@styles";
 import { formatDate, getFixedDayOfWeek, validateTimestamp } from "@utils/dateUtil";
 import { useState } from "react";
 import { Text, View } from "react-native";
-import { useModal } from "src/context/ModalContext";
 import { useHabits } from "src/context/HabitsContext";
 import { useReports } from "src/context/ReportsContext";
 
@@ -16,7 +16,6 @@ export const ActivityCalendarView = (props) => {
     } = props;
 
     const { habits } = useHabits();
-    const { showConfirm, showError } = useModal();
     const { setHabitLog } = useReports();
     const [selectedDate, setSelectedDate] = useState(formatDate(new Date(), 'date'));
 
@@ -34,25 +33,25 @@ export const ActivityCalendarView = (props) => {
         const message = `Czy chcesz confąć wykonanie zadania "${habitName}" o godzinie ${time} z dnia ${selectedDate}?`;
         const onConfirm = () => setHabitLog(selectedDate, { id, executions: newExecutions });
 
-        showConfirm(message, onConfirm);
+        ModalService.showConfirm(message, onConfirm);
     }
 
-    const showConfirmAdding = (id) => {
+    const showConfirmAdding = async (id) => {
         if (!id) {
             throw new Error('Cannot show adding confirmation - missing id');
         }
 
         const habit = habits.find(habit => habit.id === id);
         if (selectedDate < habit.startDate) {
-            showError('Nie można dodawać wykonania sprzed zaplanowanego rozpoczęcia zadania.');
+            ModalService.showError('Nie można dodawać wykonania sprzed zaplanowanego rozpoczęcia zadania.');
             return;
         }
         if (selectedDate > habit.endDate) {
-            showError('Nie można dodawać wykonania po zaplanowanym zakończeniu zadania.');
+            ModalService.showError('Nie można dodawać wykonania po zaplanowanym zakończeniu zadania.');
             return;
         }
         if (selectedDate > formatDate(new Date(), 'date')) {
-            showError('Nie można dodawać wykonania w przyszłości.');
+            ModalService.showError('Nie można dodawać wykonania w przyszłości.');
             return;
         }
 
@@ -66,7 +65,7 @@ export const ActivityCalendarView = (props) => {
         const message = `Czy chcesz dodać wykonanie zadania "${habitName}" o godzinie ${time} w dniu ${selectedDate}?`;
         const onConfirm = () => setHabitLog(selectedDate, { id, executions: newExecutions });
 
-        showConfirm(message, onConfirm);
+        ModalService.showConfirm(message, onConfirm);
     }
 
     const selectedDateStats = monthStats.dailyStats[selectedDate];

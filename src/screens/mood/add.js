@@ -1,11 +1,11 @@
 import Button from '@components/ui/Button';
 import routes from '@data/router';
 import { Mood } from '@models/mood/Mood';
+import ModalService from '@services/modalService';
 import { icons } from '@styles';
 import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { ScrollView } from 'react-native';
-import { useModal } from 'src/context/ModalContext';
 import { useReports } from 'src/context/ReportsContext';
 import NoteSection from './sections/NoteSection';
 import PickEnergySection from './sections/PickEnergySection';
@@ -13,7 +13,6 @@ import PickMoodSection from './sections/PickMoodSection';
 
 export default function AddMoodScreen() {
     const { todaysReport, setMood } = useReports();
-    const { showError } = useModal();
 
     const todaysMood = todaysReport?.mood || {};
 
@@ -37,7 +36,7 @@ export default function AddMoodScreen() {
             setMood(todaysReport.date, new Mood(moodDto));
             router.replace(routes.dashboard);
         } catch (error) {
-            showError(error.message);
+            ModalService.showError(error.message);
         }
     }
 
