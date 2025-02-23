@@ -93,6 +93,6 @@ const styles = StyleSheet.create({
     image: {
         position: 'absolute',
         height: 96,
-        marginBottom: 10,
+        bottom: 10,
     },
 });

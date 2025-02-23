@@ -1,6 +1,5 @@
 import { colors } from "@styles";
-import { StyleSheet } from "react-native";
-import { View } from "react-native-web";
+import { StyleSheet, View } from "react-native";
 
 export function ProgressBar({ progress }) {
     return (
