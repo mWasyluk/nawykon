@@ -1,4 +1,4 @@
-import { browserLocalPersistence, initializeAuth } from "firebase/auth";
+import { browserLocalPersistence, initializeAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { getReactNativePersistence } from '@firebase/auth/dist/rn/index.js';
 import { app } from "src/configs/firebaseConfig";
 import { Platform } from "react-native";
@@ -9,13 +9,25 @@ class SecureStorageAdapter {
         return key.split(":")[2] || key;
     }
     async getItem(key) {
-        return await SecureStore.getItemAsync(this.#sanitizeKey(key));
+        try {
+            return await SecureStore.getItemAsync(this.#sanitizeKey(key));
+        } catch {
+            throw new Error("Nie mogłem pobrać danych z pamięci urządzenia.");
+        }
     }
     async setItem(key, value) {
-        await SecureStore.setItemAsync(this.#sanitizeKey(key), value);
+        try {
+            await SecureStore.setItemAsync(this.#sanitizeKey(key), value);
+        } catch {
+            throw new Error("Nie mogłem zapisać danych w pamięci urządzenia.");
+        }
     }
     async removeItem(key) {
-        await SecureStore.deleteItemAsync(this.#sanitizeKey(key));
+        try {
+            await SecureStore.deleteItemAsync(this.#sanitizeKey(key));
+        } catch {
+            throw new Error("Nie mogłem usunąć danych z pamięci urządzenia.");
+        }
     }
 }
 

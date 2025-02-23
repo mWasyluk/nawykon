@@ -2,7 +2,7 @@ import ScreenSection from '@components/containers/ScreenSection';
 import HabitTypeAvatar from '@components/habit/HabitTypeAvatar';
 import Button from '@components/ui/Button';
 import routes from '@data/router';
-import ModalService from '@services/modalService';
+import { ModalService } from '@services/modalService';
 import { colors, fontStyles, icons } from '@styles';
 import { router } from 'expo-router';
 import { StyleSheet, Text, View } from 'react-native';

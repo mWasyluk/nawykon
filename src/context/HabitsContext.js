@@ -1,5 +1,5 @@
-import { deleteDocument } from '@services/firestoreService';
-import { getAllHabits, saveHabit } from '@services/habitsService';
+import { HabitService } from '@services/habitsService';
+import { ModalService } from '@services/modalService';
 import { createContext, useContext, useEffect, useState } from 'react';
 import { useUser } from './UserContext';
 
@@ -8,51 +8,63 @@ const HabitsContext = createContext();
 export const HabitsProvider = ({ children }) => {
     const { user } = useUser();
 
-    const [habits, setHabits] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const [habits, setHabits] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
 
     const addHabit = async (newHabit) => {
-        const savedHabit = await saveHabit(newHabit);
-        setHabits(prev => [...prev, savedHabit]);
+        try {
+            const savedHabit = await HabitService.saveHabit(newHabit);
+            setHabits(prev => [...prev, savedHabit]);
+        } catch (err) {
+            ModalService.showError(err.message);
+        }
     };
 
     const updateHabit = async (updatedHabit) => {
         if (!updatedHabit.id) {
-            throw new Error('Nie można zaktualizować nawyku bez id');
+            ModalService.showError('Napotkałem błąd w czasie aktualizowania nawyku. Odśwież aplikację i spróbuj ponownie.');
         }
-        const savedHabit = await saveHabit(updatedHabit);
-        setHabits(prev => prev.map(habit => habit.id === savedHabit.id ? savedHabit : habit)
-        );
+
+        try {
+            const savedHabit = await HabitService.saveHabit(updatedHabit);
+            setHabits(prev => prev.map(habit => habit.id === savedHabit.id ? savedHabit : habit));
+        } catch (err) {
+            ModalService.showError(err.message);
+        }
     };
 
     const deleteHabit = async (habitId) => {
-        await deleteDocument('habits', habitId);
-        setHabits(prev => prev.filter(habit => habit.id !== habitId));
+        try {
+            await HabitService.deleteHabit('habits', habitId);
+            setHabits(prev => prev.filter(habit => habit.id !== habitId));
+        } catch (err) {
+            ModalService.showError(err.message);
+        }
     };
 
     useEffect(() => {
-        if (!user) {
+        if (!user || !user.uid) {
             return;
         }
 
         const initHabits = async () => {
+            setIsLoading(true);
             try {
-                setHabits(await getAllHabits());
+                setHabits(await HabitService.getAllHabits());
             } catch (err) {
-                setError(err);
+                ModalService.showError(err.message);
             } finally {
                 setIsLoading(false);
             }
         };
 
-        if (isLoading) {
+        if (!habits && !isLoading) {
             initHabits();
         }
     }, [user]);
 
     return (
-        <HabitsContext.Provider value={{ habits, addHabit, updateHabit, deleteHabit, isLoading, error }}>
+        <HabitsContext.Provider value={{ habits, addHabit, updateHabit, deleteHabit, isLoading }}>
             {children}
         </HabitsContext.Provider>
     );

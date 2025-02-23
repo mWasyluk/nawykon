@@ -1,7 +1,7 @@
 import Button from '@components/ui/Button';
 import routes from '@data/router';
 import { Mood } from '@models/mood/Mood';
-import ModalService from '@services/modalService';
+import { ModalService } from '@services/modalService';
 import { icons } from '@styles';
 import { router } from 'expo-router';
 import { useEffect, useState } from 'react';

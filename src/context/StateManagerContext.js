@@ -1,16 +1,9 @@
-import { Montserrat_500Medium } from '@expo-google-fonts/montserrat';
-import {
-    OpenSans_400Regular,
-    OpenSans_400Regular_Italic,
-    OpenSans_600SemiBold,
-    OpenSans_700Bold
-} from '@expo-google-fonts/open-sans';
 import { Statistics } from "@models/reports/Statistics";
-import { colors, fontStyles } from '@styles';
-import { useFonts } from "expo-font";
-import LottieView from 'lottie-react-native';
+import { ModalService } from '@services/modalService';
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
-import { Text, View } from "react-native";
+import AuthScreen from "src/screens/auth/AuthScreen";
+import LoadingScreen from "src/screens/loading/LoadingScreen";
+import { useFonts } from './FontsContext';
 import { useHabits } from "./HabitsContext";
 import { useReports } from "./ReportsContext";
 import { useUser } from "./UserContext";
@@ -18,78 +11,75 @@ import { useUser } from "./UserContext";
 const StateManagerContext = createContext({ isReady: false });
 
 export function StateManagerProvider({ children }) {
-    const [fontLoaded, fontError] = useFonts({
-        OpenSans_400Regular,
-        OpenSans_400Regular_Italic,
-        OpenSans_600SemiBold,
-        OpenSans_700Bold,
-        Montserrat_500Medium,
-    });
+    const { isLoading: isFontsLoading } = useFonts();
+    const { isLoading: isUserLoading, user } = useUser();
+    const { isLoading: isHabitsLoading, habits } = useHabits();
+    const { isLoading: isReportsLoading, dailyReports } = useReports();
 
-    const { isLoading: isUserLoading, error: userError } = useUser();
-    const { isLoading: isHabitsLoading, error: habitsError, habits } = useHabits();
-    const { isLoading: isReportsLoading, error: reportsError, dailyReports } = useReports();
     const [statistics, setStatistics] = useState(null);
+    const [content, setContent] = useState(<AuthScreen />);
 
     const loadingMessage = useMemo(() => {
-        if (isUserLoading || isHabitsLoading || isReportsLoading || !fontLoaded) {
+        if (isUserLoading || isHabitsLoading || isReportsLoading || isFontsLoading) {
             return 'Pobieram dane' +
                 (isUserLoading ? ' o użytkowniku'
-                    : isHabitsLoading ? ' o nawykach'
-                        : isReportsLoading ? ' o raportach'
-                            : !fontLoaded ? ' o czcionkach'
+                    : isFontsLoading ? ' o czcionkach'
+                        : isHabitsLoading ? ' o nawykach'
+                            : isReportsLoading ? ' o raportach'
                                 : '') + '...';
+        } else if (!statistics) {
+            return 'Tworzę statystyki...';
         }
         return '';
-    }, [isUserLoading, isHabitsLoading, isReportsLoading, fontLoaded]);
-
-    const errorMessage = useMemo(() => {
-        if (userError || habitsError || reportsError || fontError) {
-            console.error(userError || habitsError || reportsError || fontError);
-            return 'Napotkałem problem' +
-                (userError ? ' z pobieraniem danych o użytkowniku'
-                    : habitsError ? ' z pobieraniem danych o nawykach'
-                        : reportsError ? ' z pobieraniem danych o raportach'
-                            : fontError ? ' z pobieraniem czcionek'
-                                : '') + '. Sprawdź połączenie z Internetem i spróbuj ponownie.';
-        }
-        return '';
-    }, [userError, habitsError, reportsError, fontError]);
+    }, [isUserLoading, isHabitsLoading, isReportsLoading, isFontsLoading, statistics]);
 
     useEffect(() => {
         if (!dailyReports || !habits) {
             return;
         }
-        var stats = statistics;
-        if (stats === null) {
-            stats = new Statistics(dailyReports, habits);
-        } else {
-            stats = statistics.clone();
-            stats.update(dailyReports, habits);
+
+        try {
+            var stats = statistics;
+            if (stats === null) {
+                stats = new Statistics(dailyReports, habits);
+            } else {
+                stats = statistics.clone();
+                stats.update(dailyReports, habits);
+            }
+            setStatistics(stats);
+        } catch (err) {
+            ModalService.showError('Nie mogłem wygenerować statystyk. Odśwież aplikację, żebym mógł spróbować jeszcze raz.');
         }
-        setStatistics(stats);
     }, [dailyReports, habits]);
 
-    if (loadingMessage || errorMessage || statistics === null) {
-        const message = loadingMessage || errorMessage || 'Przygotowuję statystyki...';
-        return (
-            <View style={{ backgroundColor: colors.modalBackground, flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <View style={{ backgroundColor: colors.modalBackground, justifyContent: 'center', alignItems: 'center', width: 500, height: 300 }}>
-                    <LottieView
-                        autoPlay={true}
-                        loop={true}
-                        style={{ width: '80%', height: '100%' }}
-                        source={require('@assets/logo-loading.json')}
-                    />
-                </View>
-                <Text style={{ ...fontStyles.regular, marginTop: -100 }}>{message}</Text>
-            </View>
-        );
-    }
+    const currentState = useMemo(() => {
+        if (!user && !isUserLoading) {
+            return "AUTH";
+        }
+        if (statistics && !loadingMessage) {
+            return "READY";
+        }
+        return "LOADING";
+    }, [statistics, loadingMessage, user]);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            if (currentState === "AUTH") {
+                setContent(<AuthScreen />);
+            } else if (currentState === "READY") {
+                setContent(children);
+            } else {
+                setContent(null);
+            }
+        }, 500);
+
+        return () => clearTimeout(timer);
+    }, [currentState]);
 
     return (
         <StateManagerContext.Provider value={{ statistics }}>
-            {children}
+            <LoadingScreen show={currentState === "LOADING"} message={loadingMessage}></LoadingScreen>
+            {content}
         </StateManagerContext.Provider>
     );
 }

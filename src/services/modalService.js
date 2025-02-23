@@ -2,18 +2,14 @@ import RootSiblings from 'react-native-root-siblings';
 import ErrorModal from '@components/modals/ErrorModal';
 import ConfirmationModal from '@components/modals/ConfirmationModal';
 
-let currentSibling = null;
+var currentSibling = null;
 
-const ModalService = {
-
+export const ModalService = {
     showError(message) {
         currentSibling = new RootSiblings(
             <ErrorModal
                 message={message}
-                onClose={() => {
-                    currentSibling?.destroy();
-                    currentSibling = null;
-                }}
+                noHide={() => { currentSibling = null }}
             />
         );
     },
@@ -36,11 +32,4 @@ const ModalService = {
             />
         );
     },
-
-    hide() {
-        currentSibling?.destroy();
-        currentSibling = null;
-    }
 };
-
-export default ModalService;

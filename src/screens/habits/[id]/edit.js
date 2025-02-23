@@ -1,7 +1,7 @@
 import Button from '@components/ui/Button';
 import routes from '@data/router';
 import { HabitBuilder } from '@models/habit/Habit';
-import ModalService from '@services/modalService';
+import { ModalService } from '@services/modalService';
 import { icons } from '@styles';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useMemo, useState } from 'react';

@@ -18,6 +18,7 @@ export default function TextInput(props) {
         disabled = false,
         short = false,
         error = null,
+        otherProps,
     } = props;
 
     const [isFocused, setIsFocused] = useState(false);
@@ -100,6 +101,7 @@ export default function TextInput(props) {
                 onBlur={() => setIsFocused(false)}
                 onContentSizeChange={handleHeightChange}
                 maxLength={maxLength}
+                {...otherProps}
             />
         </View>
     );

@@ -2,7 +2,7 @@ import PlanStatusCalendar from "@components/activity/PlanStatusCalendar";
 import StatisticsPresentation from "@components/sections/activity/StatisticsPresentation";
 import Button from "@components/ui/Button";
 import { fullDays, genitiveMonths } from "@data/time";
-import ModalService from "@services/modalService";
+import { ModalService } from "@services/modalService";
 import { fontStyles, icons } from "@styles";
 import { formatDate, getFixedDayOfWeek, validateTimestamp } from "@utils/dateUtil";
 import { useState } from "react";

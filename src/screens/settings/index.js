@@ -8,6 +8,10 @@ import { useUser } from 'src/context/UserContext';
 export default function SettingsScreen() {
     const { logout } = useUser();
 
+    const handleLogout = async () => {
+        await logout();
+    };
+
     return (
         <ScrollView>
             <ScreenSection title="Aplikacja">
@@ -20,7 +24,7 @@ export default function SettingsScreen() {
                 <TextOption disabled={true}>Pomoc</TextOption>
             </ScreenSection>
             <ScreenSection containerStyle={{ alignItems: 'flex-start' }}>
-                <Button icon={icons.logout} title="Wyloguj się" onPress={logout} />
+                <Button icon={icons.logout} title="Wyloguj się" onPress={handleLogout} />
             </ScreenSection>
         </ScrollView>
     );

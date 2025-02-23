@@ -1,7 +1,5 @@
 const routes = {
     home: '/',
-    login: '/login',
-    register: '/register',
     dashboard: '/dashboard',
     newHabit: '/habits/add',
     habitDetails: (id) => `/habits/${id}`,

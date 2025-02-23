@@ -1,35 +1,28 @@
 import { User } from '@models/user/User';
 import { auth } from '@services/authService';
-import { getAllDocuments } from '@services/firestoreService';
-import ModalService from '@services/modalService';
-import { onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { ModalService } from '@services/modalService';
+import { UserService } from '@services/userService';
 import { createContext, useContext, useEffect, useState } from 'react';
-import LoginScreen from 'src/screens/login';
 
 const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-    const [user, setUser] = useState(null);
+    const [user, setUser] = useState(auth.currentUser?.uid ? { uid: auth.currentUser.uid } : null);
     const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(null);
-
-    const getUserDetails = async () => {
-        const userDetails = await getAllDocuments('userDetails').then((docs) => docs[0]);
-        return userDetails;
-    }
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+        const unsubscribe = auth.onAuthStateChanged(async (currentUser) => {
             try {
                 if (currentUser) {
-                    const userDetails = await getUserDetails();
+                    setIsLoading(true);
+                    const userDetails = await UserService.getUserDetails(); // uid, username, prefs
                     setUser(new User(userDetails));
                 } else {
                     setUser(null);
                 }
             } catch (err) {
-                setError(new Error('Nie mogłem pobrać Twoich danych. Zaloguj się jeszcze raz.'));
                 setUser(null);
+                ModalService.showError('Nie mogłem pobrać Twoich danych. Zaloguj się jeszcze raz.');
             } finally {
                 setIsLoading(false);
             }
@@ -39,39 +32,29 @@ export const UserProvider = ({ children }) => {
     }, []);
 
     const login = async (email, password) => {
+        setIsLoading(true);
         try {
-            await signInWithEmailAndPassword(auth, email, password);
-
-            const userDetails = await getUserDetails();
-            setUser(new User(userDetails));
+            await UserService.login(email, password);
         } catch (err) {
-            setError(new Error('Nie mogłem Cię zalogować. Sprawdź wprowadzone dane i spróbuj jeszcze raz.'));
+            ModalService.showError(err.message)
+        } finally {
+            setIsLoading(false);
         }
     };
 
     const logout = async () => {
+        setIsLoading(true);
         try {
-            await signOut(auth);
+            await UserService.logout();
         } catch (err) {
-            setError(new Error('Nie mogłem Cię wylogować. Spróbuj jeszcze raz.'));
+            ModalService.showError(err.message + " Odśwież aplikację i spróbuj ponownie.")
+        } finally {
+            setIsLoading(false);
         }
     };
 
-    useEffect(() => {
-        if (error) {
-            ModalService.showError(error.message);
-            setError(null);
-        }
-    }, [error]);
-
-    if (!isLoading && !user) {
-        return (
-            <LoginScreen login={login} />
-        );
-    }
-
     return (
-        <UserContext.Provider value={{ user, isLoading, error, logout }}>
+        <UserContext.Provider value={{ user, isLoading, login, logout }}>
             {children}
         </UserContext.Provider>
     );

@@ -51,8 +51,9 @@ export default function Button(props) {
     };
 
     const handlePress = () => {
+        if (disabled) return;
         onPress();
-        if (href && !disabled) {
+        if (href) {
             router.push(href);
         };
     };

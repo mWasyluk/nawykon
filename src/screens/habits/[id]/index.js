@@ -1,5 +1,5 @@
 import { ActivitySection } from '@components/sections/activity/ActivitySection';
-import ModalService from '@services/modalService';
+import { ModalService } from '@services/modalService';
 import { useLocalSearchParams } from 'expo-router';
 import { ScrollView } from 'react-native';
 import { useHabits } from 'src/context/HabitsContext';

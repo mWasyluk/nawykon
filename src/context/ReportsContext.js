@@ -1,5 +1,6 @@
 import { DailyReport } from '@models/reports/DailyReport';
-import * as DailyReportService from '@services/reportService';
+import { DailyReportService } from '@services/dailyReportService';
+import { ModalService } from '@services/modalService';
 import { formatDate } from '@utils/dateUtil';
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { useUser } from './UserContext';
@@ -9,9 +10,8 @@ const DailyReportsContext = createContext();
 export const DailyReportsProvider = ({ children }) => {
     const { user } = useUser();
 
-    const [dailyReports, setDailyReports] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const [dailyReports, setDailyReports] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
 
     const todaysReport = useMemo(() => {
         if (!dailyReports || dailyReports.length === 0) {
@@ -20,45 +20,65 @@ export const DailyReportsProvider = ({ children }) => {
         return dailyReports.find(report => formatDate(report.date, 'date') === formatDate(new Date(), 'date'));
     }, [dailyReports]);
 
-    const saveDailyReport = async (report) => {
-        await DailyReportService.saveDailyReport(report);
-    };
-
     const setMood = async (date, mood) => {
-        const newReports = dailyReports.map(report => {
-            if (report.date === date) {
-                report.setMood(mood);
-                saveDailyReport(report);
-            }
-            return report;
-        });
+        try {
+            var isFound = false;
+            const newReports = await Promise.all(dailyReports.map(async (report) => {
+                if (report.date === date) {
+                    isFound = true;
+                    report.setMood(mood);
+                    const saved = await DailyReportService.saveDailyReport(report);
+                    return saved;
+                }
+                return report;
+            }));
 
-        setDailyReports([...newReports]);
+            if (!isFound) {
+                const lackReport = new DailyReport({ date });
+                lackReport.setMood(mood);
+                const saved = await DailyReportService.saveDailyReport(lackReport);
+                newReports.push(saved);
+            }
+
+            setDailyReports([...newReports]);
+        } catch (error) {
+            ModalService.showError(error.message);
+        }
     };
 
     const setHabitLog = async (date, { id, executions }) => {
-        var updatedDailyReport = null;
-        const updatedDailyReports = dailyReports.map(report => {
-            if (report.date === date) {
-                report.setHabitLog(id, executions);
-                updatedDailyReport = report;
+        try {
+            var isFound = false;
+            const newReports = await Promise.all(dailyReports.map(async (report) => {
+                if (report.date === date) {
+                    isFound = true;
+                    report.setHabitLog(id, executions);
+                    const saved = await DailyReportService.saveDailyReport(report);
+                    return saved;
+                }
+                return report;
+            }));
+
+            if (!isFound) {
+                const lackReport = new DailyReport({ date });
+                lackReport.setHabitLog(id, executions);
+                const saved = await DailyReportService.saveDailyReport(lackReport);
+                newReports.push(saved);
             }
-            return report;
-        });
 
-        if (updatedDailyReport) {
-            await saveDailyReport(updatedDailyReport);
-        };
-
-        setDailyReports([...updatedDailyReports]);
+            setDailyReports([...newReports]);
+        } catch (error) {
+            ModalService.showError(error.message);
+        }
     };
 
     useEffect(() => {
-        if (!user) {
+        if (!user || !user.uid) {
             return;
         }
 
         const initDailyReports = async () => {
+            setIsLoading(true);
             try {
                 // fetch all from database
                 const reports = await DailyReportService.getAllDailyReports();
@@ -67,20 +87,20 @@ export const DailyReportsProvider = ({ children }) => {
                 var todaysReport = reports.find(report => report.date === formatDate(new Date(), 'date'));
                 if (!todaysReport) {
                     todaysReport = new DailyReport({ date: new Date() });
-                    reports.push(todaysReport);
-                    await saveDailyReport(todaysReport);
+                    const saved = await DailyReportService.saveDailyReport(todaysReport);
+                    reports.push(saved);
                 }
 
                 setDailyReports(reports);
             } catch (error) {
-                setError(error);
+                ModalService.showError(error.message);
             } finally {
                 setIsLoading(false);
             }
         };
 
 
-        if (isLoading) {
+        if (!dailyReports && !isLoading) {
             initDailyReports();
         }
     }, [user]);
@@ -93,7 +113,6 @@ export const DailyReportsProvider = ({ children }) => {
                 setHabitLog,
                 setMood,
                 isLoading,
-                error
             }}
         >
             {children}
