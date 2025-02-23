@@ -19,7 +19,9 @@ const styles = StyleSheet.create({
     },
     bg: {
         backgroundColor: colors.lightGray,
-        border: `2px solid ${colors.lightGray}`,
+        borderWidth: 1,
+        borderStyle: 'solid',
+        borderColor: colors.lightGray,
         borderRadius: 10,
         justifyContent: 'center',
     },

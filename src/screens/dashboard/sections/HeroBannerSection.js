@@ -2,18 +2,9 @@ import personListSrc from '@assets/person/person-list.png';
 import personOkSrc from '@assets/person/person-ok.png';
 import ScreenSection from '@components/containers/ScreenSection';
 import { ProgressBar } from '@components/progress/ProgessBar';
-import { ModalService } from '@services/modalService';
 import { colors, fontStyles } from '@styles';
-import { useEffect, useState } from 'react';
 import { Image, StyleSheet, Text } from 'react-native';
-import { useReports } from 'src/context/ReportsContext';
 import { useStateManager } from 'src/context/StateManagerContext';
-
-const personListSize = { height: 96 };
-// const { width, height } = Image.resolveAssetSource(personListSrc);
-
-// console.log('personListSize', width, height);
-
 
 function getTaskForm(number) {
     if (number === 1) {
@@ -42,7 +33,7 @@ const heroVariants = {
         return {
             imgSrc: personListSrc,
             imgWidth: 38.25,
-            title: `Widzę, że zostało Ci ${done} z ${goal} zadań`,
+            title: `Widzę, że zostało Ci ${goal - done} z ${goal} zadań`,
             description: `Świetnie Ci idzie. Tak trzymaj!`
         }
     },
