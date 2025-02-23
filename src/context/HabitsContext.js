@@ -35,7 +35,7 @@ export const HabitsProvider = ({ children }) => {
 
     const deleteHabit = async (habitId) => {
         try {
-            await HabitService.deleteHabit('habits', habitId);
+            await HabitService.deleteHabit(habitId);
             setHabits(prev => prev.filter(habit => habit.id !== habitId));
         } catch (err) {
             ModalService.showError(err.message);
