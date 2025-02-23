@@ -1,40 +1,46 @@
 import { StyleSheet } from 'react-native';
 
+// Genos_400Regular,
+//     Genos_500Medium,
+//     Genos_600SemiBold,
+//     Genos_600SemiBold_Italic,
+//     Genos_700Bold
+
 const fontStyles = StyleSheet.create({
     sectionHeader: {
-        fontFamily: 'OpenSans_700Bold',
-        fontSize: 22,
-        textTransform: 'uppercase',
-    },
-    sectionMore: {
-        fontFamily: 'OpenSans_600SemiBold',
-        fontSize: 16,
+        fontFamily: 'Genos_700Bold',
+        fontSize: 20,
         textTransform: 'uppercase',
     },
     regularTitle: {
-        fontFamily: 'OpenSans_700Bold',
+        fontFamily: 'Genos_700Bold',
         fontSize: 18,
         textTransform: 'uppercase',
     },
     regular: {
-        fontFamily: 'OpenSans_400Regular',
+        fontFamily: 'Genos_400Regular',
         fontSize: 16,
     },
     regularBold: {
-        fontFamily: 'OpenSans_700Bold',
+        fontFamily: 'Genos_700Bold',
         fontSize: 16,
     },
     regularNote: {
-        fontFamily: 'OpenSans_400Regular',
+        fontFamily: 'Genos_400Regular',
         fontSize: 14,
     },
     button: {
-        fontFamily: 'Montserrat_500Medium',
+        fontFamily: 'Genos_600SemiBold',
         fontSize: 16,
         textTransform: 'uppercase',
     },
+    bigButton: {
+        fontFamily: 'Genos_600SemiBold',
+        fontSize: 20,
+        textTransform: 'uppercase',
+    },
     textFieldLabel: {
-        fontFamily: 'OpenSans_400Regular_Italic',
+        fontFamily: 'Genos_600SemiBold_Italic',
         fontSize: 14,
         textTransform: 'uppercase',
     },

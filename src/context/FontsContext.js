@@ -1,10 +1,10 @@
-import { Montserrat_500Medium } from '@expo-google-fonts/montserrat';
 import {
-    OpenSans_400Regular,
-    OpenSans_400Regular_Italic,
-    OpenSans_600SemiBold,
-    OpenSans_700Bold
-} from '@expo-google-fonts/open-sans';
+    Genos_400Regular,
+    Genos_500Medium,
+    Genos_600SemiBold,
+    Genos_600SemiBold_Italic,
+    Genos_700Bold
+} from '@expo-google-fonts/genos';
 import { ModalService } from '@services/modalService';
 import { useFonts } from "expo-font";
 import { createContext, useContext, useEffect } from "react";
@@ -13,11 +13,11 @@ const FontsContext = createContext({ isLoading: true });
 
 export function FontsProvider({ children }) {
     const [loaded, error] = useFonts({
-        OpenSans_400Regular,
-        OpenSans_400Regular_Italic,
-        OpenSans_600SemiBold,
-        OpenSans_700Bold,
-        Montserrat_500Medium,
+        Genos_400Regular,
+        Genos_500Medium,
+        Genos_600SemiBold,
+        Genos_600SemiBold_Italic,
+        Genos_700Bold
     });
 
 

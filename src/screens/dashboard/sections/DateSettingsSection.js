@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
         color: colors.darkGray,
     },
     moreText: {
-        ...fontStyles.sectionMore,
+        ...fontStyles.button,
         color: colors.midGray,
     },
     image: {

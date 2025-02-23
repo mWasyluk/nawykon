@@ -9,8 +9,7 @@
     "web": "expo start --web"
   },
   "dependencies": {
-    "@expo-google-fonts/montserrat": "^0.2.3",
-    "@expo-google-fonts/open-sans": "^0.2.3",
+    "@expo-google-fonts/genos": "^0.2.3",
     "@lottiefiles/dotlottie-react": "^0.6.5",
     "@react-native-async-storage/async-storage": "^1.24.0",
     "bcryptjs": "^2.4.3",
