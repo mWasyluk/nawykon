@@ -122,7 +122,7 @@ export class Statistics {
         }
 
         stats.goal = Object.values(stats.dailyStats).reduce((acc, stat) => acc + (stat?.goal || 0), 0);
-        stats.completed = Object.values(stats.dailyStats).reduce((acc, stat) => acc + (stat?.goal || 0), 0);
+        stats.completed = Object.values(stats.dailyStats).reduce((acc, stat) => acc + (stat?.completed || 0), 0);
         stats.status = this.#combineStatuses(Object.values(stats.dailyStats).map(stat => stat?.status || Statistics.STATUSES.neutral));
         stats.habitIds = habitId ? [habitId] : Object.keys(this.habits);
 
