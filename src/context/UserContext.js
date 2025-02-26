@@ -2,6 +2,7 @@ import { User } from '@models/user/User';
 import { auth } from '@services/authService';
 import { ModalService } from '@services/modalService';
 import { UserService } from '@services/userService';
+import { router } from 'expo-router';
 import { createContext, useContext, useEffect, useState } from 'react';
 
 const UserContext = createContext();
@@ -46,6 +47,7 @@ export const UserProvider = ({ children }) => {
         setIsLoading(true);
         try {
             await UserService.logout();
+            router.push('/');
         } catch (err) {
             ModalService.showError(err.message + " Odśwież aplikację i spróbuj ponownie.")
         } finally {
