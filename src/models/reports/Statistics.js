@@ -32,11 +32,11 @@ export class Statistics {
     };
 
     update(dailyReports, habits = null) {
-        const isEveryHabitValid = habits && habits.every(habit => habit instanceof Habit);
+        const isEveryHabitValid = habits && habits.every(habit => 'id' in habit);
         if (!isEveryHabitValid) {
             throw new Error("Statistics require an array of Habit instances.");
         }
-        const isEveryReportValid = dailyReports.every(report => report instanceof DailyReport);
+        const isEveryReportValid = dailyReports.every(report => 'date' in report && 'executions' in report);
         if (!isEveryReportValid) {
             throw new Error("Statistics require an array of DailyReport instances.");
         }
