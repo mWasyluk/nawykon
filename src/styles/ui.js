@@ -38,6 +38,9 @@ const uiStyles = {
         ...fontStyles.regular,
         color: colors.midGray,
     },
+    lightShadow: {
+        boxShadow: `2px 2px 4px ${colors.darkBlue}26`, // ~15% opacity
+    }
 }
 
 export default uiStyles;
