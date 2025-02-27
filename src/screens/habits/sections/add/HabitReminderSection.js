@@ -1,8 +1,7 @@
-import ScreenSection from '@components/containers/ScreenSection';
-import ErrorMessage from '@components/ui/ErrorMessage';
-import Switch from '@components/ui/Switch';
-import TextInput from '@components/ui/TextInput';
-import TextOption from '@components/ui/TextOption';
+import ScreenSection from '@components/layout/ScreenSection';
+import { AdaptiveRegularText, OptionalErrorText } from '@components/text';
+import Switch from '@components/input/Switch';
+import TextInput from '@components/input/TextInput';
 import { useState } from 'react';
 import { View } from 'react-native';
 
@@ -46,14 +45,14 @@ export default function HabitReminderSection(props) {
             <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', gap: 10 }}>
                 <Switch defaultState={isSet}
                     onChange={handleSwitchChange} />
-                <TextOption disabled={!isSet}>O godzinie</TextOption>
+                <AdaptiveRegularText disabled={!isSet}>O godzinie</AdaptiveRegularText>
                 <TextInput value={reminders[0]}
                     onChange={handleReminderChange}
                     maxLength={5}
                     disabled={!isSet}
                     error={reminderError} />
             </View>
-            <ErrorMessage>{reminderError}</ErrorMessage>
+            <OptionalErrorText>{reminderError}</OptionalErrorText>
         </ScreenSection>
     );
 }

@@ -1,5 +1,5 @@
-import ScreenSection from "@components/containers/ScreenSection";
-import IconToggleGroup from "@components/icon-toggle/IconToggleGroup";
+import ScreenSection from "@components/layout/ScreenSection";
+import IconToggleGroup from "@components/input/IconToggleGroup";
 import { icons } from "@styles";
 
 export default function PickMoodSection(props) {

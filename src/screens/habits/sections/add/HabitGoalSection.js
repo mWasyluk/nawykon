@@ -1,9 +1,8 @@
-import ScreenSection from '@components/containers/ScreenSection';
-import EndDateSelection from '@components/habit/PeriodSelection';
-import SelectableWeekDay from '@components/SelectableWeekDays';
-import ErrorMessage from '@components/ui/ErrorMessage';
-import TextInput from '@components/ui/TextInput';
-import TextOption from '@components/ui/TextOption';
+import SelectableWeekDay from '@components/date/SelectableWeekDays';
+import HabitEndDateSelection from '@components/habit/HabitEndDateSelection';
+import TextInput from '@components/input/TextInput';
+import ScreenSection from '@components/layout/ScreenSection';
+import { OptionalErrorText, RegularText } from '@components/text';
 import { HabitGoal } from '@models/habit/HabitGoal';
 import { useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
@@ -62,15 +61,15 @@ export default function HabitGoalSection(props) {
                 returnKeyType={'next'}
                 maxLength={2}
                 error={repetitionsError} />
-            <TextOption>razy dziennie</TextOption>
-            <ErrorMessage style={{ width: '100%' }}>{repetitionsError}</ErrorMessage>
+            <RegularText>razy dziennie</RegularText>
+            <OptionalErrorText style={{ width: '100%' }}>{repetitionsError}</OptionalErrorText>
 
             <SelectableWeekDay
                 defaultDays={days}
                 onChange={handleDaysChange} />
-            <ErrorMessage>{daysError}</ErrorMessage>
+            <OptionalErrorText>{daysError}</OptionalErrorText>
 
-            <EndDateSelection
+            <HabitEndDateSelection
                 habitBuilder={habitBuilder}
             />
         </ScreenSection>

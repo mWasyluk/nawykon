@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { colors, fontStyles } from '@styles';
-import { shortDays } from '@data/time';
+import { shortDays } from '@constants/time';
 
 export default function SelectableWeekDay(props) {
     const {

@@ -1,5 +1,5 @@
-import ScreenSection from '@components/containers/ScreenSection';
-import TextOption from '@components/ui/TextOption';
+import ScreenSection from '@components/layout/ScreenSection';
+import { RegularText } from '@components/text';
 import { colors, fontStyles, icons } from '@styles';
 import { Image, StyleSheet, Text } from 'react-native';
 
@@ -10,7 +10,7 @@ export default function PointsSection(props) {
 
     return (
         <ScreenSection title="Punkty" containerStyle={styles.container} >
-            <TextOption>Aktualnie posiadasz</TextOption>
+            <RegularText>Aktualnie posiadasz</RegularText>
             <Text style={styles.pointsText}>{points}</Text>
             <Image source={icons.point} style={styles.pointsIcon} />
         </ScreenSection>

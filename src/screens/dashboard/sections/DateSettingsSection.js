@@ -2,8 +2,8 @@ import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { router } from 'expo-router';
 import { colors, fontStyles, icons } from '@styles';
-import routes from '@data/router';
-import ScreenSection from '@components/containers/ScreenSection';
+import routes from '@constants/router';
+import ScreenSection from '@components/layout/ScreenSection';
 
 const todaysDate = new Date();
 const dayOfWeek = todaysDate.toLocaleString('default', { weekday: 'long' });

@@ -1,14 +1,14 @@
 import PlanStatusCalendar from "@components/activity/PlanStatusCalendar";
-import StatisticsPresentation from "@components/sections/activity/StatisticsPresentation";
-import Button from "@components/ui/Button";
-import { fullDays, genitiveMonths } from "@data/time";
+import Button from "@components/input/Button";
+import { fullDays, genitiveMonths } from "@constants/time";
+import { useHabits } from "@contexts/HabitsContext";
+import { useReports } from "@contexts/ReportsContext";
 import { ModalService } from "@services/modalService";
 import { fontStyles, icons } from "@styles";
 import { formatDate, getFixedDayOfWeek, validateTimestamp } from "@utils/dateUtil";
 import { useState } from "react";
 import { Text, View } from "react-native";
-import { useHabits } from "src/context/HabitsContext";
-import { useReports } from "src/context/ReportsContext";
+import StatisticsPresentation from "./StatisticsPresentation";
 
 export const ActivityCalendarView = (props) => {
     const {

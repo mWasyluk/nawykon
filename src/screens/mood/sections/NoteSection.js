@@ -1,5 +1,5 @@
-import ScreenSection from "@components/containers/ScreenSection";
-import TextInput from "@components/ui/TextInput";
+import ScreenSection from "@components/layout/ScreenSection";
+import TextInput from "@components/input/TextInput";
 import { useState } from "react";
 
 export default function NoteSection(props) {

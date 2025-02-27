@@ -1,12 +1,12 @@
-import Button from '@components/ui/Button';
-import routes from '@data/router';
+import Button from '@components/input/Button';
+import routes from '@constants/router';
 import { Mood } from '@models/mood/Mood';
 import { ModalService } from '@services/modalService';
 import { icons } from '@styles';
 import { router } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { ScrollView } from 'react-native';
-import { useReports } from 'src/context/ReportsContext';
+import { useReports } from '@contexts/ReportsContext';
 import NoteSection from './sections/NoteSection';
 import PickEnergySection from './sections/PickEnergySection';
 import PickMoodSection from './sections/PickMoodSection';

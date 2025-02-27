@@ -1,8 +1,8 @@
-import { browserLocalPersistence, initializeAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { getReactNativePersistence } from '@firebase/auth/dist/rn/index.js';
-import { app } from "src/configs/firebaseConfig";
-import { Platform } from "react-native";
 import * as SecureStore from 'expo-secure-store';
+import { browserLocalPersistence, initializeAuth } from "firebase/auth";
+import { Platform } from "react-native";
+import { app } from "src/configs/firebaseConfig";
 
 class SecureStorageAdapter {
     #sanitizeKey(key) {

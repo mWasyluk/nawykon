@@ -1,4 +1,4 @@
-import { ActivitySection } from '@components/sections/activity/ActivitySection';
+import ActivitySection from '@screens/commons/sections/ActivitySection';
 import { ScrollView } from 'react-native';
 import PointsSection from './sections/PointsSection';
 

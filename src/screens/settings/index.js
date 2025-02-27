@@ -1,9 +1,9 @@
-import ScreenSection from '@components/containers/ScreenSection';
-import Button from '@components/ui/Button';
-import TextOption from '@components/ui/TextOption';
+import ScreenSection from '@components/layout/ScreenSection';
+import Button from '@components/input/Button';
+import { AdaptiveRegularText } from '@components/text';
 import { icons } from '@styles';
 import { ScrollView } from 'react-native';
-import { useUser } from 'src/context/UserContext';
+import { useUser } from '@contexts/UserContext';
 
 export default function SettingsScreen() {
     const { logout } = useUser();
@@ -15,13 +15,13 @@ export default function SettingsScreen() {
     return (
         <ScrollView>
             <ScreenSection title="Aplikacja">
-                <TextOption disabled={true}>Powiadomienia</TextOption>
-                <TextOption disabled={true}>Wyświetlanie</TextOption>
+                <AdaptiveRegularText disabled={true}>Powiadomienia</AdaptiveRegularText>
+                <AdaptiveRegularText disabled={true}>Wyświetlanie</AdaptiveRegularText>
             </ScreenSection>
             <ScreenSection title="Informacje">
-                <TextOption disabled={true}>Regulamin użytkownika</TextOption>
-                <TextOption disabled={true}>Polityka prywatności</TextOption>
-                <TextOption disabled={true}>Pomoc</TextOption>
+                <AdaptiveRegularText disabled={true}>Regulamin użytkownika</AdaptiveRegularText>
+                <AdaptiveRegularText disabled={true}>Polityka prywatności</AdaptiveRegularText>
+                <AdaptiveRegularText disabled={true}>Pomoc</AdaptiveRegularText>
             </ScreenSection>
             <ScreenSection containerStyle={{ alignItems: 'flex-start' }}>
                 <Button icon={icons.logout} title="Wyloguj się" onPress={handleLogout} />

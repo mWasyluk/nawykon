@@ -1,8 +1,8 @@
 import LineChart from '@components/charts/LineChart';
-import ScreenSection from '@components/containers/ScreenSection';
-import StatisticsPresentation from '@components/sections/activity/StatisticsPresentation';
-import TextOptionPicker from '@components/ui/TextOptionPicker';
+import ScreenSection from '@components/layout/ScreenSection';
+import TextOptionPicker from '@components/input/TextOptionPicker';
 import { useState } from 'react';
+import StatisticsPresentation from '@components/activity/StatisticsPresentation';
 
 export default function ProgressSection(props) {
     const {

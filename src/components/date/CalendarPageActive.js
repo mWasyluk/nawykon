@@ -1,9 +1,9 @@
-import routes from '@data/router';
+import routes from '@constants/router';
 import { colors, fontStyles, icons } from '@styles';
 import { router } from 'expo-router';
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
-import { useReports } from 'src/context/ReportsContext';
+import { useReports } from '@contexts/ReportsContext';
 
 export default function CalendarPageActive(props) {
     const {

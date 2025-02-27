@@ -1,9 +1,9 @@
 import { colors } from '@styles';
 import { useRef, useState } from 'react';
 import { Animated, Dimensions, Easing, Image, StyleSheet, View } from 'react-native';
-import { useUser } from 'src/context/UserContext';
-import LoginSection from 'src/screens/auth/sections/LoginSection';
-import RegisterSection from 'src/screens/auth/sections/RegisterSection';
+import { useUser } from '@contexts/UserContext';
+import LoginSection from '@screens/commons/sections/LoginSection';
+import RegisterSection from '@screens/commons/sections/RegisterSection';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
 // const LOTTIE_INITIAL_WIDTH = 200;

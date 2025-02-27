@@ -1,6 +1,6 @@
-import ScreenSection from '@components/containers/ScreenSection';
+import ScreenSection from '@components/layout/ScreenSection';
 import SelectableHabitTypeAvatar from '@components/habit/SelectableHabitTypeAvatar';
-import ErrorMessage from '@components/ui/ErrorMessage';
+import { OptionalErrorText } from '@components/text';
 import { HabitDetails } from '@models/habit/HabitDetails';
 import { useEffect, useState } from 'react';
 
@@ -42,7 +42,7 @@ export default function PickHabitSection(props) {
                     isSelected={habitType === type}
                     onPress={() => handleSelect(type)} />
             )}
-            <ErrorMessage>{habitTypeError}</ErrorMessage>
+            <OptionalErrorText>{habitTypeError}</OptionalErrorText>
         </ScreenSection>
     );
 }

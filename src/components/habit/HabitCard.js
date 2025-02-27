@@ -1,5 +1,5 @@
 import HabitTypeAvatar from '@components/habit/HabitTypeAvatar';
-import PieButton from '@components/PieButton';
+import PieButton from '@components/input/PieButton';
 import { colors, fontStyles, icons } from '@styles';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 

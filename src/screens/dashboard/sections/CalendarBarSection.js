@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import CalendarPage from '@components/calendar/CalendarPage';
-import CalendarPageActive from '@components/calendar/CalendarPageActive';
-import ScreenSection from '@components/containers/ScreenSection';
+import CalendarPage from '@components/date/CalendarPage';
+import CalendarPageActive from '@components/date/CalendarPageActive';
+import ScreenSection from '@components/layout/ScreenSection';
 
 export default function CalendarBarSection() {
     const days = [];

@@ -1,4 +1,4 @@
-import Button from '@components/ui/Button';
+import Button from '@components/input/Button';
 import { colors, icons } from '@styles';
 import { useEffect, useRef, useState } from 'react';
 import { Animated, Dimensions, Modal, Pressable, StyleSheet, Text, View } from 'react-native';

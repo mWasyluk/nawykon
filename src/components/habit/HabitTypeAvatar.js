@@ -1,6 +1,6 @@
 import React from 'react';
 import { Image, StyleSheet, View } from 'react-native';
-import { types as habitTypes } from '@data/habit';
+import { types as habitTypes } from '@constants/habit';
 import { colors } from '@styles';
 
 export default function HabitTypeAvatar(props) {

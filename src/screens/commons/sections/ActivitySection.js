@@ -1,11 +1,11 @@
-import ScreenSection from "@components/containers/ScreenSection";
-import TextOptionPicker from "@components/ui/TextOptionPicker";
+import { ActivityCalendarView } from "@components/activity/ActivityCalendarView";
+import { ActivityProgressView } from "@components/activity/ActivityProgressView";
+import TextOptionPicker from "@components/input/TextOptionPicker";
+import ScreenSection from "@components/layout/ScreenSection";
 import { useMemo, useState } from "react";
-import { ActivityCalendarView } from "./ActivityCalendarView";
-import { ActivityProgressView } from "./ActivityProgressView";
-import { useStateManager } from "src/context/StateManagerContext";
+import { useStateManager } from "@contexts/StateManagerContext";
 
-export const ActivitySection = (props) => {
+export default function ActivitySection(props) {
     const {
         habitId = undefined,
     } = props;

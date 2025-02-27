@@ -1,14 +1,14 @@
-import ScreenSection from "@components/containers/ScreenSection";
+import ScreenSection from "@components/layout/ScreenSection";
 import HabitCard from "@components/habit/HabitCard";
-import Button from "@components/ui/Button";
-import routes from "@data/router";
+import Button from "@components/input/Button";
+import routes from "@constants/router";
 import { icons } from "@styles";
 import { formatDate } from "@utils/dateUtil";
 import { router } from "expo-router";
 import { useMemo } from "react";
-import { useHabits } from "src/context/HabitsContext";
-import { useReports } from "src/context/ReportsContext";
-import { useStateManager } from "src/context/StateManagerContext";
+import { useHabits } from "@contexts/HabitsContext";
+import { useReports } from "@contexts/ReportsContext";
+import { useStateManager } from "@contexts/StateManagerContext";
 
 export default function HabitsListSection() {
     const { habits } = useHabits();

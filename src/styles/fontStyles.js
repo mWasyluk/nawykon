@@ -1,11 +1,5 @@
 import { StyleSheet } from 'react-native';
 
-// Genos_400Regular,
-//     Genos_500Medium,
-//     Genos_600SemiBold,
-//     Genos_600SemiBold_Italic,
-//     Genos_700Bold
-
 const fontStyles = StyleSheet.create({
     sectionHeader: {
         fontFamily: 'Genos_700Bold',

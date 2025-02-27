@@ -1,8 +1,8 @@
-import { ActivitySection } from '@components/sections/activity/ActivitySection';
+import ActivitySection from '@screens/commons/sections/ActivitySection';
 import { ModalService } from '@services/modalService';
 import { useLocalSearchParams } from 'expo-router';
 import { ScrollView } from 'react-native';
-import { useHabits } from 'src/context/HabitsContext';
+import { useHabits } from '@contexts/HabitsContext';
 import HabitDetailsSection from '../sections/[id]/HabitDetailsSection';
 
 export default function HabitDetailsScreen() {

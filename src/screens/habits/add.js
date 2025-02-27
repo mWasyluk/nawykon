@@ -1,12 +1,12 @@
-import Button from '@components/ui/Button';
-import routes from '@data/router';
+import Button from '@components/input/Button';
+import routes from '@constants/router';
 import { HabitBuilder } from '@models/habit/Habit';
 import { ModalService } from '@services/modalService';
 import { icons } from '@styles';
 import { router } from 'expo-router';
 import { useMemo, useState } from 'react';
 import { ScrollView } from 'react-native';
-import { useHabits } from 'src/context/HabitsContext';
+import { useHabits } from '@contexts/HabitsContext';
 import HabitDetailsSection from './sections/add/HabitDetailsSection';
 import HabitGoalSection from './sections/add/HabitGoalSection';
 import HabitReminderSection from './sections/add/HabitReminderSection';

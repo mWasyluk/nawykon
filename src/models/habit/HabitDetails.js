@@ -1,4 +1,4 @@
-import { types } from '@data/habit';
+import { types } from '@constants/habit';
 
 export class HabitDetails {
     static HABIT_TYPES = Object.keys(types);

@@ -1,7 +1,7 @@
-import ScreenSection from '@components/containers/ScreenSection';
-import Button from '@components/ui/Button';
-import ErrorMessage from '@components/ui/ErrorMessage';
-import TextInput from '@components/ui/TextInput';
+import ScreenSection from '@components/layout/ScreenSection';
+import Button from '@components/input/Button';
+import { OptionalErrorText } from '@components/text';
+import TextInput from '@components/input/TextInput';
 import { User } from '@models/user/User';
 import { ModalService } from '@services/modalService';
 import { fontStyles } from '@styles';
@@ -72,7 +72,7 @@ export default function LoginSection({ login, goToRegister }) {
                 onBlur={validateEmail}
 
             />
-            <ErrorMessage>{emailError}</ErrorMessage>
+            <OptionalErrorText>{emailError}</OptionalErrorText>
 
             <TextInput label="Hasło"
                 value={password}
@@ -80,7 +80,7 @@ export default function LoginSection({ login, goToRegister }) {
                 secureTextEntry={true}
                 error={passwordError}
             />
-            <ErrorMessage>{passwordError}</ErrorMessage>
+            <OptionalErrorText>{passwordError}</OptionalErrorText>
 
             <Button
                 title={"Zaloguj się"}

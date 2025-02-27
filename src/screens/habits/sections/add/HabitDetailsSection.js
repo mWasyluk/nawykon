@@ -1,6 +1,6 @@
-import ScreenSection from '@components/containers/ScreenSection';
-import ErrorMessage from '@components/ui/ErrorMessage';
-import TextInput from '@components/ui/TextInput';
+import ScreenSection from '@components/layout/ScreenSection';
+import { OptionalErrorText } from '@components/text';
+import TextInput from '@components/input/TextInput';
 import { useEffect, useState } from 'react';
 
 export default function HabitDetailsSection(props) {
@@ -45,7 +45,7 @@ export default function HabitDetailsSection(props) {
                 onChange={handleNameChange}
                 returnKeyType={'next'}
                 error={nameError} />
-            <ErrorMessage>{nameError}</ErrorMessage>
+            <OptionalErrorText>{nameError}</OptionalErrorText>
             <TextInput label="Opis"
                 value={description}
                 onChange={handleDescriptionChange}

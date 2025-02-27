@@ -1,7 +1,7 @@
 import { colors, fontStyles } from "@styles";
 import { StyleSheet, Text } from "react-native";
 
-export default function ErrorMessage(props) {
+export function OptionalErrorText(props) {
     const { children, style, ...otherProps } = props;
 
     if (!children) {

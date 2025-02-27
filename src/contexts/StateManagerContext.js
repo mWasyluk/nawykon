@@ -1,9 +1,9 @@
 import { Statistics } from "@models/reports/Statistics";
-import { ModalService } from '@services/modalService';
+import AuthScreen from "@screens/commons/AuthScreen";
+import LoadingScreen from "@screens/commons/LoadingScreen";
+import { ModalService } from "@services/modalService";
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
-import AuthScreen from "src/screens/auth/AuthScreen";
-import LoadingScreen from "src/screens/loading/LoadingScreen";
-import { useFonts } from './FontsContext';
+import { useFonts } from "./FontsContext";
 import { useHabits } from "./HabitsContext";
 import { useReports } from "./ReportsContext";
 import { useUser } from "./UserContext";

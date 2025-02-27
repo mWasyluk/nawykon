@@ -1,4 +1,4 @@
-import { fullMonths } from "@data/time";
+import { fullMonths } from "@constants/time";
 
 export const validateTimestamp = (timestamp) => {
     if (!timestamp) {

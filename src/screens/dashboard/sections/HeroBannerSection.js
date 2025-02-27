@@ -1,10 +1,10 @@
-import personListSrc from '@assets/person/person-list.png';
-import personOkSrc from '@assets/person/person-ok.png';
-import ScreenSection from '@components/containers/ScreenSection';
-import { ProgressBar } from '@components/progress/ProgessBar';
+import personListSrc from '@assets/hero/person-list.png';
+import personOkSrc from '@assets/hero/person-ok.png';
+import ScreenSection from '@components/layout/ScreenSection';
+import { ProgressBar } from '@components/activity/ProgessBar';
 import { colors, fontStyles } from '@styles';
 import { Image, StyleSheet, Text } from 'react-native';
-import { useStateManager } from 'src/context/StateManagerContext';
+import { useStateManager } from '@contexts/StateManagerContext';
 
 function getTaskForm(number) {
     if (number === 1) {

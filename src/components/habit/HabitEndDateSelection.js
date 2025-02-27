@@ -1,7 +1,6 @@
-import ErrorMessage from '@components/ui/ErrorMessage';
-import Switch from '@components/ui/Switch';
-import TextInput from '@components/ui/TextInput';
-import TextOption from '@components/ui/TextOption';
+import Switch from '@components/input/Switch';
+import TextInput from '@components/input/TextInput';
+import { AdaptiveRegularText, OptionalErrorText, RegularText } from '@components/text';
 import { colors, fontStyles } from '@styles';
 import { formatDate } from '@utils/dateUtil';
 import { useEffect, useState } from 'react';
@@ -9,7 +8,7 @@ import { StyleSheet, View } from 'react-native';
 
 const nextWeekDate = new Date(new Date().setDate(new Date().getDate() + 7));
 
-export default function EndDateSelection(props) {
+export default function HabitEndDateSelection(props) {
     const {
         habitBuilder,
     } = props;
@@ -53,11 +52,11 @@ export default function EndDateSelection(props) {
         <View style={styles.container}>
             <View style={styles.row}>
                 <Switch onChange={handleIsPeriodicChange} defaultState={isPeriodic} />
-                <TextOption>okresowo</TextOption>
+                <RegularText>okresowo</RegularText>
             </View>
 
             <View style={styles.row}>
-                <TextOption disabled={!isPeriodic}>Do</TextOption>
+                <AdaptiveRegularText disabled={!isPeriodic}>Do</AdaptiveRegularText>
                 <TextInput
                     value={endDateText}
                     onChange={handleEndDateChange}
@@ -67,7 +66,7 @@ export default function EndDateSelection(props) {
                     error={endDateError}
                 />
             </View>
-            <ErrorMessage>{endDateError}</ErrorMessage>
+            <OptionalErrorText>{endDateError}</OptionalErrorText>
         </View>
     );
 }

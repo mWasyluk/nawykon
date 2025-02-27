@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 import { colors, fontStyles, icons } from '@styles';
-import TextOptionPicker from '@components/ui/TextOptionPicker';
-import PieChart from '@components/PieChart';
-import ScreenSection from '@components/containers/ScreenSection';
-import Button from '@components/ui/Button';
-import routes from '@data/router';
+import TextOptionPicker from '@components/input/TextOptionPicker';
+import PieChart from '@components/charts/PieChart';
+import ScreenSection from '@components/layout/ScreenSection';
+import Button from '@components/input/Button';
+import routes from '@constants/router';
 
 export default function StatisticsChartSection(props) {
     const {
