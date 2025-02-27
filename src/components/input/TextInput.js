@@ -1,6 +1,7 @@
-import { View, Text, TextInput as DefaultTextInput, StyleSheet } from 'react-native';
-import { colors, fontStyles, uiStyles } from '@styles';
+import { LabelText, BodyText } from '@components/text';
+import { colors, uiStyles } from '@styles';
 import { useState } from 'react';
+import { TextInput as DefaultTextInput, StyleSheet, View } from 'react-native';
 
 const DEFAULT_HEIGHT = 32;
 const MAX_HEIGHT = 64;
@@ -85,9 +86,9 @@ export default function TextInput(props) {
     return (
         <View style={viewstyle}>
             {/* Ukryty komponent <Text> mierzący szerokość litery „W” w czcionce <TextInput>. */}
-            <Text style={styles.hiddenMeasureText} onLayout={handleMeasureLayout}>W</Text>
+            <BodyText style={styles.hiddenMeasureText} onLayout={handleMeasureLayout}>W</BodyText>
 
-            <Text style={labelStyle}>{label}</Text>
+            <LabelText style={labelStyle}>{label}</LabelText>
             <DefaultTextInput
                 style={textInputStyle}
                 disabled={disabled}
@@ -114,11 +115,9 @@ const styles = StyleSheet.create({
     label: {
         marginLeft: 10,
         color: colors.darkGray,
-        ...fontStyles.textFieldLabel,
     },
     hiddenMeasureText: {
         position: 'absolute',
         opacity: 0,
-        ...fontStyles.regular,
     }
 });

@@ -1,14 +1,14 @@
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { colors, fontStyles } from '@styles';
+import { CaptionText, BodyBoldText } from '@components/text';
+import { colors } from '@styles';
+import { StyleSheet, View } from 'react-native';
 
 export default function CalendarPage(props) {
     const { day = 99, month = 'NAN' } = props;
 
     return (
         <View style={styles.container}>
-            <Text style={styles.day}>{day}</Text>
-            <Text style={styles.month}>{month}</Text>
+            <BodyBoldText style={styles.day}>{day}</BodyBoldText>
+            <CaptionText style={styles.month}>{month}</CaptionText>
         </View>
     );
 }
@@ -24,11 +24,9 @@ const styles = StyleSheet.create({
         borderRadius: 8,
     },
     day: {
-        ...fontStyles.regularBold,
         color: colors.darkGray,
     },
     month: {
-        ...fontStyles.regularNote,
         textTransform: 'uppercase',
         color: colors.midGray,
     },

@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
-import { fontStyles, icons, colors } from '@styles';
+import { BodyText } from '@components/text';
+import { colors, icons } from '@styles';
+import { useState } from 'react';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 export default function TextOptionPicker(props) {
     const {
@@ -42,7 +43,7 @@ export default function TextOptionPicker(props) {
                     tintColor={canHandlePrevious() ? colors.darkGray : colors.lightGray} />
             </TouchableOpacity>
 
-            <Text style={styles.text}>{options[currentIndex]}</Text>
+            <BodyText style={styles.text}>{options[currentIndex]}</BodyText>
 
             <TouchableOpacity onPress={handleNext}>
                 <Image source={icons.circleRight}
@@ -63,7 +64,6 @@ const styles = StyleSheet.create({
         height: 24,
     },
     text: {
-        ...fontStyles.regular,
         color: colors.darkGray,
         width: 100,
         textAlign: 'center',

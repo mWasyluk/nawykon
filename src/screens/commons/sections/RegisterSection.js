@@ -1,3 +1,4 @@
+import { TitleText } from "@components/text";
 import React, { useState } from "react";
 import { View, Text, TextInput, Button, StyleSheet } from "react-native";
 
@@ -30,7 +31,7 @@ export default function RegisterSection(props) {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Rejestracja</Text>
+            <TitleText style={styles.title}>Rejestracja</TitleText>
             <TextInput
                 style={styles.input}
                 placeholder="Email"
@@ -61,7 +62,6 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     title: {
-        fontSize: 22,
         marginBottom: 16,
     },
     input: {

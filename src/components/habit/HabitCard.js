@@ -1,7 +1,8 @@
 import HabitTypeAvatar from '@components/habit/HabitTypeAvatar';
 import PieButton from '@components/input/PieButton';
-import { colors, fontStyles, icons } from '@styles';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { CaptionText, TitleText } from '@components/text';
+import { colors, icons } from '@styles';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 export default function HabitCard(props) {
     const {
@@ -22,13 +23,13 @@ export default function HabitCard(props) {
 
             <View style={styles.detailsContainer}>
                 <View style={styles.head}>
-                    <Text style={styles.name}>{name}</Text>
-                    <Text style={styles.description}>{description}</Text>
+                    <TitleText style={styles.name}>{name}</TitleText>
+                    <CaptionText style={styles.description}>{description}</CaptionText>
                 </View>
 
                 <View style={styles.actionContainer}>
                     <Image source={icons.streak} style={styles.streakIcon} />
-                    <Text style={styles.streakText}>{streak}</Text>
+                    <TitleText style={styles.streakText}>{streak}</TitleText>
                     <PieButton maxCount={repetitions} count={executions} onPress={addExecution} />
                 </View>
             </View>
@@ -70,11 +71,9 @@ const styles = StyleSheet.create({
         gap: 5,
     },
     name: {
-        ...fontStyles.regularTitle,
         color: colors.darkGray,
     },
     description: {
-        ...fontStyles.regularNote,
         color: colors.midGray,
     },
     streakIcon: {
@@ -82,21 +81,7 @@ const styles = StyleSheet.create({
         height: 22,
     },
     streakText: {
-        ...fontStyles.regularTitle,
         color: colors.darkGray,
         marginRight: 10,
-    },
-    remainContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 5,
-    },
-    remainIcon: {
-        width: 16,
-        height: 16,
-    },
-    remianText: {
-        ...fontStyles.regularBold,
-        color: colors.midGray,
     },
 });

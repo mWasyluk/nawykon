@@ -1,7 +1,6 @@
-// ScreenSection.js
-import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { colors, fontStyles } from '@styles';
+import { TitleText } from '@components/text';
+import { colors } from '@styles';
+import { StyleSheet, View } from 'react-native';
 
 export default function ScreenSection({
     title,
@@ -14,7 +13,7 @@ export default function ScreenSection({
         <View style={[styles.container]}>
             {(title || rightComponent) &&
                 <View style={styles.headerRow}>
-                    <Text style={[styles.title, titleStyle]}>{title}</Text>
+                    <TitleText style={[styles.title, titleStyle]}>{title}</TitleText>
                     {rightComponent && (
                         <View style={styles.rightComponent}>{rightComponent}</View>
                     )}
@@ -43,7 +42,6 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     title: {
-        ...fontStyles.sectionHeader,
         color: colors.darkGray,
     },
     rightComponent: {

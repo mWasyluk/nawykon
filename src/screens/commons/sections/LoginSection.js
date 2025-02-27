@@ -1,12 +1,10 @@
-import ScreenSection from '@components/layout/ScreenSection';
 import Button from '@components/input/Button';
-import { OptionalErrorText } from '@components/text';
 import TextInput from '@components/input/TextInput';
+import ScreenSection from '@components/layout/ScreenSection';
+import { OptionalErrorText, BodyText } from '@components/text';
 import { User } from '@models/user/User';
 import { ModalService } from '@services/modalService';
-import { fontStyles } from '@styles';
 import { useRef, useState } from 'react';
-import { Text } from 'react-native';
 
 export default function LoginSection({ login, goToRegister }) {
     const [email, setEmail] = useState('');
@@ -60,9 +58,9 @@ export default function LoginSection({ login, goToRegister }) {
     return (
         <ScreenSection
             title={"Logowanie"}>
-            <Text style={{ ...fontStyles.regular, marginBottom: 50 }}>
+            <BodyText style={{ marginBottom: 50 }}>
                 {'Wprowadź dane konta lub skorzystaj z innej dostępnej metody logowania.'}
-            </Text>
+            </BodyText>
 
             <TextInput label="E-mail"
                 value={email}

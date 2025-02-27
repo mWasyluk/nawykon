@@ -2,7 +2,7 @@ import SelectableWeekDay from '@components/date/SelectableWeekDays';
 import HabitEndDateSelection from '@components/habit/HabitEndDateSelection';
 import TextInput from '@components/input/TextInput';
 import ScreenSection from '@components/layout/ScreenSection';
-import { OptionalErrorText, RegularText } from '@components/text';
+import { OptionalErrorText, BodyText } from '@components/text';
 import { HabitGoal } from '@models/habit/HabitGoal';
 import { useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
@@ -61,7 +61,7 @@ export default function HabitGoalSection(props) {
                 returnKeyType={'next'}
                 maxLength={2}
                 error={repetitionsError} />
-            <RegularText>razy dziennie</RegularText>
+            <BodyText>razy dziennie</BodyText>
             <OptionalErrorText style={{ width: '100%' }}>{repetitionsError}</OptionalErrorText>
 
             <SelectableWeekDay

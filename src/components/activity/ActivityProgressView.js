@@ -1,8 +1,8 @@
 import LineChart from "@components/charts/LineChart";
-import { fontStyles, icons } from "@styles";
+import { BodyBoldText } from "@components/text";
+import { icons } from "@styles";
 import { validateTimestamp } from "@utils/dateUtil";
-import { Image, Text } from "react-native";
-import { View } from "react-native";
+import { Image, View } from "react-native";
 
 export const ActivityProgressView = (props) => {
     const {
@@ -20,9 +20,9 @@ export const ActivityProgressView = (props) => {
     return (
         <View style={{ width: '100%' }}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: -10 }}>
-                <Text style={{ ...fontStyles.regularBold }}>Postęp</Text>
+                <BodyBoldText>Postęp</BodyBoldText>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Text style={{ ...fontStyles.regularBold }}>{pointsText}</Text>
+                    <BodyBoldText>{pointsText}</BodyBoldText>
                     <Image source={icons.point} style={{ width: 32, height: 32 }} />
                 </View>
             </View>

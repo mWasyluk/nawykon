@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
-import { colors, fontStyles, icons } from '@styles';
-import TextOptionPicker from '@components/input/TextOptionPicker';
 import PieChart from '@components/charts/PieChart';
-import ScreenSection from '@components/layout/ScreenSection';
 import Button from '@components/input/Button';
+import TextOptionPicker from '@components/input/TextOptionPicker';
+import ScreenSection from '@components/layout/ScreenSection';
+import { BodyBoldText, BodyText, TitleText } from '@components/text';
 import routes from '@constants/router';
+import { colors, icons } from '@styles';
+import { useState } from 'react';
+import { Image, StyleSheet, View } from 'react-native';
 
 export default function StatisticsChartSection(props) {
     const {
@@ -45,7 +46,7 @@ export default function StatisticsChartSection(props) {
                         size={128}
                     />
                     <View style={styles.pieChartCenter}>
-                        <Text style={styles.pointsText}>{selectedOption.points}</Text>
+                        <TitleText style={styles.pointsText}>{selectedOption.points}</TitleText>
                         <Image source={icons.point} style={styles.icon} />
                     </View>
                 </View>
@@ -59,18 +60,18 @@ export default function StatisticsChartSection(props) {
                     />
 
                     <View style={styles.row}>
-                        <Text style={styles.doneText}>{`${Math.round(selectedOption.done / recordsSum * 100)}% (${selectedOption.done} z ${recordsSum})`}</Text>
-                        <Text style={styles.darkGrayText}> ukończonych</Text>
+                        <BodyBoldText style={styles.doneText}>{`${Math.round(selectedOption.done / recordsSum * 100)}% (${selectedOption.done} z ${recordsSum})`}</BodyBoldText>
+                        <BodyText style={styles.darkGrayText}> ukończonych</BodyText>
                     </View>
 
                     <View style={styles.row}>
-                        <Text style={styles.waitingText}>{`${Math.round(selectedOption.waiting / recordsSum * 100)}% (${selectedOption.waiting})`}</Text>
-                        <Text style={styles.darkGrayText}> oczekujących</Text>
+                        <BodyText style={styles.waitingText}>{`${Math.round(selectedOption.waiting / recordsSum * 100)}% (${selectedOption.waiting})`}</BodyText>
+                        <BodyText style={styles.darkGrayText}> oczekujących</BodyText>
                     </View>
 
                     <View style={styles.row}>
-                        <Text style={styles.failedText}>{`${Math.round(selectedOption.failed / recordsSum * 100)}% (${selectedOption.failed})`}</Text>
-                        <Text style={styles.darkGrayText}> niezaliczonych</Text>
+                        <BodyText style={styles.failedText}>{`${Math.round(selectedOption.failed / recordsSum * 100)}% (${selectedOption.failed})`}</BodyText>
+                        <BodyText style={styles.darkGrayText}> niezaliczonych</BodyText>
                     </View>
                 </View>
             </View>
@@ -110,24 +111,19 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     pointsText: {
-        ...fontStyles.regularTitle,
         color: colors.darkGray,
         marginRight: -5,
     },
     doneText: {
-        ...fontStyles.regularBold,
         color: colors.lightSuccess,
     },
     waitingText: {
-        ...fontStyles.regular,
         color: colors.darkWarning,
     },
     failedText: {
-        ...fontStyles.regular,
         color: colors.lightError,
     },
     darkGrayText: {
-        ...fontStyles.regular,
         color: colors.darkGray,
     },
 });

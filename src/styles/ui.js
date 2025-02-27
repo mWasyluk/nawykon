@@ -35,7 +35,7 @@ const uiStyles = {
         outlineStyle: 'none',
 
         overflow: 'hidden',
-        ...fontStyles.regular,
+        ...fontStyles.body,
         color: colors.midGray,
     },
     lightShadow: {

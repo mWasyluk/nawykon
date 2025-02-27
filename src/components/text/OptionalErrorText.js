@@ -1,5 +1,6 @@
-import { colors, fontStyles } from "@styles";
-import { StyleSheet, Text } from "react-native";
+import { colors } from "@styles";
+import { StyleSheet } from "react-native";
+import { CaptionText } from "./styledTexts";
 
 export function OptionalErrorText(props) {
     const { children, style, ...otherProps } = props;
@@ -9,13 +10,12 @@ export function OptionalErrorText(props) {
     }
 
     return (
-        <Text style={[styles.error, style]} {...otherProps}>{children}</Text>
+        <CaptionText style={[styles.error, style]} {...otherProps}>{children}</CaptionText>
     );
 }
 
 const styles = StyleSheet.create({
     error: {
-        ...fontStyles.regularNote,
         marginTop: -10,
         color: colors.darkError,
     },

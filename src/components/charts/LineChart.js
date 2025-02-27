@@ -1,7 +1,7 @@
+import { colors, fontStyles } from '@styles';
 import React from 'react';
 import { View } from 'react-native';
-import { Svg, Path, Text as SvgText, Line } from 'react-native-svg';
-import { colors, fontStyles } from '@styles';
+import { Line, Path, Svg, Text as SvgText } from 'react-native-svg';
 
 export default function LineChart({
     data = [],
@@ -174,8 +174,7 @@ export default function LineChart({
                                 x={margin.left - 10}
                                 y={scaleY(val)}
                                 fill={textColor}
-                                fontFamily={fontStyles.regularNote.fontFamily}
-                                fontSize={fontStyles.regularNote.fontSize}
+                                {...fontStyles.caption}
                                 textAnchor="end"
                                 alignmentBaseline="middle"
                             >
@@ -201,8 +200,7 @@ export default function LineChart({
                                 x={p.x}
                                 y={verticalBottom + 15}
                                 fill={textColor}
-                                fontFamily={fontStyles.regularNote.fontFamily}
-                                fontSize={fontStyles.regularNote.fontSize}
+                                {...fontStyles.caption}
                                 textAnchor="middle"
                             >
                                 {p.xVal}

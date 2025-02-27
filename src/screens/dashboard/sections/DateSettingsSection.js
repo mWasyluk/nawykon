@@ -1,9 +1,9 @@
-import React from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
-import { router } from 'expo-router';
-import { colors, fontStyles, icons } from '@styles';
-import routes from '@constants/router';
 import ScreenSection from '@components/layout/ScreenSection';
+import { ActionText, TitleText } from '@components/text';
+import routes from '@constants/router';
+import { colors, icons } from '@styles';
+import { router } from 'expo-router';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 const todaysDate = new Date();
 const dayOfWeek = todaysDate.toLocaleString('default', { weekday: 'long' });
@@ -14,8 +14,8 @@ export default function DateSettingsSection() {
     return (
         <ScreenSection containerStyle={styles.container}>
             <View>
-                <Text style={styles.headerText}>{dayOfWeek}</Text>
-                <Text style={styles.moreText}>{day} {month}</Text>
+                <TitleText style={styles.title}>{dayOfWeek}</TitleText>
+                <ActionText style={styles.more}>{day} {month}</ActionText>
             </View>
             <TouchableOpacity onPress={() => router.push(routes.settings)}>
                 <Image source={icons.settings} style={styles.image} />
@@ -30,12 +30,10 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
     },
-    headerText: {
-        ...fontStyles.sectionHeader,
+    title: {
         color: colors.darkGray,
     },
-    moreText: {
-        ...fontStyles.button,
+    more: {
         color: colors.midGray,
     },
     image: {

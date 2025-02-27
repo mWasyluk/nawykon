@@ -1,12 +1,13 @@
-import ScreenSection from '@components/layout/ScreenSection';
 import HabitTypeAvatar from '@components/habit/HabitTypeAvatar';
 import Button from '@components/input/Button';
+import ScreenSection from '@components/layout/ScreenSection';
+import { CaptionText, BodyText } from '@components/text';
 import routes from '@constants/router';
-import { ModalService } from '@services/modalService';
-import { colors, fontStyles, icons } from '@styles';
-import { router } from 'expo-router';
-import { StyleSheet, Text, View } from 'react-native';
 import { useHabits } from '@contexts/HabitsContext';
+import { ModalService } from '@services/modalService';
+import { colors, icons } from '@styles';
+import { router } from 'expo-router';
+import { StyleSheet, View } from 'react-native';
 
 export default function HabitDetailsSection(props) {
     const {
@@ -33,8 +34,8 @@ export default function HabitDetailsSection(props) {
             containerStyle={styles.container}
         >
             <View style={styles.textContainer}>
-                <Text style={styles.title}>{name}</Text>
-                <Text style={styles.description}>{description}</Text>
+                <BodyText style={styles.title}>{name}</BodyText>
+                <CaptionText style={styles.description}>{description}</CaptionText>
             </View>
             <HabitTypeAvatar type={type} />
             <Button
@@ -64,11 +65,9 @@ const styles = StyleSheet.create({
         width: '80%',
     },
     title: {
-        ...fontStyles.regularTitle,
         color: colors.darkGray,
     },
     description: {
-        ...fontStyles.regularNote,
         color: colors.midGray,
     },
 });

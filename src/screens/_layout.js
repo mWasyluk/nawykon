@@ -11,7 +11,7 @@ export default function Layout() {
         <SafeAreaView style={{ flex: 1, backgroundColor: colors.light }}>
             <Stack screenOptions={{
                 headerStyle: { backgroundColor: colors.light, borderWidth: 0 },
-                headerTitleStyle: { ...fontStyles.regularTitle },
+                headerTitleStyle: { ...fontStyles.header },
             }} >
                 <Stack.Screen name="index" options={{ headerShown: false }} />
                 <Stack.Screen name="dashboard/index" options={{ headerShown: false }} />

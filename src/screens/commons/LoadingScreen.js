@@ -1,8 +1,9 @@
-import { colors, fontStyles } from '@styles';
+import { BodyBoldText } from '@components/text';
+import { colors } from '@styles';
 import Constants from 'expo-constants';
 import * as ExpoSplashScreen from 'expo-splash-screen';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Animated, Dimensions, Easing, Image, StyleSheet, Text } from 'react-native';
+import { Animated, Dimensions, Easing, Image, StyleSheet } from 'react-native';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const IMAGE_SIZE = 200;
@@ -112,7 +113,7 @@ export default function LoadingScreen({ show, message }) {
             >
                 {/* loading message */}
                 <Animated.View style={{ opacity: messageOpacity, height: 20 }}>
-                    <Text style={[fontStyles.regularBold]}>{message}</Text>
+                    <BodyBoldText>{message}</BodyBoldText>
                 </Animated.View>
 
                 {/* logo image */}
@@ -124,7 +125,7 @@ export default function LoadingScreen({ show, message }) {
                 />
 
                 {/* loading message counterweight */}
-                <Text style={[fontStyles.regularBold, { height: 20 }]}></Text>
+                <BodyBoldText style={{ height: 20 }}></BodyBoldText>
             </Animated.View >
 
             {/* background shadow layer */}

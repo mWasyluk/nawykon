@@ -1,7 +1,7 @@
-import React from 'react';
-import { Text, Image, TouchableOpacity } from 'react-native';
+import { ActionLargeText, ActionText } from '@components/text';
+import { colors, uiStyles } from '@styles';
 import { router } from 'expo-router';
-import { colors, fontStyles, uiStyles } from '@styles';
+import { Image, TouchableOpacity } from 'react-native';
 
 export default function Button(props) {
     const {
@@ -41,7 +41,6 @@ export default function Button(props) {
 
     const textStyles = [
         { color: textColor },
-        fontStyles.button,
         textStyle,
     ];
 
@@ -61,7 +60,10 @@ export default function Button(props) {
     return (
         <TouchableOpacity style={buttonStyles} onPress={handlePress}>
             {icon && <Image source={icon} style={iconStyle} tintColor={textColor} />}
-            {title && <Text style={textStyles}>{title}</Text>}
+            {title &&
+                (small ? <ActionText style={textStyles}>{title}</ActionText>
+                    : <ActionLargeText style={textStyles}>{title}</ActionLargeText>)
+            }
         </TouchableOpacity>
     );
 }

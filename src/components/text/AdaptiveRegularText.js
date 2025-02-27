@@ -1,5 +1,5 @@
-import { colors, fontStyles } from "@styles";
-import { Text } from "react-native";
+import { colors } from "@styles";
+import { BodyText } from "./styledTexts";
 
 export function AdaptiveRegularText(props) {
     const {
@@ -8,11 +8,10 @@ export function AdaptiveRegularText(props) {
     } = props;
 
     const textStyle = {
-        ...fontStyles.regular,
         color: disabled ? colors.lightGray : colors.midGray,
     };
 
     return (
-        <Text style={textStyle}>{children}</Text>
+        <BodyText style={textStyle}>{children}</BodyText>
     );
 }

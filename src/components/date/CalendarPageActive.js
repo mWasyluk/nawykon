@@ -1,9 +1,9 @@
+import { CaptionText, BodyBoldText } from '@components/text';
 import routes from '@constants/router';
-import { colors, fontStyles, icons } from '@styles';
-import { router } from 'expo-router';
-import React from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { useReports } from '@contexts/ReportsContext';
+import { colors, icons } from '@styles';
+import { router } from 'expo-router';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 
 export default function CalendarPageActive(props) {
     const {
@@ -23,8 +23,8 @@ export default function CalendarPageActive(props) {
     return (
         <TouchableOpacity style={styles.container} onPress={() => router.push(routes.newMood)}>
             <View style={styles.textContainer}>
-                <Text style={styles.day}>{day}</Text>
-                <Text style={styles.month}>{month}</Text>
+                <BodyBoldText style={styles.day}>{day}</BodyBoldText>
+                <CaptionText style={styles.month}>{month}</CaptionText>
             </View>
             <Image source={moodIcon} style={{ width: 32, height: 32, filter: !moodReport?.humor ? 'grayscale(100%)' : undefined }} />
         </TouchableOpacity>
@@ -49,11 +49,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     day: {
-        ...fontStyles.regularBold,
         color: colors.light,
     },
     month: {
-        ...fontStyles.regularNote,
         textTransform: 'uppercase',
         color: colors.light,
     },

@@ -1,13 +1,14 @@
 import PlanStatusCalendar from "@components/activity/PlanStatusCalendar";
 import Button from "@components/input/Button";
+import { CaptionText, BodyBoldText } from "@components/text";
 import { fullDays, genitiveMonths } from "@constants/time";
 import { useHabits } from "@contexts/HabitsContext";
 import { useReports } from "@contexts/ReportsContext";
 import { ModalService } from "@services/modalService";
-import { fontStyles, icons } from "@styles";
+import { icons } from "@styles";
 import { formatDate, getFixedDayOfWeek, validateTimestamp } from "@utils/dateUtil";
 import { useState } from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import StatisticsPresentation from "./StatisticsPresentation";
 
 export const ActivityCalendarView = (props) => {
@@ -93,10 +94,10 @@ export const ActivityCalendarView = (props) => {
                 selectedDate={selectedDate}
                 setSelectedDate={setSelectedDate}
             />
-            <Text style={{ ...fontStyles.regularNote, marginTop: -10, textTransform: 'uppercase' }}>{selectedDateLabel} </Text>
+            <CaptionText style={{ marginTop: -10, textTransform: 'uppercase' }}>{selectedDateLabel} </CaptionText>
 
             <View style={{ gap: 10, width: '100%' }}>
-                <Text style={{ ...fontStyles.regularBold }}>Akcje wybranego dnia</Text>
+                <BodyBoldText>Akcje wybranego dnia</BodyBoldText>
                 <View style={{ flexDirection: 'row', gap: 10 }}>
                     {executions.map(({ id, execution }, index) => (
                         <Button key={index}

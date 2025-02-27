@@ -1,6 +1,7 @@
+import { BodyText } from '@components/text';
 import { colors } from '@styles';
 import { useEffect, useRef, useState } from 'react';
-import { Animated, StyleSheet, Text } from 'react-native';
+import { Animated, StyleSheet } from 'react-native';
 
 export default function ErrorModal(props) {
     const { message, onHide } = props;
@@ -40,7 +41,7 @@ export default function ErrorModal(props) {
         <>
             {isRendered && (
                 <Animated.View style={[styles.toast, { top: slideAnim }]}>
-                    <Text style={styles.message}>{message}</Text>
+                    <BodyText style={styles.message}>{message}</BodyText>
                 </Animated.View>
             )}
         </>
@@ -61,7 +62,6 @@ const styles = StyleSheet.create({
     },
     message: {
         color: 'white',
-        fontSize: 16,
         textAlign: 'center',
     },
 });

@@ -1,6 +1,6 @@
-import { colors, fontStyles } from '@styles';
-import React from 'react';
-import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { TitleText } from '@components/text';
+import { colors } from '@styles';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import Svg, { Circle } from 'react-native-svg';
 
 const SIZE = 50; // Rozmiar przycisku
@@ -42,7 +42,7 @@ const PieButton = (props) => {
                         strokeLinecap="round"
                     />
                 </Svg>
-                <Text style={styles.text}>{count}/{maxCount}</Text>
+                <TitleText style={styles.text}>{count}/{maxCount}</TitleText>
             </View>
         </TouchableOpacity>
     );
@@ -56,7 +56,6 @@ const styles = StyleSheet.create({
     },
     text: {
         position: 'absolute',
-        ...fontStyles.regularTitle,
     },
 });
 

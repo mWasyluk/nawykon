@@ -1,7 +1,6 @@
 import Switch from '@components/input/Switch';
 import TextInput from '@components/input/TextInput';
-import { AdaptiveRegularText, OptionalErrorText, RegularText } from '@components/text';
-import { colors, fontStyles } from '@styles';
+import { AdaptiveRegularText, OptionalErrorText, BodyText } from '@components/text';
 import { formatDate } from '@utils/dateUtil';
 import { useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -52,7 +51,7 @@ export default function HabitEndDateSelection(props) {
         <View style={styles.container}>
             <View style={styles.row}>
                 <Switch onChange={handleIsPeriodicChange} defaultState={isPeriodic} />
-                <RegularText>okresowo</RegularText>
+                <BodyText>okresowo</BodyText>
             </View>
 
             <View style={styles.row}>
@@ -82,10 +81,5 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         alignItems: 'center',
         gap: 10,
-    },
-    error: {
-        ...fontStyles.regularNote,
-        marginTop: -10,
-        color: colors.darkError,
     },
 });

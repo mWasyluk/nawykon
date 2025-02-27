@@ -1,10 +1,11 @@
 import personListSrc from '@assets/hero/person-list.png';
 import personOkSrc from '@assets/hero/person-ok.png';
-import ScreenSection from '@components/layout/ScreenSection';
 import { ProgressBar } from '@components/activity/ProgessBar';
-import { colors, fontStyles } from '@styles';
-import { Image, StyleSheet, Text } from 'react-native';
+import ScreenSection from '@components/layout/ScreenSection';
+import { CaptionText, BodyBoldText } from '@components/text';
 import { useStateManager } from '@contexts/StateManagerContext';
+import { colors } from '@styles';
+import { Image, StyleSheet } from 'react-native';
 
 function getTaskForm(number) {
     if (number === 1) {
@@ -61,8 +62,8 @@ export default function HeroBannerSection() {
         <ScreenSection
             containerStyle={styles.container}
         >
-            <Text style={[fontStyles.regularBold, { color: colors.light }]}>{currentVarian.title}</Text>
-            <Text style={[fontStyles.regularNote, { color: colors.light }]}>{currentVarian.description}</Text>
+            <BodyBoldText style={{ color: colors.light }}>{currentVarian.title}</BodyBoldText>
+            <CaptionText style={{ color: colors.light }}>{currentVarian.description}</CaptionText>
             {currentVarian !== heroVariants.noneGoal
                 && <ProgressBar progress={completed / goal} />
             }

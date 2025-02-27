@@ -1,7 +1,8 @@
 import Button from '@components/input/Button';
+import { BodyText } from '@components/text';
 import { colors, icons } from '@styles';
 import { useEffect, useRef, useState } from 'react';
-import { Animated, Dimensions, Modal, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Animated, Dimensions, Modal, Pressable, StyleSheet, View } from 'react-native';
 
 const { height } = Dimensions.get('window');
 
@@ -35,7 +36,7 @@ export default function ConfirmationModal(props) {
                 <Pressable style={styles.background} onPress={onCancel} />
 
                 <Animated.View style={[styles.modal, { top: slideAnim }]}>
-                    <Text style={styles.message}>{message}</Text>
+                    <BodyText style={styles.message}>{message}</BodyText>
 
                     <View style={styles.buttonContainer}>
                         <Button
@@ -79,7 +80,6 @@ const styles = StyleSheet.create({
         elevation: 5,
     },
     message: {
-        fontSize: 16,
         marginBottom: 20,
         textAlign: 'center',
     },

@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { colors, fontStyles } from '@styles';
+import { BodyText } from '@components/text';
 import { shortDays } from '@constants/time';
+import { colors } from '@styles';
+import { useState } from 'react';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 export default function SelectableWeekDay(props) {
     const {
@@ -35,9 +36,7 @@ export default function SelectableWeekDay(props) {
                             borderColor: isSelected ? colors.primBlue : colors.lightGray
                         }]}
                         onPress={() => toggleDay(index)}>
-                        <Text style={[styles.dayText, {
-                            color: isSelected ? colors.light : colors.midGray
-                        }]}>{day}</Text>
+                        <BodyText style={{ color: isSelected ? colors.light : colors.midGray }}>{day}</BodyText>
                     </TouchableOpacity>
                 );
             })}
@@ -63,8 +62,5 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         outlineStyle: 'none',
         flex: 1,
-    },
-    dayText: {
-        ...fontStyles.regular,
-    },
+    }
 });
