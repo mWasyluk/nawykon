@@ -6,19 +6,10 @@ module.exports = function (api) {
             [
                 'module-resolver',
                 {
-                    root: ['./'],
                     alias: {
-                        '@components': './src/components',
-                        '@constants': './src/constants',
-                        '@contexts': './src/contexts',
-                        '@models': './src/models',
-                        '@screens': './src/screens',
-                        '@services': './src/services',
-                        '@styles': './src/styles',
-                        '@utils': './src/utils',
+                        '@': './src',
                         '@assets': './assets',
                     },
-                    extensions: ['.js', '.jsx', '.ts', '.tsx', '.json']
                 },
             ],
         ],
