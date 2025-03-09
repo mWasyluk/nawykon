@@ -1,5 +1,3 @@
-import { Habit } from "@models/habit/Habit";
-import { DailyReport } from "./DailyReport";
 import { formatDate, getMonthName } from "@utils/dateUtil";
 
 export class Statistics {
