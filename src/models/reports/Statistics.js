@@ -19,6 +19,7 @@ export class Statistics {
         };
         this.habits = {};
 
+        this.points = 0;
         this.update(dailyReports, habits);
     }
 
@@ -56,6 +57,24 @@ export class Statistics {
                 this.map[dailyReport.date][habit.id] = habitExecutions;
             });
         });
+
+        this.points = Object.entries(this.map).reduce((acc, [date, habits]) => {
+            const habitsToDo = Object.values(this.habits).reduce((acc, habit) => habit.getGoalForDate(date) > 0 ? ++acc : acc, 0);
+            let habitsDone = 0;
+
+            Object.keys(this.habits).forEach((habitId) => {
+                const currentHabitGoal = this.habits[habitId].getGoalForDate(date);
+                const currentHabitExecutions = habits[habitId].length;
+                if (currentHabitGoal > 0 && currentHabitExecutions >= currentHabitGoal) {
+                    habitsDone++;
+                };
+            });
+
+            if (habitsToDo > 0 && habitsDone >= habitsToDo) {
+                acc++;
+            }
+            return acc;
+        }, 0);
     }
 
     // if habitId is not provided, generate stats for all habits
@@ -100,7 +119,6 @@ export class Statistics {
         dailyStats.status = this.#combineStatuses(Object.values(targetHabitsDailyStats).map(stat => stat.status));
 
         return dailyStats;
-
     }
 
     getStatsByDateRange(startDate, endDate, habitId = undefined) {
@@ -108,7 +126,6 @@ export class Statistics {
             dailyStats: {},
             goal: 0,
             completed: 0,
-            status: Statistics.STATUSES.NEUTRAL,
         };
 
         startDate = formatDate(startDate, 'date');
@@ -121,7 +138,6 @@ export class Statistics {
 
         stats.goal = Object.values(stats.dailyStats).reduce((acc, stat) => acc + (stat?.goal || 0), 0);
         stats.completed = Object.values(stats.dailyStats).reduce((acc, stat) => acc + (stat?.completed || 0), 0);
-        stats.status = this.#combineStatuses(Object.values(stats.dailyStats).map(stat => stat?.status || Statistics.STATUSES.NEUTRAL));
         stats.habitIds = habitId ? [habitId] : Object.keys(this.habits);
 
         return stats;
@@ -142,10 +158,12 @@ export class Statistics {
         return stats;
     }
 
-    #calculateStatus(goal, progress) {
+    #calculateStatus(goal, completed) {
         if (!goal) {
             return Statistics.STATUSES.NEUTRAL;
         }
+
+        const progress = completed / goal;
         if (progress === 1) {
             return Statistics.STATUSES.COMPLETED;
         }
@@ -156,16 +174,16 @@ export class Statistics {
     }
 
     #combineStatuses(statuses = []) {
-        const isEveryNeutral = statuses.every(status => status === Statistics.STATUSES.NEUTRAL);
-        if (isEveryNeutral) {
+        const isEmptyOrEveryNeutral = !statuses.length || statuses.every(status => status === Statistics.STATUSES.NEUTRAL);
+        if (isEmptyOrEveryNeutral) {
             return Statistics.STATUSES.NEUTRAL;
         }
-        const isEveryCompleted = statuses.every(status => status === Statistics.STATUSES.COMPLETED);
-        if (isEveryCompleted) {
+        const isEveryCompletedOrNeutral = statuses.every(status => status === Statistics.STATUSES.COMPLETED || status === Statistics.STATUSES.NEUTRAL);
+        if (isEveryCompletedOrNeutral) {
             return Statistics.STATUSES.COMPLETED;
         }
-        const isEveryNotCompleted = statuses.every(status => status !== Statistics.STATUSES.COMPLETED);
-        if (isEveryNotCompleted) {
+        const isEveryFailedOrNeutral = statuses.every(status => status === Statistics.STATUSES.FAILED || status === Statistics.STATUSES.NEUTRAL);
+        if (isEveryFailedOrNeutral) {
             return Statistics.STATUSES.FAILED;
         }
 
