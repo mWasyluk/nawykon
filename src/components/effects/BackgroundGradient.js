@@ -1,4 +1,3 @@
-import { BodyBoldText } from '@components/text';
 import { StyleSheet, View } from 'react-native';
 import Svg, { Defs, RadialGradient, Rect, Stop } from 'react-native-svg';
 
