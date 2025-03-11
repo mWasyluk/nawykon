@@ -2,10 +2,10 @@ import { formatDate, getMonthName } from "@utils/dateUtil";
 
 export class Statistics {
     static STATUSES = {
-        completed: 'completed',
-        failed: 'failed',
-        partial: 'partial',
-        neutral: 'neutral',
+        COMPLETED: 'completed',
+        FAILED: 'failed',
+        PARTIAL: 'partial',
+        NEUTRAL: 'neutral',
     };
 
     constructor(dailyReports = [], habits = []) {
@@ -64,7 +64,7 @@ export class Statistics {
             habitStats: {},
             goal: 0,
             completed: 0,
-            status: Statistics.STATUSES.neutral,
+            status: Statistics.STATUSES.NEUTRAL,
         };
 
         const targetHabitIds = habitId ? [habitId] : [...Object.keys(this.habits)];
@@ -108,7 +108,7 @@ export class Statistics {
             dailyStats: {},
             goal: 0,
             completed: 0,
-            status: Statistics.STATUSES.neutral,
+            status: Statistics.STATUSES.NEUTRAL,
         };
 
         startDate = formatDate(startDate, 'date');
@@ -121,7 +121,7 @@ export class Statistics {
 
         stats.goal = Object.values(stats.dailyStats).reduce((acc, stat) => acc + (stat?.goal || 0), 0);
         stats.completed = Object.values(stats.dailyStats).reduce((acc, stat) => acc + (stat?.completed || 0), 0);
-        stats.status = this.#combineStatuses(Object.values(stats.dailyStats).map(stat => stat?.status || Statistics.STATUSES.neutral));
+        stats.status = this.#combineStatuses(Object.values(stats.dailyStats).map(stat => stat?.status || Statistics.STATUSES.NEUTRAL));
         stats.habitIds = habitId ? [habitId] : Object.keys(this.habits);
 
         return stats;
@@ -144,31 +144,31 @@ export class Statistics {
 
     #calculateStatus(goal, progress) {
         if (!goal) {
-            return Statistics.STATUSES.neutral;
+            return Statistics.STATUSES.NEUTRAL;
         }
         if (progress === 1) {
-            return Statistics.STATUSES.completed;
+            return Statistics.STATUSES.COMPLETED;
         }
         if (progress === 0) {
-            return Statistics.STATUSES.failed;
+            return Statistics.STATUSES.FAILED;
         }
-        return Statistics.STATUSES.partial
+        return Statistics.STATUSES.PARTIAL
     }
 
     #combineStatuses(statuses = []) {
-        const isEveryNeutral = statuses.every(status => status === Statistics.STATUSES.neutral);
+        const isEveryNeutral = statuses.every(status => status === Statistics.STATUSES.NEUTRAL);
         if (isEveryNeutral) {
-            return Statistics.STATUSES.neutral;
+            return Statistics.STATUSES.NEUTRAL;
         }
-        const isEveryCompleted = statuses.every(status => status === Statistics.STATUSES.completed);
+        const isEveryCompleted = statuses.every(status => status === Statistics.STATUSES.COMPLETED);
         if (isEveryCompleted) {
-            return Statistics.STATUSES.completed;
+            return Statistics.STATUSES.COMPLETED;
         }
-        const isEveryNotCompleted = statuses.every(status => status !== Statistics.STATUSES.completed);
+        const isEveryNotCompleted = statuses.every(status => status !== Statistics.STATUSES.COMPLETED);
         if (isEveryNotCompleted) {
-            return Statistics.STATUSES.failed;
+            return Statistics.STATUSES.FAILED;
         }
 
-        return Statistics.STATUSES.partial;
+        return Statistics.STATUSES.PARTIAL;
     }
 }

@@ -15,10 +15,10 @@ export default function PlanStatusRecord(props) {
 
     const pointDiameter = Math.min(width, height) * pointRate;
 
-    const pointColor = status === Statistics.STATUSES.completed ? colors.lightSuccess
-        : status === Statistics.STATUSES.failed ? colors.lightError
-            : status === Statistics.STATUSES.partial ? colors.lightWarning
-                : status === Statistics.STATUSES.neutral ? colors.light
+    const pointColor = status === Statistics.STATUSES.COMPLETED ? colors.lightSuccess
+        : status === Statistics.STATUSES.FAILED ? colors.lightError
+            : status === Statistics.STATUSES.PARTIAL ? colors.lightWarning
+                : status === Statistics.STATUSES.NEUTRAL ? colors.light
                     : status === 'current' ? colors.primBlue
                         : colors.midGray;
 
