@@ -8,7 +8,7 @@ import { useHabits } from "./HabitsContext";
 import { useReports } from "./ReportsContext";
 import { useUser } from "./UserContext";
 
-const StateManagerContext = createContext({ isReady: false });
+const StateManagerContext = createContext({ statistics: null });
 
 export function StateManagerProvider({ children }) {
     const { isLoading: isFontsLoading } = useFonts();
