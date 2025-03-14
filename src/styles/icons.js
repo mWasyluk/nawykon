@@ -22,6 +22,7 @@ const icons = {
     refreshBold: require('@assets/icons/refresh-bold.png'),
     cancel: require('@assets/icons/cancel.png'),
     bin: require('@assets/icons/bin.png'),
+    home: require('@assets/icons/home.png'),
 
     habit: {
         productivity: require('@assets/habit-icons/productivity.png'),
