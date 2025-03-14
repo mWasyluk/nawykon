@@ -1,3 +1,5 @@
+import DashboardNavHeader from '@components/navigation/DashboardNavHeader';
+import { NavHeader } from '@components/navigation/NavHeader';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { colors, fontStyles } from '@styles';
@@ -10,12 +12,12 @@ export default function Layout() {
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: colors.light }}>
             <Stack screenOptions={{
+                header: ({ options }) => options.customHeader || <NavHeader title={options.title} back home />,
                 headerStyle: { backgroundColor: colors.light, borderWidth: 0 },
                 headerTitleStyle: { ...fontStyles.header },
             }} >
-                <Stack.Screen name="index" options={{ headerShown: false }} />
-                <Stack.Screen name="dashboard/index" options={{ headerShown: false }} />
-                <Stack.Screen name="habits/add" options={{ title: 'Nowy Nawyk', }} />
+                <Stack.Screen name="index" options={{ customHeader: <DashboardNavHeader /> }} />
+                <Stack.Screen name="habits/add" options={{ title: 'Nowy Nawyk' }} />
                 <Stack.Screen name="habits/[id]/index" options={{ title: 'Informacje O Nawyku' }} />
                 <Stack.Screen name="habits/[id]/edit" options={{ title: 'Edycja Nawyku' }} />
                 <Stack.Screen name="mood/add" options={{ title: 'Nowy Raport' }} />

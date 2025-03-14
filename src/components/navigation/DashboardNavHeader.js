@@ -1,26 +1,24 @@
-import ScreenSection from '@components/layout/ScreenSection';
+import { NavButton } from '@components/navigation/NavButton';
 import { ActionText, TitleText } from '@components/text';
 import routes from '@constants/router';
-import { colors, icons } from '@styles';
+import { colors, icons, metrics, uiStyles } from '@styles';
 import { router } from 'expo-router';
-import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 const todaysDate = new Date();
 const dayOfWeek = todaysDate.toLocaleString('default', { weekday: 'long' });
 const day = todaysDate.getDate();
 const month = todaysDate.toLocaleString('default', { month: 'long' });
 
-export default function DateSettingsSection() {
+export default function DashboardNavHeader() {
     return (
-        <ScreenSection containerStyle={styles.container}>
+        <View style={styles.container}>
             <View>
                 <TitleText style={styles.title}>{dayOfWeek}</TitleText>
                 <ActionText style={styles.more}>{day} {month}</ActionText>
             </View>
-            <TouchableOpacity onPress={() => router.push(routes.settings)}>
-                <Image source={icons.settings} style={styles.image} />
-            </TouchableOpacity>
-        </ScreenSection>
+            <NavButton icon={icons.settings} onPress={() => router.push(routes.settings)} />
+        </View >
     );
 }
 
@@ -29,16 +27,17 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
+        padding: metrics.spacing.sm,
+        height: metrics.headerHeight,
+        
+        backgroundColor: colors.modalBackground,
+        ...uiStyles.lightShadow,
     },
     title: {
         color: colors.darkGray,
     },
     more: {
         color: colors.midGray,
-    },
-    image: {
-        width: 48,
-        height: 48,
     },
 });
 
