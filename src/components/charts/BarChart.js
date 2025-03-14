@@ -3,9 +3,8 @@ import { CaptionText } from "@components/text";
 import { Statistics } from "@models/reports/Statistics";
 import { colors } from "@styles";
 import { validateTimestamp } from "@utils/dateUtil";
-import { useLayoutEffect, useRef, useState } from "react";
-import { StyleSheet } from "react-native";
-import { View } from "react-native-web";
+import { useState } from "react";
+import { StyleSheet, View } from "react-native";
 
 const BAR_BORDER_RADIUS = 10;
 const FLAT_BAR_HEIGHT = 8;
@@ -19,7 +18,6 @@ export function BarChart(props) {
     } = props;
 
     const [containerHeight, setContainerHeight] = useState(0);
-    const ref = useRef(null);
 
     const progressData = [];
     var maxY = 0;
@@ -42,6 +40,8 @@ export function BarChart(props) {
     const ySpan = maxY + Math.abs(minY);
     const stepHeight = (containerHeight - LABEL_HEIGHT) / ySpan;
     const positiveHeight = maxY * stepHeight;
+
+    const showEverySecond = progressData.length > 20;
     const isLastXEven = progressData.length % 2 === 0;
 
     const bars = [];
@@ -66,18 +66,25 @@ export function BarChart(props) {
             borderBottomRightRadius: y <= 0 ? BAR_BORDER_RADIUS : 0,
         }
 
+        const barContainerStyle = {
+            flex: 1,
+            zIndex,
+            alignItems: 'center',
+        }
+
         const barStyle = {
             ...borderRadiusProps,
             position: 'relative',
             top,
             height,
             backgroundColor,
+            width: '100%',
         }
 
-        const showLabel = i % 2 === (isLastXEven ? 1 : 0);
+        const showLabel = showEverySecond ? i % 2 === (isLastXEven ? 1 : 0) : true;
 
         bars.push(
-            <View key={i} style={{ flex: 1, zIndex }} >
+            <View key={i} style={barContainerStyle} >
                 <View style={barStyle}>
                     <BackgroundGradient />
                 </View >
@@ -86,13 +93,13 @@ export function BarChart(props) {
         );
     }
 
-    useLayoutEffect(() => {
-        const { height } = ref.current.getBoundingClientRect();
+    const onLayout = (event) => {
+        const { height } = event.nativeEvent.layout;
         setContainerHeight(height);
-    }, []);
+    };
 
     return (
-        <View style={[styles.container, { width, height }]} ref={ref} >
+        <View style={[styles.container, { width, height }]} onLayout={onLayout} >
             {bars}
             <View style={[styles.separator, { top: positiveHeight }]}></View>
         </View>
@@ -110,13 +117,15 @@ const styles = StyleSheet.create({
     label: {
         position: 'absolute',
         bottom: 0,
-        alignSelf: 'center',
+        textAlign: 'center',
+        minWidth: 20,
+        height: LABEL_HEIGHT,
     },
     separator: {
         position: 'absolute',
-        width: '100%',
-        height: 2,
         left: 0,
+        right: 0,
+        height: 2,
         transform: [{ translateY: -1 }],
         backgroundColor: colors.midGray,
         borderRadius: 2,
