@@ -1,5 +1,5 @@
 import { DailyReport } from '@models/reports/DailyReport';
-import { getAllDocuments, getAllDocumentsByQuery, setDocument } from '@services/firestoreService';
+import { deleteDocument, getAllDocuments, getAllDocumentsByQuery, setDocument } from '@services/firestoreService';
 import { formatDate } from '@utils/dateUtil';
 import { where } from 'firebase/firestore';
 
@@ -40,12 +40,14 @@ async function saveDailyReport(dailyReport) {
         dailyReport.id = reportByDate.id;
     }
 
-    // TODO: remove empty daily reports from the database
-    // if (Object.keys(dailyReport.executions).length === 0 && dailyReport.mood === null) {
-    //     await deleteDocument(collectionName, dailyReport.id);
-    //     return null;
-    // }
-
-    const savedReport = await setDocument(collectionName, dailyReport);
-    return new DailyReport(savedReport);
+    // remove empty daily reports from the database
+    if (dailyReport.isEmpty()) {
+        if (dailyReport.id) {
+            await deleteDocument(collectionName, dailyReport.id);
+        }
+        return dailyReport;
+    } else {
+        const savedReport = await setDocument(collectionName, dailyReport);
+        return new DailyReport(savedReport);
+    }
 }

@@ -33,4 +33,8 @@ export class DailyReport {
     setMood(mood) {
         this.mood = new Mood(mood);
     }
+
+    isEmpty() {
+        return Object.keys(this.executions).length === 0 && this.mood === null;
+    }
 }
