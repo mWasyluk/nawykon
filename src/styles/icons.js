@@ -23,6 +23,7 @@ const icons = {
     cancel: require('@assets/icons/cancel.png'),
     bin: require('@assets/icons/bin.png'),
     home: require('@assets/icons/home.png'),
+    puzzle: require('@assets/icons/puzzle.png'),
 
     habit: {
         productivity: require('@assets/habit-icons/productivity.png'),
