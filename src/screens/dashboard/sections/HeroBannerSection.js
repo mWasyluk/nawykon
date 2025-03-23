@@ -5,6 +5,8 @@ import ScreenSection from '@components/layout/ScreenSection';
 import { CaptionText, BodyBoldText } from '@components/text';
 import { useStateManager } from '@contexts/StateManagerContext';
 import { colors } from '@styles';
+import { ActivityUtil } from '@utils/activityUtil';
+import { formatDate } from '@utils/dateUtil';
 import { Image, StyleSheet } from 'react-native';
 
 function getTaskForm(number) {
@@ -47,8 +49,11 @@ const heroVariants = {
 };
 
 export default function HeroBannerSection() {
-    const { statistics } = useStateManager();
-    const { completed, goal } = statistics.getStatsByDateRange(new Date(), new Date());
+    const { activityRegistry } = useStateManager();
+    
+    const todaysDate = formatDate(new Date(), 'date');
+    const todaysActivityStats = ActivityUtil.calculateHabitStatistics([activityRegistry.getRecord(todaysDate)]);
+    const { completed, goal } = todaysActivityStats.calendar[todaysDate];
 
     const currentVarian = !goal ? heroVariants.noneGoal
         : !completed ? heroVariants.noneDone(goal)
