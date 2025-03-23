@@ -1,8 +1,6 @@
 import BackgroundGradient from "@components/effects/BackgroundGradient";
 import { CaptionText } from "@components/text";
-import { Statistics } from "@models/reports/Statistics";
 import { colors } from "@styles";
-import { validateTimestamp } from "@utils/dateUtil";
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
 
@@ -14,43 +12,33 @@ export function BarChart(props) {
     const {
         width = '100%',
         height = '100%',
-        dailyStats = {},
+        data = [], // [{ x: label, y: value }]
     } = props;
 
     const [containerHeight, setContainerHeight] = useState(0);
 
-    const progressData = [];
     var maxY = 0;
     var minY = 0;
 
-    Object.entries(dailyStats).reduce((sum, [date, stats]) => {
-        var x, y;
-        x = validateTimestamp(date).getDate();
-        y = stats.status === Statistics.STATUSES.COMPLETED ? sum += 1
-            : stats.status === Statistics.STATUSES.FAILED ? sum -= 1
-                : sum;
-
-        progressData.push({ x, y });
-        if (sum > maxY) maxY = sum;
-        if (sum < minY) minY = sum;
-
-        return sum;
-    }, 0);
+    data.forEach(({ y }) => {
+        if (y > maxY) maxY = y;
+        if (y < minY) minY = y;
+    });
 
     const ySpan = maxY + Math.abs(minY);
     const stepHeight = (containerHeight - LABEL_HEIGHT) / ySpan;
     const positiveHeight = maxY * stepHeight;
 
-    const showEverySecond = progressData.length > 20;
-    const isLastXEven = progressData.length % 2 === 0;
+    const showEverySecond = data.length > 20;
+    const isLastXEven = data.length % 2 === 0;
 
     const bars = [];
-    for (let i = 0; i < progressData.length; i++) {
-        const { x, y } = progressData[i];
+    for (let i = 0; i < data.length; i++) {
+        const { x, y } = data[i];
 
         let backgroundColor;
         if (i > 0) {
-            const prevY = progressData[i - 1].y;
+            const prevY = data[i - 1].y;
             backgroundColor = y > prevY ? colors.lightSuccess : y < prevY ? colors.lightError : colors.lightWarning;
         } else {
             backgroundColor = y > 0 ? colors.lightSuccess : y < 0 ? colors.lightError : colors.lightWarning;
