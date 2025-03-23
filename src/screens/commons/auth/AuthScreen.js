@@ -1,39 +1,18 @@
+import { useUser } from '@contexts/UserContext';
 import { colors } from '@styles';
 import { useRef, useState } from 'react';
 import { Animated, Dimensions, Easing, Image, StyleSheet, View } from 'react-native';
-import { useUser } from '@contexts/UserContext';
-import LoginSection from '@screens/commons/sections/LoginSection';
-import RegisterSection from '@screens/commons/sections/RegisterSection';
+import LoginSection from './LoginSection';
+import RegisterSection from './RegisterSection';
 
-const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
-// const LOTTIE_INITIAL_WIDTH = 200;
-// const LOTTIE_SHRINK_WIDTH = 150;
-// const LOTTIE_INITIAL_Y = SCREEN_HEIGHT / 2 - LOTTIE_INITIAL_WIDTH;
-// const LOTTIE_FINAL_Y = 100;
+const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
-/**
- * 1) LottieView is always visible. 
- *    - During loading, it is placed above center and animates.
- *    - After loading, it is paused, shrinks by 50px, and is positioned at 100px from top.
- *
- * 2) The message is in the center. It fades out when the auth section appears.
- *
- * 3) showMessage: fade in the message, put Lottie in "loading" position (animate / big size).
- * 4) showAuth: fade out message, pause Lottie animation, move it to top=100, shrink width, 
- *    and slide auth container from the bottom to about half screen.
- *
- * 5) switchAuth: shift the forms horizontally (0 => login is visible, -SCREEN_WIDTH => register is visible).
- */
-export default function AuthScreen(props) {
-    // const { login = () => { } } = props;
+export default function AuthScreen() {
     const { login } = useUser();
     const [isLogin, setIsLogin] = useState(true);
 
-    // Animated values
     const formsOffsetX = useRef(new Animated.Value(0)).current;
 
-
-    // Shift horizontally between Login (offset=0) and Register (offset=-SCREEN_WIDTH)
     const switchAuth = () => {
         const target = isLogin ? -SCREEN_WIDTH : 0;
         Animated.timing(formsOffsetX, {
@@ -53,12 +32,6 @@ export default function AuthScreen(props) {
                 resizeMode='contain'
             />
 
-            {/* <Animated.View
-                    style={[
-                        styles.authContainer,
-                        { transform: [{ translateY: authTranslateY }] },
-                    ]}
-                > */}
             {/* Horizontal layout for login & register */}
             <Animated.View
                 style={[
@@ -76,7 +49,6 @@ export default function AuthScreen(props) {
                     <RegisterSection onGoToLogin={switchAuth} />
                 </View>
             </Animated.View>
-            {/* </Animated.View> */}
         </View>
     );
 }

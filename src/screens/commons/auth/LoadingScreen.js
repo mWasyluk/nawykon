@@ -7,6 +7,7 @@ import { Animated, Dimensions, Easing, Image, StyleSheet } from 'react-native';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const IMAGE_SIZE = 200;
+export const LOADING_ANIMATION_DURATION = 500;
 
 export default function LoadingScreen({ show, message }) {
     const [isVisible, setIsVisible] = useState(true);

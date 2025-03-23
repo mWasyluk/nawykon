@@ -1,12 +1,7 @@
 import { TitleText } from "@components/text";
-import React, { useState } from "react";
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import { useState } from "react";
+import { Button, StyleSheet, TextInput, View } from "react-native";
 
-/**
- * Minimalny przykład sekcji rejestracji.
- * onGoToLogin() – wzywamy, gdy użytkownik kliknie „Mam już konto” i chce wrócić do logowania.
- * onRegistered() – wzywamy, gdy rejestracja przebiegnie pomyślnie (StateManagerContext obsłuży animację i ModalService).
- */
 export default function RegisterSection(props) {
     const { onGoToLogin, onRegistered } = props;
 
@@ -14,16 +9,11 @@ export default function RegisterSection(props) {
     const [password, setPassword] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
-    // TO-DO: Podłącz do swojego serwisu/ UserContext, np. auth.createUserWithEmailAndPassword
     const handleRegister = async () => {
         setIsLoading(true);
         try {
-            // Przykład (zależnie od Twojego serwisu):
-            // await signUp(email, password);
-            // Wywołaj callback
             onRegistered && onRegistered();
         } catch (err) {
-            // Obsłuż błąd
             console.error(err);
         }
         setIsLoading(false);

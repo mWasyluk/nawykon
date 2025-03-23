@@ -1,7 +1,7 @@
 import Button from '@components/input/Button';
 import TextInput from '@components/input/TextInput';
 import ScreenSection from '@components/layout/ScreenSection';
-import { OptionalErrorText, BodyText } from '@components/text';
+import { BodyText, OptionalErrorText } from '@components/text';
 import { User } from '@models/user/User';
 import { ModalService } from '@services/modalService';
 import { useRef, useState } from 'react';
