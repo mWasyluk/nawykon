@@ -1,14 +1,14 @@
-import ActivitySection from '@screens/commons/sections/ActivitySection';
-import { ScrollView } from 'react-native';
-import PointsSection from './sections/PointsSection';
+import ActivitySection from '@screens/commons/activity/ActivitySection';
+import PointsSection from '@screens/commons/activity/PointsSection';
+import ActionsSection from './sections/ActionsSection';
+import { ScreenContainer } from '@components/layout';
 
-export default function Statistics() {
-    const points = 165;
-
+export default function StatisticsScreen() {
     return (
-        <ScrollView>
-            <PointsSection points={points} />
+        <ScreenContainer>
             <ActivitySection />
-        </ScrollView>
+            <PointsSection />
+            <ActionsSection />
+        </ScreenContainer>
     );
 }
