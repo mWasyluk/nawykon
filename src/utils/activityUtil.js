@@ -1,5 +1,5 @@
 import { ActivityRegistry } from "@models/reports/ActivityRegistry";
-import { formatDate, validateTimestamp } from "./dateUtil";
+import { formatDate, getFixedDayOfWeek, validateTimestamp } from "./dateUtil";
 
 export const ActivityUtil = {
     extractRecords: (activityRecords = [], startDate, endDate = new Date()) => {
@@ -133,6 +133,7 @@ export const ActivityUtil = {
 
     calculateActionsSummary: (activityRegistry, habits = []) => {
         const summary = {
+            actionsNumber: 0,
             habits: {
                 startDate: undefined,
                 totalNumber: 0,
@@ -160,19 +161,24 @@ export const ActivityUtil = {
 
             notes: {
                 weekAvgNotesNumber: 0,
-                longestNoteMood: undefined,
                 longestNoteLength: 0,
+                // presentation
+                longestNoteReport: undefined,
             },
         };
-
-        // TODO: no habits??? no reports???
 
         const weeks = {};
         const totalExecutionsByHabitId = {};
 
+        var adjustWeekNumber = false;
         const allRecords = activityRegistry.getRecords();
         allRecords.forEach((record, index) => {
-            const weekNumber = Math.floor(index / 7);
+            const dayOfWeek = getFixedDayOfWeek(record.date);
+            // if the first record is not Monday, adjust all week numbers
+            if (index === 0 && dayOfWeek > 0) {
+                adjustWeekNumber = true;
+            }
+            const weekNumber = Math.floor((index - dayOfWeek) / 7) + (adjustWeekNumber ? 1 : 0);
 
             if (!weeks[weekNumber]) {
                 weeks[weekNumber] = {
@@ -213,7 +219,7 @@ export const ActivityUtil = {
 
                     // handle summary longest note
                     if (dailyMood.note.length > summary.notes.longestNoteLength) {
-                        summary.notes.longestNoteMood = dailyMood;
+                        summary.notes.longestNoteReport = dailyMood;
                         summary.notes.longestNoteLength = dailyMood.note.length;
                     }
                 }
@@ -236,16 +242,19 @@ export const ActivityUtil = {
 
         // habits summary
         summary.habits.totalNumber = habits.length;
-        summary.habits.firstHabit = habits.reduce((firstHabit, habit) => {
-            const habitCreatTime = habit.createdAt;
-            return habitCreatTime < firstHabit.createdAt ? habit : firstHabit;
-        }, habits[0]);
-        summary.habits.startDate = formatDate(summary.habits.firstHabit.createdAt, 'date');
-        summary.habits.firstHabitPoints = ActivityUtil.calculateHabitPoints(allRecords, summary.habits.firstHabit.id);
-        summary.habits.firstHabitExecutionsNumber = totalExecutionsByHabitId[summary.habits.firstHabit.id];
+        if (habits.length) {
+            summary.habits.firstHabit = habits.reduce((firstHabit, habit) => {
+                const habitCreatTime = habit.createdAt;
+                return habitCreatTime < firstHabit.createdAt ? habit : firstHabit;
+            }, habits[0]);
+            summary.habits.startDate = formatDate(summary.habits.firstHabit.createdAt, 'date');
+            summary.habits.firstHabitPoints = ActivityUtil.calculateHabitPoints(allRecords, summary.habits.firstHabit.id);
+            summary.habits.firstHabitExecutionsNumber = totalExecutionsByHabitId[summary.habits.firstHabit.id];
+        }
 
         // results summary
         const totalExecutionsNumber = Object.values(totalExecutionsByHabitId).reduce((sum, executions) => sum += executions, 0);
+        summary.actionsNumber += totalExecutionsNumber;
         summary.results.weekAvgExecutionsNumber = totalExecutionsNumber / weeksNumber;
 
         var favHabitId = Object.keys(totalExecutionsByHabitId)[0];
@@ -282,26 +291,29 @@ export const ActivityUtil = {
         summary.mood.bestMoodDaysOfWeek = Object.entries(bestMoodByDayOfWeek)
             .reduce((bestDays, [dayOfWeek, bestMoodsNumber]) => {
                 if (bestMoodsNumber === bestMoodHighestReportsNumber) {
-                    bestDays.push(dayOfWeek);
+                    bestDays.push((dayOfWeek + 6) % 7); // shift to start from Monday
                 }
                 return bestDays;
-            }, []);
+            }, []).sort();
 
         const totalMoodReportsNumber = Object.values(weeks).reduce((sum, week) => sum += week.moodsNumber, 0);
+        summary.actionsNumber += totalMoodReportsNumber;
         summary.mood.weekAvgReportsNumber = totalMoodReportsNumber / weeksNumber;
 
         const previousWeek = weeks[weeksNumber - 2];
-        previousWeek.bestHumor?.moods.forEach(mood => {
-            if (!summary.mood.bestMoodDayOfPreviousWeek) {
-                summary.mood.bestMoodDayOfPreviousWeekReport = mood;
-            } else if (mood.humor >= summary.mood.bestMoodDayOfPreviousWeekReport.humor) {
-                summary.mood.bestMoodDayOfPreviousWeekReport = mood;
-            }
-        });
+        if (previousWeek) {
+            previousWeek.bestHumor?.moods.forEach(mood => {
+                if (!summary.mood.bestMoodDayOfPreviousWeek) {
+                    summary.mood.bestMoodDayOfPreviousWeekReport = mood;
+                } else if (mood.humor >= summary.mood.bestMoodDayOfPreviousWeekReport.humor) {
+                    summary.mood.bestMoodDayOfPreviousWeekReport = mood;
+                }
+            });
 
-        if (summary.mood.bestMoodDayOfPreviousWeekReport) {
-            const bestMoodPrevWeekDate = validateTimestamp(summary.mood.bestMoodDayOfPreviousWeekReport.date);
-            summary.mood.bestMoodDayOfPreviousWeek = bestMoodPrevWeekDate.getDay();
+            if (summary.mood.bestMoodDayOfPreviousWeekReport) {
+                const bestMoodPrevWeekDate = validateTimestamp(summary.mood.bestMoodDayOfPreviousWeekReport.date);
+                summary.mood.bestMoodDayOfPreviousWeek = (bestMoodPrevWeekDate.getDay() + 6) % 7; // shift to start from Monday
+            }
         }
 
         // notes summary
