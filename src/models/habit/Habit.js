@@ -8,7 +8,7 @@ export class Habit {
         COMPLETED: 'completed',
     };
 
-    constructor({ id, uid, details, goal, goalHistory, reminders, startDate, endDate }) {
+    constructor({ id, uid, details, goal, goalHistory, reminders, createdAt, endDate }) {
         this.id = id || null;
         this.uid = uid || null;
         this.details = details instanceof HabitDetails ? details : new HabitDetails({ ...details });
@@ -19,7 +19,7 @@ export class Habit {
 
         this.streak = 0; // TODO: Streak should be a part of stats instead of habit, but already used in the app
 
-        this.startDate = startDate ? formatDate(startDate, 'date') : formatDate(new Date(), 'date');
+        this.createdAt = createdAt || new Date().getTime();
         this.endDate = endDate ? formatDate(endDate, 'date') : null;
     }
 
@@ -35,14 +35,16 @@ export class Habit {
     }
 
     getGoalForDate(date) {
-        if (this.startDate > formatDate(date, 'date')) {
-            return 0;
+        const formattedDate = formatDate(date, 'date');
+        const startDate = formatDate(this.createdAt, 'date');
+        if (startDate > formattedDate || (this.endDate && this.endDate < formattedDate)) {
+            return null;
         }
 
-        const wasCurrentGoalActive = this.goal.startDate <= formatDate(date, 'date');
+        const wasCurrentGoalActive = this.goal.startDate <= formattedDate;
         if (!wasCurrentGoalActive) {
             const history = this.goalHistory.sort((a, b) => new Date(b.startDate) - new Date(a.startDate));
-            const firstMatchingGoal = history.find(record => record.startDate <= formatDate(date, 'date'));
+            const firstMatchingGoal = history.find(record => record.startDate <= formattedDate);
             if (firstMatchingGoal) {
                 const wasDayOfWeek = firstMatchingGoal.days.includes(getFixedDayOfWeek(date));
                 return wasDayOfWeek ? firstMatchingGoal.repetitions : 0;
