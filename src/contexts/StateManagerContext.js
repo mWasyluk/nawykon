@@ -1,6 +1,6 @@
-import { Statistics } from "@models/reports/Statistics";
-import AuthScreen from "@screens/commons/AuthScreen";
-import LoadingScreen from "@screens/commons/LoadingScreen";
+import { ActivityRegistry } from "@models/reports/ActivityRegistry";
+import AuthScreen from "@screens/commons/auth/AuthScreen";
+import LoadingScreen from "@screens/commons/auth/LoadingScreen";
 import { ModalService } from "@services/modalService";
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { useFonts } from "./FontsContext";
@@ -8,7 +8,7 @@ import { useHabits } from "./HabitsContext";
 import { useReports } from "./ReportsContext";
 import { useUser } from "./UserContext";
 
-const StateManagerContext = createContext({ statistics: null });
+const StateManagerContext = createContext({ activityRegistry: null });
 
 export function StateManagerProvider({ children }) {
     const { isLoading: isFontsLoading } = useFonts();
@@ -16,22 +16,25 @@ export function StateManagerProvider({ children }) {
     const { isLoading: isHabitsLoading, habits } = useHabits();
     const { isLoading: isReportsLoading, dailyReports } = useReports();
 
-    const [statistics, setStatistics] = useState(null);
+    const [activityRegistry, setActivityRegistry] = useState(null);
     const [content, setContent] = useState(<AuthScreen />);
 
     const loadingMessage = useMemo(() => {
-        if (isUserLoading || isHabitsLoading || isReportsLoading || isFontsLoading) {
+        if (isFontsLoading){
+            return '';
+        }
+        if (isUserLoading || isHabitsLoading || isReportsLoading) {
             return 'Pobieram dane' +
                 (isUserLoading ? ' o użytkowniku'
-                    : isFontsLoading ? ' o czcionkach'
                         : isHabitsLoading ? ' o nawykach'
                             : isReportsLoading ? ' o raportach'
                                 : '') + '...';
-        } else if (!statistics) {
-            return 'Tworzę statystyki...';
+        } 
+        if (!activityRegistry) {
+            return 'Tworzę rejestr aktywności...';
         }
         return '';
-    }, [isUserLoading, isHabitsLoading, isReportsLoading, isFontsLoading, statistics]);
+    }, [isUserLoading, isHabitsLoading, isReportsLoading, isFontsLoading, activityRegistry]);
 
     useEffect(() => {
         if (!dailyReports || !habits) {
@@ -39,16 +42,19 @@ export function StateManagerProvider({ children }) {
         }
 
         try {
-            var stats = statistics;
-            if (stats === null) {
-                stats = new Statistics(dailyReports, habits);
+            let registry = activityRegistry;
+            if (!registry) {
+                registry = new ActivityRegistry(dailyReports, habits);
             } else {
-                stats = statistics.clone();
-                stats.update(dailyReports, habits);
+                const isUpdated = registry.update(dailyReports, habits);
+                if (isUpdated) {
+                    registry = registry.clone();
+                }
             }
-            setStatistics(stats);
+            setActivityRegistry(registry);
         } catch (err) {
-            ModalService.showError('Nie mogłem wygenerować statystyk. Odśwież aplikację, żebym mógł spróbować jeszcze raz.');
+            console.error(err);
+            ModalService.showError('Nie mogłem wygenerować rejestru aktywności. Odśwież aplikację, żebym mógł spróbować jeszcze raz.');
         }
     }, [dailyReports, habits]);
 
@@ -56,11 +62,11 @@ export function StateManagerProvider({ children }) {
         if (!user && !isUserLoading) {
             return "AUTH";
         }
-        if (statistics && !loadingMessage) {
+        if (activityRegistry && !loadingMessage) {
             return "READY";
         }
         return "LOADING";
-    }, [statistics, loadingMessage, user]);
+    }, [activityRegistry, loadingMessage, user]);
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -77,7 +83,7 @@ export function StateManagerProvider({ children }) {
     }, [currentState]);
 
     return (
-        <StateManagerContext.Provider value={{ statistics }}>
+        <StateManagerContext.Provider value={{ activityRegistry }}>
             <LoadingScreen show={currentState === "LOADING"} message={loadingMessage}></LoadingScreen>
             {content}
         </StateManagerContext.Provider>
