@@ -5,7 +5,7 @@ const metrics = {
         xs: 5,
         sm: 10,
         md: 20,
-        // lg: 30,
+        lg: 30,
         // xl: 40,
     },
     borderRadius: {
@@ -24,7 +24,9 @@ const metrics = {
     },
     buttonSize: {
         sm: 32,
-    }
+        lg: 48,
+    },
+    buttonRadius: 16,
 }
 
 export default metrics;
