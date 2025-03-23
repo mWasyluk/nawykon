@@ -1,5 +1,6 @@
 export const shortDays = ['Po', 'Wt', 'Śr', 'Cz', 'Pi', 'So', 'Ni'];
 export const fullDays = ['Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota', 'Niedziela'];
+export const pluralDays = ['Poniedziałki', 'Wtorki', 'Środy', 'Czwartki', 'Piątki', 'Soboty', 'Niedziele'];
 
 export const shortMonths = ['Sty', 'Lut', 'Mar', 'Kwi', 'Maj', 'Cze', 'Lip', 'Sie', 'Wrz', 'Paź', 'Lis', 'Gru'];
 export const fullMonths = ['Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec', 'Lipiec', 'Sierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień'];
