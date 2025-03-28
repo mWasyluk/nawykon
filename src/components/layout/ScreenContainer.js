@@ -3,7 +3,7 @@ import { ScrollView, StyleSheet } from "react-native";
 
 export default function ScreenContainer({ children, style }) {
     return (
-        <ScrollView style={[styles.container, style]}>
+        <ScrollView contentContainerStyle={[styles.container, style]}>
             {children}
         </ScrollView>
     );
