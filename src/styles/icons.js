@@ -24,6 +24,8 @@ const icons = {
     bin: require('@assets/icons/bin.png'),
     home: require('@assets/icons/home.png'),
     puzzle: require('@assets/icons/puzzle.png'),
+    topArrow: require('@assets/icons/top-arrow.png'),
+    bottomArrow: require('@assets/icons/bottom-arrow.png'),
 
     habit: {
         productivity: require('@assets/habit-icons/productivity.png'),
