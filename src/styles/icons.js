@@ -26,6 +26,9 @@ const icons = {
     puzzle: require('@assets/icons/puzzle.png'),
     topArrow: require('@assets/icons/top-arrow.png'),
     bottomArrow: require('@assets/icons/bottom-arrow.png'),
+    calendarCheck: require('@assets/icons/calendar-check.png'),
+    calendarCross: require('@assets/icons/calendar-cross.png'),
+    calendarDays: require('@assets/icons/calendar-days.png'),
 
     habit: {
         productivity: require('@assets/habit-icons/productivity.png'),
