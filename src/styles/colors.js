@@ -20,6 +20,24 @@ const colors = {
     lightError: '#DC3545',
     darkError: '#A01724',
 
+    getContrastFor: (color) => {
+        return isLight(color) ? colors.darkGray : colors.light;
+    }
 };
+
+const isLight = (hexColor) => {
+    try {
+        const hex = hexColor.replace('#', '');
+        const r = parseInt(hex.slice(0, 2), 16);
+        const g = parseInt(hex.slice(2, 4), 16);
+        const b = parseInt(hex.slice(4, 6), 16);
+
+        // Calculate perceived brightness (luminance)
+        const brightness = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+        return brightness > 0.5;
+    } catch (error) {
+        throw new Error('Cannot determine color brightness for ' + hexColor);
+    }
+}
 
 export default colors;
