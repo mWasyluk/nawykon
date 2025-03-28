@@ -1,24 +1,25 @@
 import BackgroundGradient from "@components/effects/BackgroundGradient";
 import { colors, metrics, uiStyles } from "@styles";
-import { TouchableOpacity, View } from "react-native";
+import { TouchableOpacity } from "react-native";
 
-export const BUTTON_COLORS = {
+export const INPUT_VARIANTS = {
     DEFAULT: colors.modalBackground,
     ERROR: colors.lightError,
     PRIME: colors.primBlue,
-    DISABLED: colors.lightGray,
+    DISABLED: colors.light,
 }
 
-export const BUTTON_SIZES = {
+export const INPUT_SIZES = {
     DEFAULT: metrics.buttonSize.sm,
     LARGE: metrics.buttonSize.lg,
+    AUTO: 'auto',
 }
 
-export default function ButtonContainer(props) {
+export default function InputContainer(props) {
     const {
         children,
-        color = BUTTON_COLORS.DEFAULT,
-        size = BUTTON_SIZES.DEFAULT,
+        variant = INPUT_VARIANTS.DEFAULT,
+        size = INPUT_SIZES.DEFAULT,
         style = {},
         onPress = () => { },
     } = props;
@@ -30,13 +31,15 @@ export default function ButtonContainer(props) {
             alignItems: 'center',
 
             height: size,
-            paddingHorizontal: size === BUTTON_SIZES.LARGE ? metrics.spacing.lg : metrics.spacing.sm,
-            gap: size === BUTTON_SIZES.LARGE ? metrics.spacing.sm : metrics.spacing.xs,
+            paddingHorizontal: size === INPUT_SIZES.LARGE ? metrics.spacing.lg : metrics.spacing.sm,
+            gap: size === INPUT_SIZES.LARGE ? metrics.spacing.sm : metrics.spacing.xs,
 
-            backgroundColor: color,
+            outlineStyle: 'none',
+            backgroundColor: variant,
             borderRadius: metrics.buttonRadius,
-
-            color: colors.darkSuccess,
+        },
+        size === INPUT_SIZES.AUTO && {
+            paddingVertical: metrics.spacing.sm
         },
         uiStyles.lightShadow,
         style,

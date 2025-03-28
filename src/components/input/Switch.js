@@ -1,46 +1,67 @@
-import React, { useState } from 'react';
-import { StyleSheet, Image, TouchableOpacity } from 'react-native';
-import { colors, icons } from '@styles';
+import BackgroundGradient from '@components/effects/BackgroundGradient';
+import { colors, metrics } from '@styles';
+import { useEffect, useRef, useState } from 'react';
+import { Animated, StyleSheet } from 'react-native';
+import InputContainer, { INPUT_VARIANTS } from './InputContainer';
+
+const TOGGLE_SIZE = 20;
+const ANIMATION_DURATION = 200;
 
 export default function Switch(props) {
     const {
-        defaultState = false,
+        isOn: defaultIsOn = false,
         onChange = () => { },
-        style = {},
     } = props;
 
-    const [toggled, setToggled] = useState(defaultState);
+    const [isOn, setIsOn] = useState(defaultIsOn);
+    const slideAnimation = useRef(new Animated.Value(defaultIsOn ? 1 : 0)).current;
 
-    const handleToggle = () => {
-        const newToggled = !toggled;
-        setToggled(newToggled);
-        onChange(newToggled);
+    const buttonVariant = isOn ? INPUT_VARIANTS.PRIME : INPUT_VARIANTS.DEFAULT;
+
+    const toggleStyle = [
+        styles.toggle,
+        {
+            backgroundColor: isOn ? colors.darkBlue : colors.lightGray,
+            left: slideAnimation.interpolate({
+                inputRange: [0, 1],
+                outputRange: [0, metrics.buttonSize.sm - TOGGLE_SIZE]
+            })
+        }
+    ]
+
+    const handleChange = () => {
+        const newState = !isOn;
+        setIsOn(newState);
+        onChange(newState);
     };
 
-    const switchStyle = {
-        borderColor: toggled ? colors.lightSuccess : colors.lightGray,
-    }
+    useEffect(() => {
+        Animated.timing(slideAnimation, {
+            toValue: isOn ? 1 : 0,
+            duration: ANIMATION_DURATION,
+            useNativeDriver: false,
+        }).start();
+    }, [isOn, slideAnimation]);
 
     return (
-        <TouchableOpacity style={[styles.container, switchStyle, style]} onPress={handleToggle}>
-            {toggled && <Image source={icons.check} style={styles.icon} tintColor={colors.lightSuccess} />}
-        </TouchableOpacity>
+        <InputContainer variant={buttonVariant} style={styles.container} onPress={handleChange}>
+            <Animated.View style={toggleStyle}>
+                <BackgroundGradient />
+            </Animated.View>
+        </InputContainer>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: 28,
-        height: 28,
-        borderRadius: 8,
-        backgroundColor: colors.light,
-        borderWidth: 2,
+        width: metrics.buttonSize.sm,
+        height: TOGGLE_SIZE,
+        borderRadius: metrics.borderRadius.circular,
     },
-    icon: {
-        width: 20,
-        height: 20,
+    toggle: {
+        position: 'absolute',
+        width: TOGGLE_SIZE,
+        height: TOGGLE_SIZE,
+        borderRadius: metrics.borderRadius.circular,
     },
 });

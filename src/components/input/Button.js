@@ -1,69 +1,43 @@
-import { ActionLargeText, ActionText } from '@components/text';
-import { colors, uiStyles } from '@styles';
-import { router } from 'expo-router';
-import { Image, TouchableOpacity } from 'react-native';
+import { ActionLargeText, ActionText } from "@components/text";
+import { colors, metrics } from "@styles";
+import { Image, StyleSheet } from "react-native";
+import InputContainer, { INPUT_SIZES, INPUT_VARIANTS } from "./InputContainer";
 
 export default function Button(props) {
     const {
+        icon,
         title,
-        href = undefined,
-        onPress = () => { },
-        icon = null,
-        small = false,
-        // TODO: implement prim as a variant
-        prim = true,
-        variant = undefined,
-        disabled = false,
-        style = {},
-        textStyle = {},
+        variant = INPUT_VARIANTS.DEFAULT,
+        size = INPUT_SIZES.DEFAULT,
+        ...otherProps
     } = props;
 
-
-    const buttonStyles = [
-        small ? uiStyles.smallButton : uiStyles.button,
-        {
-            backgroundColor: disabled ? colors.light
-                : variant === 'error' ? colors.lightError
-                    : prim ? colors.primBlue
-                        : colors.light,
-            borderColor: disabled ? colors.lightGray
-                : variant === 'error' ? colors.darkError
-                    : prim ? colors.darkBlue
-                        : colors.darkGray,
-        },
-        style,
-    ];
-
-    const textColor = disabled ? colors.lightGray
-        : variant === 'error' ? colors.prim
-            : prim ? colors.light
-                : colors.darkGray;
-
-    const textStyles = [
-        { color: textColor },
-        textStyle,
-    ];
-
-    const iconStyle = {
-        width: small ? 16 : 24,
-        height: small ? 16 : 24,
-    };
-
-    const handlePress = () => {
-        if (disabled) return;
-        onPress();
-        if (href) {
-            router.push(href);
-        };
+    const imageStyle = size === INPUT_SIZES.LARGE ? styles.largeImage : styles.smallImage;
+    const textStyle = {
+        color: variant === INPUT_VARIANTS.DISABLED ? colors.lightGray
+            : variant === INPUT_VARIANTS.DEFAULT ? colors.midGray
+                : colors.light
     };
 
     return (
-        <TouchableOpacity style={buttonStyles} onPress={handlePress}>
-            {icon && <Image source={icon} style={iconStyle} tintColor={textColor} />}
-            {title &&
-                (small ? <ActionText style={textStyles}>{title}</ActionText>
-                    : <ActionLargeText style={textStyles}>{title}</ActionLargeText>)
-            }
-        </TouchableOpacity>
+        <InputContainer variant={variant} size={size} {...otherProps}>
+            {icon && <Image source={icon} style={imageStyle} tintColor={textStyle.color} />}
+            {title && (
+                size === INPUT_SIZES.LARGE
+                    ? <ActionLargeText style={textStyle}>{title}</ActionLargeText>
+                    : <ActionText style={textStyle}>{title}</ActionText>
+            )}
+        </InputContainer>
     );
 }
+
+const styles = StyleSheet.create({
+    smallImage: {
+        width: metrics.imageSize.xs,
+        height: metrics.imageSize.xs,
+    },
+    largeImage: {
+        width: metrics.imageSize.sm,
+        height: metrics.imageSize.sm
+    }
+});

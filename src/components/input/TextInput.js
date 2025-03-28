@@ -1,123 +1,91 @@
-import { LabelText, BodyText } from '@components/text';
-import { colors, uiStyles } from '@styles';
-import { useState } from 'react';
-import { TextInput as DefaultTextInput, StyleSheet, View } from 'react-native';
+import { colors, fontStyles, metrics } from "@styles";
+import { useRef, useState } from "react";
+import { StyleSheet, TextInput } from "react-native";
+import InputContainer, { INPUT_SIZES, INPUT_VARIANTS } from "./InputContainer";
 
-const DEFAULT_HEIGHT = 32;
-const MAX_HEIGHT = 64;
+const INPUT_TEXT_STYLE = fontStyles.body;
 
 export default function TextInput(props) {
     const {
         value = '',
-        label = '',
         onChange = () => { },
-        keyboardType = 'text',
-        maxLength = undefined,
-        secureTextEntry = false,
-        multiline = false,
-        returnKeyType = 'done',
-        disabled = false,
-        short = false,
         error = null,
-        otherProps,
+        multiline = false,
+
+        variant,
+        style = {},
+        textStyle = {},
+        ...otherProps
     } = props;
 
+    const inputRef = useRef(null);
     const [isFocused, setIsFocused] = useState(false);
-    const [height, setHeight] = useState(DEFAULT_HEIGHT);
-    const [charWidth, setCharWidth] = useState(0);
 
-    const handleTextChange = (text) => {
-        onChange(text);
+    const handleChange = (value) => {
+        onChange(value);
     }
 
-    const handleHeightChange = (event) => {
-        const contentHeight = event.nativeEvent.contentSize.height;
-
-        if (contentHeight >= MAX_HEIGHT) {
-            setHeight(MAX_HEIGHT);
-        } else if (contentHeight >= DEFAULT_HEIGHT) {
-            setHeight(contentHeight);
-        } else {
-            setHeight(DEFAULT_HEIGHT);
+    const handleButtonPress = () => {
+        if (variant !== INPUT_VARIANTS.DISABLED) {
+            inputRef.current.focus();
         }
     }
 
-    // Funkcja pomocnicza do pomiaru szerokości litery "W"
-    const handleMeasureLayout = (event) => {
-        const { width } = event.nativeEvent.layout;
-        setCharWidth(width);
-    };
-
-    // Wyliczenie docelowej szerokości
-    // Zostanie użyte tylko wtedy, gdy `maxLength` jest zdefiniowane    
-    var computedWidth = maxLength && charWidth
-        ? charWidth * maxLength
-        : undefined;
-
-    if (computedWidth && !short) {
-        computedWidth += uiStyles.input.paddingLeft * 2;
-    }
-
-    const viewstyle = [
-        styles.container,
+    const buttonStyle = [
         {
-            width: computedWidth,
-        }
-    ]
-
-    const labelStyle = [
-        styles.label,
-        {
-            display: label ? undefined : 'none',
-        }
+            borderWidth: 2,
+            borderColor: error ? colors.darkError
+                : isFocused ? colors.primBlue
+                    : 'transparent',
+            height: multiline ? INPUT_SIZES.LARGE : INPUT_SIZES.DEFAULT,
+        },
+        style,
     ]
 
     const textInputStyle = [
-        uiStyles.input,
+        styles.input,
+        INPUT_TEXT_STYLE,
         {
-            borderColor: error ? colors.darkError : isFocused ? colors.primBlue : colors.lightGray,
-            color: disabled ? colors.lightGray : isFocused ? colors.darkGray : colors.midGray,
-            height: height,
-            width: computedWidth,
-            textAlign: maxLength ? 'center' : undefined
-        }
+            zIndex: variant === INPUT_VARIANTS.DISABLED ? -1 : 1,
+            color: variant === INPUT_VARIANTS.DISABLED ? colors.lightGray
+                : isFocused ? colors.darkGray
+                    : colors.midGray,
+        },
+        multiline && { textAlignVertical: 'top' },
+        textStyle,
     ];
 
     return (
-        <View style={viewstyle}>
-            {/* Ukryty komponent <Text> mierzący szerokość litery „W” w czcionce <TextInput>. */}
-            <BodyText style={styles.hiddenMeasureText} onLayout={handleMeasureLayout}>W</BodyText>
-
-            <LabelText style={labelStyle}>{label}</LabelText>
-            <DefaultTextInput
-                style={textInputStyle}
-                disabled={disabled}
+        <InputContainer style={buttonStyle} variant={variant} onPress={handleButtonPress}>
+            <TextInput
+                ref={inputRef}
                 value={value}
-                onChangeText={handleTextChange}
+                onChangeText={handleChange}
+
                 multiline={multiline}
-                returnKeyType={returnKeyType}
-                keyboardType={keyboardType}
-                secureTextEntry={secureTextEntry}
+                numberOfLines={multiline ? 2 : 1}
+
+                disabled={variant === INPUT_VARIANTS.DISABLED}
                 onFocus={() => setIsFocused(true)}
                 onBlur={() => setIsFocused(false)}
-                onContentSizeChange={handleHeightChange}
-                maxLength={maxLength}
+
+                style={textInputStyle}
                 {...otherProps}
             />
-        </View>
-    );
+        </InputContainer>
+    )
 }
 
 const styles = StyleSheet.create({
-    container: {
+    input: {
+        zIndex: 1,
         width: '100%',
+        height: '100%',
+
+        paddingTop: metrics.spacing.xs,
+        paddingBottom: metrics.spacing.xs,
+
+        outlineStyle: 'none',
+        overflow: 'hidden',
     },
-    label: {
-        marginLeft: 10,
-        color: colors.darkGray,
-    },
-    hiddenMeasureText: {
-        position: 'absolute',
-        opacity: 0,
-    }
 });
