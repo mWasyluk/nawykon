@@ -1,6 +1,6 @@
 import { colors, fontStyles, metrics } from "@styles";
 import { useRef, useState } from "react";
-import { StyleSheet, TextInput } from "react-native";
+import { StyleSheet, TextInput as ReactTextInput } from "react-native";
 import InputContainer, { INPUT_SIZES, INPUT_VARIANTS } from "./InputContainer";
 
 const INPUT_TEXT_STYLE = fontStyles.body;
@@ -57,7 +57,7 @@ export default function TextInput(props) {
 
     return (
         <InputContainer style={buttonStyle} variant={variant} onPress={handleButtonPress}>
-            <TextInput
+            <ReactTextInput
                 ref={inputRef}
                 value={value}
                 onChangeText={handleChange}
