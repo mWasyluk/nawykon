@@ -35,7 +35,7 @@ export default function LoadingScreen({ show, message }) {
     // pulls the icon layer from the left edge of the screen
     const showIconLayerAnimation = Animated.timing(iconLayerTranslateX, {
         toValue: 0,
-        duration: 500,
+        duration: LOADING_ANIMATION_DURATION,
         easing: Easing.inOut(Easing.ease),
         useNativeDriver: false,
     });
@@ -43,7 +43,7 @@ export default function LoadingScreen({ show, message }) {
     // pushes the icon layer out of the left edge of the screen
     const hideIconLayerAnimation = Animated.timing(iconLayerTranslateX, {
         toValue: -SCREEN_WIDTH,
-        duration: 500,
+        duration: LOADING_ANIMATION_DURATION,
         easing: Easing.inOut(Easing.ease),
         useNativeDriver: false,
     });
@@ -51,7 +51,7 @@ export default function LoadingScreen({ show, message }) {
     // fades in the shadow layer
     const showShadowLayerAnimation = Animated.timing(shadowLayerOpacity, {
         toValue: 1,
-        duration: 500,
+        duration: LOADING_ANIMATION_DURATION,
         easing: Easing.inOut(Easing.ease),
         useNativeDriver: false,
     });
@@ -59,7 +59,7 @@ export default function LoadingScreen({ show, message }) {
     // fades out the shadow layer
     const hideShadowLayerAnimation = Animated.timing(shadowLayerOpacity, {
         toValue: 0,
-        duration: 500,
+        duration: LOADING_ANIMATION_DURATION,
         easing: Easing.inOut(Easing.ease),
         useNativeDriver: false,
     });
