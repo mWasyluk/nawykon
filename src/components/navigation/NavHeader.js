@@ -6,11 +6,20 @@ import { StyleSheet, View } from "react-native";
 import { NavButton } from "./NavButton";
 
 export const NavHeader = ({ title, back, home }) => {
+    const handleBackPress = () => {
+        router.back();
+    }
+
+    const handleHomePress = () => {
+        router.dismissAll();
+        router.replace(routes.home);
+    }
+
     return (
         <View style={styles.container}>
-            {back && <NavButton icon={icons.circleLeft} onPress={() => router.back()} />}
+            {back && <NavButton icon={icons.circleLeft} onPress={handleBackPress} />}
             <HeaderText style={styles.title}>{title}</HeaderText>
-            {home && <NavButton icon={icons.home} onPress={() => router.push(routes.home)} />}
+            {home && <NavButton icon={icons.home} onPress={handleHomePress} />}
         </View>
     );
 }
