@@ -1,4 +1,4 @@
-import ButtonContainer from "@components/input/ButtonContainer";
+import InputContainer from "@components/input/InputContainer";
 import { ActionText } from "@components/text";
 import { colors, icons, metrics } from "@styles";
 import { Image, StyleSheet } from "react-native";
@@ -7,10 +7,10 @@ export default function TimeActivityButton(props) {
     const { time, onPress } = props;
 
     return (
-        <ButtonContainer onPress={onPress}>
+        <InputContainer onPress={onPress}>
             <Image source={icons.check} tintColor={colors.midGray} style={styles.image} />
             <ActionText style={styles.text}>{time}</ActionText>
-        </ButtonContainer>
+        </InputContainer>
     );
 }
 

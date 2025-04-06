@@ -1,10 +1,11 @@
 import PieChart from '@components/charts/PieChart';
 import Button from '@components/input/Button';
 import TextOptionPicker from '@components/input/TextOptionPicker';
-import ScreenSection from '@components/layout/ScreenSection';
+import { SectionContainer, SectionHeader } from '@components/layout';
 import { BodyBoldText, BodyText, TitleText } from '@components/text';
 import routes from '@constants/router';
 import { colors, icons } from '@styles';
+import { router } from 'expo-router';
 import { useState } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 
@@ -27,17 +28,16 @@ export default function StatisticsChartSection(props) {
 
     const recordsSum = selectedOption.done + selectedOption.waiting + selectedOption.failed;
 
+    const handleDetailsPress = () => {
+        router.push(routes.statistics);
+    }
+
     return (
-        <ScreenSection
-            title={"Statystyki"}
-            rightComponent={
-                <Button href={routes.statistics}
-                    title={"Szczegóły"}
-                    prim={false}
-                    small={true}
-                />
-            }
-        >
+        <SectionContainer>
+            <SectionHeader
+                title={"Statystyki"}
+                right={<Button title={"Szczegóły"} onPress={handleDetailsPress} />}
+            />
             <View style={styles.row}>
                 <View style={styles.pieChartContainer}>
                     <PieChart
@@ -75,7 +75,7 @@ export default function StatisticsChartSection(props) {
                     </View>
                 </View>
             </View>
-        </ScreenSection>
+        </SectionContainer>
     );
 }
 

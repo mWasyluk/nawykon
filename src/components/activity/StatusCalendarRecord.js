@@ -1,5 +1,5 @@
 import { CaptionText } from '@components/text';
-import { shortDays } from '@constants/time';
+import { fullDays } from '@constants/time';
 import { colors, metrics } from '@styles';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
@@ -54,7 +54,7 @@ export default function StatusCalendarRecord(props) {
     return (
         <TouchableOpacity style={[styles.container, style]} onPress={onPress}>
             {variant === CALENDAR_RECORD_VARIANTS.WEEKDAY
-                ? <CaptionText style={styles.weekday}>{shortDays[weekday].charAt(0)}</CaptionText>
+                ? <CaptionText style={styles.weekday}>{fullDays[weekday].charAt(0)}</CaptionText>
                 : <>
                     {isSelected && <View style={styles.selection} />}
                     <View style={[styles.point, { backgroundColor: pointColor }]} />

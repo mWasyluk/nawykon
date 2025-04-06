@@ -1,4 +1,4 @@
-import ButtonContainer from "@components/input/ButtonContainer";
+import InputContainer from "@components/input/InputContainer";
 import { ActionText } from "@components/text";
 import { colors, icons, metrics } from "@styles";
 import { Image, StyleSheet, View } from "react-native";
@@ -16,13 +16,13 @@ export default function MoodActivityButton(props) {
     return (
         <>
             {isEmpty ? (
-                <ButtonContainer >
+                <InputContainer >
                     <Image source={icons.mood} style={[styles.image, { filter: 'grayscale(100%)' }]} />
 
                     <ActionText style={styles.emptyText}>Raport dzienny</ActionText>
-                </ButtonContainer>
+                </InputContainer>
             ) : (
-                <ButtonContainer onPress={onPress}>
+                <InputContainer onPress={onPress}>
                     <View style={{ flexDirection: 'row' }}>
                         <Image source={icons[`mood${humor}`]} style={styles.image} />
                         <Image source={icons[`energy${energy}`]} style={styles.image} />
@@ -31,7 +31,7 @@ export default function MoodActivityButton(props) {
                         )}
                     </View>
                     <ActionText style={styles.text}>{date ? date : "Raport dzienny"}</ActionText>
-                </ButtonContainer>
+                </InputContainer>
             )}
         </>
     );

@@ -1,5 +1,5 @@
-import ScreenSection from "@components/layout/ScreenSection";
 import TextInput from "@components/input/TextInput";
+import ScreenSection from "@components/layout/ScreenSection";
 import { useState } from "react";
 
 export default function NoteSection(props) {
@@ -17,7 +17,8 @@ export default function NoteSection(props) {
 
     return (
         <ScreenSection title="Co dobrego cię dziś spotkało?">
-            <TextInput value={note}
+            <TextInput
+                value={note}
                 onChange={handleChange}
                 multiline={true} />
         </ScreenSection>

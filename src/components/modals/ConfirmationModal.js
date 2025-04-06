@@ -1,3 +1,4 @@
+import { INPUT_VARIANTS } from '@components/input/InputContainer';
 import Button from '@components/input/Button';
 import { BodyText } from '@components/text';
 import { colors, icons } from '@styles';
@@ -41,18 +42,17 @@ export default function ConfirmationModal(props) {
                     <View style={styles.buttonContainer}>
                         <Button
                             title="Anuluj"
-                            icons={icons.cancel}
+                            icon={icons.cancel}
+                            variant={INPUT_VARIANTS.DEFAULT}
                             onPress={onCancel}
-                            prim={false}
-                            small={true}
                             style={{ marginRight: 10 }}
                         />
+
                         <Button
                             title="Zatwierdź"
-                            icons={icons.check}
+                            icon={icons.check}
+                            variant={INPUT_VARIANTS.PRIME}
                             onPress={onConfirm}
-                            prim={true}
-                            small={true}
                         />
                     </View>
                 </Animated.View>
