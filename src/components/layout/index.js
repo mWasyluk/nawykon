@@ -1,3 +1,4 @@
+export { default as LoadingIndicator } from './LoadingIndicator';
 export { default as ScreenContainer } from './ScreenContainer';
 export { default as SectionContainer } from './SectionContainer';
 export { default as SectionHeader } from './SectionHeader';

@@ -1,7 +1,10 @@
+import { LoadingIndicator } from "@components/layout";
 import { ActionLargeText, ActionText } from "@components/text";
 import { colors, metrics } from "@styles";
 import { Image, StyleSheet } from "react-native";
 import InputContainer, { INPUT_SIZES, INPUT_VARIANTS } from "./InputContainer";
+
+export const LOADING_ICON = 'loading';
 
 export default function Button(props) {
     const {
@@ -21,7 +24,9 @@ export default function Button(props) {
 
     return (
         <InputContainer variant={variant} size={size} {...otherProps}>
-            {icon && <Image source={icon} style={imageStyle} tintColor={textStyle.color} />}
+            {icon && (icon === LOADING_ICON
+                ? <LoadingIndicator size={imageStyle.height} />
+                : <Image source={icon} style={imageStyle} tintColor={textStyle.color} />)}
             {title && (
                 size === INPUT_SIZES.LARGE
                     ? <ActionLargeText style={textStyle}>{title}</ActionLargeText>
