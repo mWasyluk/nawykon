@@ -32,6 +32,7 @@ const icons = {
     calendarDays: require('@assets/icons/calendar-days.png'),
     eye: require('@assets/icons/eye.png'),
     eyeCrossed: require('@assets/icons/eye-crossed.png'),
+    doc: require('@assets/icons/doc.png'),
 
     habit: {
         productivity: require('@assets/habit-icons/productivity.png'),

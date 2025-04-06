@@ -27,7 +27,7 @@ export default function MoodActivityButton(props) {
                         <Image source={icons[`mood${humor}`]} style={styles.image} />
                         <Image source={icons[`energy${energy}`]} style={styles.image} />
                         {isNote && (
-                            <Image source={icons.pen} style={styles.image} tintColor={colors.midGray} />
+                            <Image source={icons.doc} style={styles.image} tintColor={colors.midGray} />
                         )}
                     </View>
                     <ActionText style={styles.text}>{date ? date : "Raport dzienny"}</ActionText>
