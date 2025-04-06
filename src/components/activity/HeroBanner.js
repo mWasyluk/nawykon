@@ -1,13 +1,13 @@
 import personListSrc from '@assets/hero/person-list.png';
 import personOkSrc from '@assets/hero/person-ok.png';
 import { ProgressBar } from '@components/activity/ProgessBar';
-import ScreenSection from '@components/layout/ScreenSection';
-import { CaptionText, BodyBoldText } from '@components/text';
+import BackgroundGradient from '@components/effects/BackgroundGradient';
+import { BodyBoldText, CaptionText } from '@components/text';
 import { useStateManager } from '@contexts/StateManagerContext';
-import { colors } from '@styles';
+import { colors, metrics } from '@styles';
 import { ActivityUtil } from '@utils/activityUtil';
 import { formatDate } from '@utils/dateUtil';
-import { Image, StyleSheet } from 'react-native';
+import { Image, StyleSheet, View } from 'react-native';
 
 function getTaskForm(number) {
     if (number === 1) {
@@ -48,48 +48,51 @@ const heroVariants = {
     }
 };
 
-export default function HeroBannerSection() {
+export default function HeroBanner() {
     const { activityRegistry } = useStateManager();
-    
+
     const todaysDate = formatDate(new Date(), 'date');
     const todaysActivityStats = ActivityUtil.calculateHabitStatistics([activityRegistry.getRecord(todaysDate)]);
-    const { completed, goal } = todaysActivityStats.calendar[todaysDate];
+    const { effectual, goal } = todaysActivityStats.calendar[todaysDate];
 
     const currentVarian = !goal ? heroVariants.noneGoal
-        : !completed ? heroVariants.noneDone(goal)
-            : completed === goal ? heroVariants.allDone
-                : heroVariants.progress(completed, goal);
+        : !effectual ? heroVariants.noneDone(goal)
+            : effectual === goal ? heroVariants.allDone
+                : heroVariants.progress(effectual, goal);
 
     const imgWidth = currentVarian.imgSrc === personListSrc ? 38.25 : 52;
     const imgPadding = currentVarian.imgSrc === personListSrc ? 23.75 : 11;
 
     return (
-        <ScreenSection
-            containerStyle={styles.container}
-        >
+        <View style={styles.container}>
+            <BackgroundGradient />
             <BodyBoldText style={{ color: colors.light }}>{currentVarian.title}</BodyBoldText>
             <CaptionText style={{ color: colors.light }}>{currentVarian.description}</CaptionText>
             {currentVarian !== heroVariants.noneGoal
-                && <ProgressBar progress={completed / goal} />
+                && <ProgressBar progress={effectual / goal} />
             }
             <Image source={currentVarian.imgSrc} style={[styles.image, { right: imgPadding, width: imgWidth }]} resizeMode='contain' resizeMethod='scale' />
-        </ScreenSection>
+        </View>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        minHeight: 96,
         flexDirection: 'column',
         justifyContent: 'center',
-        padding: 10,
-        paddingRight: 64,
+
+        minHeight: 96,
+        gap: metrics.spacing.xs,
+        marginTop: metrics.spacing.sm,
+        padding: metrics.spacing.sm,
+        paddingRight: 70,
+
         backgroundColor: colors.primBlue,
-        borderRadius: 10,
+        borderRadius: metrics.spacing.sm,
     },
     image: {
         position: 'absolute',
         height: 96,
-        bottom: 10,
+        bottom: metrics.spacing.sm,
     },
 });
