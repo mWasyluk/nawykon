@@ -13,7 +13,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Animated, Image, StyleSheet, View } from 'react-native';
 
 const ANIMATION_DURATION = 300;
-const BUTTON_CONTAINER_HEIGHT = INPUT_SIZES.DEFAULT;
+const BUTTON_CONTAINER_HEIGHT = metrics.buttonSize.sm;
 
 export default function ViewDetailsSection({ habit }) {
     const {
