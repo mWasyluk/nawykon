@@ -1,78 +1,89 @@
 import { useUser } from '@contexts/UserContext';
-import { colors } from '@styles';
-import { useRef, useState } from 'react';
-import { Animated, Dimensions, Easing, Image, StyleSheet, View } from 'react-native';
+import { colors, metrics, uiStyles } from '@styles';
+import { useState } from 'react';
+import { Image, SafeAreaView, StyleSheet } from 'react-native';
 import LoginSection from './LoginSection';
 import RegisterSection from './RegisterSection';
 
-const { width: SCREEN_WIDTH } = Dimensions.get('window');
+export const VALIDATION_DELAY = 500;
 
 export default function AuthScreen() {
     const { login } = useUser();
     const [isLogin, setIsLogin] = useState(true);
 
-    const formsOffsetX = useRef(new Animated.Value(0)).current;
-
     const switchAuth = () => {
-        const target = isLogin ? -SCREEN_WIDTH : 0;
-        Animated.timing(formsOffsetX, {
-            toValue: target,
-            duration: 500,
-            easing: Easing.linear,
-            useNativeDriver: false,
-        }).start(() => {
-            setIsLogin(!isLogin);
-        });
+        setIsLogin(!isLogin);
     };
 
     return (
-        <View style={styles.container}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: colors.light }}>
             <Image style={styles.image}
                 source={require("@assets/images/logo.png")}
                 resizeMode='contain'
             />
 
-            {/* Horizontal layout for login & register */}
-            <Animated.View
-                style={[
-                    styles.formsRow,
-                    { transform: [{ translateX: formsOffsetX }] },
-                ]}
-            >
-                <View style={[styles.authSection]}>
-                    <LoginSection
-                        login={login}
-                        goToRegister={switchAuth}
-                    />
-                </View>
-                <View style={[styles.authSection]}>
-                    <RegisterSection onGoToLogin={switchAuth} />
-                </View>
-            </Animated.View>
-        </View>
+            {isLogin ? (
+                <LoginSection
+                    login={login}
+                    goToRegister={switchAuth}
+                    styles={sectionStyles}
+                />
+            ) : (
+                // TODO: Implement register function and pass it the section
+                <RegisterSection
+                    register={() => { alert('Register not implemented') }}
+                    goToLogin={switchAuth}
+                    styles={sectionStyles}
+                />
+            )}
+        </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: colors.light,
-    },
-
     image: {
-        marginTop: 40,
+        marginVertical: metrics.spacing.xl,
         width: '100%',
         height: 50,
     },
+});
 
-    formsRow: {
+const sectionStyles = StyleSheet.create({
+    container: {
+        marginHorizontal: metrics.spacing.md,
+        padding: metrics.spacing.sm,
+        paddingBottom: metrics.spacing.md,
+
+        borderRadius: metrics.borderRadius.sm,
+        backgroundColor: colors.modalBackground,
+        ...uiStyles.lightShadow,
+    },
+    info: {
+        color: colors.midGray,
+        marginBottom: metrics.spacing.xl,
+    },
+    forgotPasswordContainer: {
+        alignSelf: 'flex-end',
+    },
+    multiTextLine: {
         flexDirection: 'row',
-        width: SCREEN_WIDTH * 2,
-    },
-
-    authSection: {
-        width: SCREEN_WIDTH,
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'center'
     },
+    securePasswordContainer: {
+        zIndex: 1,
+        position: 'absolute',
+        padding: metrics.spacing.xs,
+        right: metrics.spacing.xs,
+        bottom: metrics.buttonSize.sm / 2 - metrics.imageSize.xs / 2 - metrics.spacing.xs,
+    },
+    passwordIcon: {
+        width: metrics.imageSize.xs,
+        height: metrics.imageSize.xs,
+        color: colors.midGray,
+    },
+    button: {
+        alignSelf: 'center',
+        marginTop: metrics.spacing.md,
+    }
 });

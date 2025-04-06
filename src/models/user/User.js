@@ -5,6 +5,29 @@ export class User {
         this.preferences = preferences instanceof UserPreferences ? preferences : new UserPreferences({ ...preferences });
     }
 
+    static validateUsername(username) {
+        if (!username) {
+            throw new Error('Nazwa użytkownika jest wymagana.');
+        }
+
+        const minLettersRegex = /^[a-zA-ZÀ-ÖØ-öø-ÿĄąĆćĘęŁłŃńÓóŚśŹźŻż]{3,}/;
+        if (!minLettersRegex.test(username)) {
+            throw new Error('Nazwa użytkownika musi zaczynać się od min. 3 liter.');
+        }
+
+        const allowedCharsRegex = /^[a-zA-ZÀ-ÖØ-öø-ÿĄąĆćĘęŁłŃńÓóŚśŹźŻż0-9_-]+$/;
+        if (!allowedCharsRegex.test(username)) {
+            throw new Error('Nazwa użytkownika może zawierać tylko litery, cyfry, oraz znaki - i _.');
+        }
+
+        const maxLengthRegex = /^.{1,20}$/;
+        if (!maxLengthRegex.test(username)) {
+            throw new Error('Nazwa użytkownika nie może przekraczać 20 znaków.');
+        }
+
+        return true;
+    }
+
     static validateEmail(email) {
         // requires at list one sign before @, at least one sign between @ and ., at least 2 signs after .
         if (!email) {
@@ -22,7 +45,6 @@ export class User {
             throw new Error('Hasło jest wymagane.');
         }
     }
-
 }
 
 export class UserPreferences {

@@ -109,7 +109,8 @@ export default function LoadingScreen({ show, message }) {
             <Animated.View
                 style={[
                     styles.iconLayer,
-                    { transform: [{ translateX: iconLayerTranslateX }] }
+                    { transform: [{ translateX: iconLayerTranslateX }] },
+                    !isVisible && { display: 'none' },
                 ]}
             >
                 {/* loading message */}

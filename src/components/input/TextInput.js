@@ -1,6 +1,6 @@
 import { colors, fontStyles, metrics } from "@styles";
 import { useRef, useState } from "react";
-import { StyleSheet, TextInput as ReactTextInput } from "react-native";
+import { TextInput as ReactTextInput, StyleSheet } from "react-native";
 import InputContainer, { INPUT_SIZES, INPUT_VARIANTS } from "./InputContainer";
 
 const INPUT_TEXT_STYLE = fontStyles.body;
@@ -15,21 +15,15 @@ export default function TextInput(props) {
         variant,
         style = {},
         textStyle = {},
+
+        outerRef = null,
+        onFocus,
+        onBlur,
         ...otherProps
     } = props;
 
     const inputRef = useRef(null);
     const [isFocused, setIsFocused] = useState(false);
-
-    const handleChange = (value) => {
-        onChange(value);
-    }
-
-    const handleButtonPress = () => {
-        if (variant !== INPUT_VARIANTS.DISABLED) {
-            inputRef.current.focus();
-        }
-    }
 
     const buttonStyle = [
         {
@@ -55,10 +49,37 @@ export default function TextInput(props) {
         textStyle,
     ];
 
+    const setRefs = (ref) => {
+        inputRef.current = ref;
+        if (outerRef) {
+            outerRef.current = ref;
+        }
+    }
+
+    const handleChange = (value) => {
+        onChange(value);
+    }
+
+    const handleContainerPress = () => {
+        if (variant !== INPUT_VARIANTS.DISABLED) {
+            inputRef.current.focus();
+        }
+    }
+
+    const handleFocus = () => {
+        setIsFocused(true);
+        onFocus?.();
+    }
+
+    const handleBlur = () => {
+        onBlur?.();
+        setIsFocused(false);
+    }
+
     return (
-        <InputContainer style={buttonStyle} variant={variant} onPress={handleButtonPress}>
+        <InputContainer style={buttonStyle} variant={variant} onPress={handleContainerPress}>
             <ReactTextInput
-                ref={inputRef}
+                ref={setRefs}
                 value={value}
                 onChangeText={handleChange}
 
@@ -66,8 +87,8 @@ export default function TextInput(props) {
                 numberOfLines={multiline ? 2 : 1}
 
                 disabled={variant === INPUT_VARIANTS.DISABLED}
-                onFocus={() => setIsFocused(true)}
-                onBlur={() => setIsFocused(false)}
+                onFocus={handleFocus}
+                onBlur={handleBlur}
 
                 style={textInputStyle}
                 {...otherProps}
@@ -87,5 +108,7 @@ const styles = StyleSheet.create({
 
         outlineStyle: 'none',
         overflow: 'hidden',
+
+        backgroundColor: 'transparent',
     },
 });
