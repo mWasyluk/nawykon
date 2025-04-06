@@ -18,6 +18,7 @@ const icons = {
     check: require('@assets/icons/check.png'),
     pen: require('@assets/icons/pen.png'),
     logout: require('@assets/icons/logout.png'),
+    login: require('@assets/icons/login.png'),
     refresh: require('@assets/icons/refresh.png'),
     refreshBold: require('@assets/icons/refresh-bold.png'),
     cancel: require('@assets/icons/cancel.png'),
@@ -29,6 +30,8 @@ const icons = {
     calendarCheck: require('@assets/icons/calendar-check.png'),
     calendarCross: require('@assets/icons/calendar-cross.png'),
     calendarDays: require('@assets/icons/calendar-days.png'),
+    eye: require('@assets/icons/eye.png'),
+    eyeCrossed: require('@assets/icons/eye-crossed.png'),
 
     habit: {
         productivity: require('@assets/habit-icons/productivity.png'),

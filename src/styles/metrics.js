@@ -6,7 +6,7 @@ const metrics = {
         sm: 10,
         md: 20,
         lg: 30,
-        // xl: 40,
+        xl: 40,
     },
     borderRadius: {
         // xs: 5,
