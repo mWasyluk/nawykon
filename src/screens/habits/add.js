@@ -1,4 +1,4 @@
-import Button from '@components/input/Button';
+import Button, { LOADING_ICON } from '@components/input/Button';
 import { INPUT_SIZES, INPUT_VARIANTS } from '@components/input/InputContainer';
 import { ScreenContainer } from '@components/layout';
 import routes from '@constants/router';
@@ -7,15 +7,16 @@ import { HabitBuilder } from '@models/habit/Habit';
 import { ModalService } from '@services/modalService';
 import { icons, metrics } from '@styles';
 import { router } from 'expo-router';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import EditAvatarSection from './sections/EditAvatarSection';
 import EditDetailsSection from './sections/EditDetailsSection';
 import EditGoalSection from './sections/EditGoalSection';
 import EditRemindersSection from './sections/EditRemindersSection';
 
 export default function AddHabitScreen() {
-	const { addHabit } = useHabits();
+	const { addHabit, isLoading } = useHabits();
 	const [builderErrors, setBuilderErrors] = useState([]);
+	const [createdHabit, setCreatedHabit] = useState(null);
 
 	const habitBuilder = useMemo(() => {
 		const hb = new HabitBuilder();
@@ -23,22 +24,35 @@ export default function AddHabitScreen() {
 		return hb;
 	}, []);
 
+	const isSubmitted = useMemo(() => isLoading || createdHabit, [isLoading, createdHabit]);
+	const isError = useMemo(() => builderErrors.length > 0, [builderErrors]);
+
+	const buttonIcon = useMemo(() => (
+		isSubmitted ? LOADING_ICON : icons.check
+	), [isSubmitted]);
+
 	const buttonVariant = useMemo(() => (
-		builderErrors.length > 0 ? INPUT_VARIANTS.DISABLED : INPUT_VARIANTS.PRIME
-	), [builderErrors]);
+		(isError || isSubmitted) ? INPUT_VARIANTS.DISABLED : INPUT_VARIANTS.PRIME
+	), [isError, isSubmitted]);
 
 	const handleAdd = async () => {
 		try {
 			let habit = habitBuilder.build();
 
-			if (buttonVariant !== INPUT_VARIANTS.DISABLED) {
-				habit = await addHabit(habit);
-				router.push(routes.habitDetails(habit.id));
+			if (!isSubmitted && !isError) {
+				setCreatedHabit(await addHabit(habit));
 			}
 		} catch (error) {
 			ModalService.showError(error.message);
 		}
 	}
+
+	useEffect(() => {
+		if (createdHabit && !isLoading) {
+			setCreatedHabit(null);
+			router.replace(routes.habitDetails(createdHabit.id));
+		}
+	}, [createdHabit, isLoading]);
 
 	return (
 		<ScreenContainer>
@@ -49,7 +63,7 @@ export default function AddHabitScreen() {
 
 			<Button
 				title={"Zapisz"}
-				icon={icons.check}
+				icon={buttonIcon}
 				variant={buttonVariant}
 				size={INPUT_SIZES.LARGE}
 
