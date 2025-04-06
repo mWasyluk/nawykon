@@ -10,6 +10,7 @@ import { genitiveMonths } from "@constants/time";
 import { useHabits } from "@contexts/HabitsContext";
 import { useReports } from "@contexts/ReportsContext";
 import { useStateManager } from "@contexts/StateManagerContext";
+import { ModalService } from "@services/modalService";
 import { colors, icons, metrics } from "@styles";
 import { formatDate, validateTimestamp } from "@utils/dateUtil";
 import { router } from "expo-router";
@@ -27,7 +28,8 @@ export default function DailyActivitySubsection(props) {
 
     if (!habitId) {
         listElements.push(
-            <MoodActivityButton key="mood"
+            <MoodActivityButton
+                key="mood-button"
                 humor={moodReport?.humor}
                 energy={moodReport?.energy}
                 isNote={!!moodReport?.note}
@@ -40,17 +42,30 @@ export default function DailyActivitySubsection(props) {
 
     if (allDailyExecutions) {
         if (habitId) {
-            Object.entries(allDailyExecutions)?.forEach(([dailyHabitId, dailyHabitExecutions], i) => {
-                if (habitId !== dailyHabitId) {
-                    return;
+            const executions = allDailyExecutions[habitId] || [];
+            executions.forEach((execution, j) => {
+                const time = formatDate(execution, 'shorttime');
+
+                const handleRemoveExecution = async () => {
+                    const newExecutions = executions.filter(e => e !== execution);
+                    await setHabitLog(date, { id: habitId, executions: newExecutions });
                 }
-                dailyHabitExecutions?.forEach((execution, j) => {
-                    const time = formatDate(execution, 'shorttime');
-                    listElements.push(
-                        <TimeActivityButton key={`${i}${j}`} time={time} />
+
+                const showRemoveConfirmation = () => {
+                    ModalService.showConfirm(
+                        `Czy chcesz trwale usunąć zapis wykonania nawyku z godziny ${time}?`,
+                        handleRemoveExecution,
                     );
-                })
-            });
+                }
+
+                listElements.push(
+                    <TimeActivityButton
+                        key={`execution-button-${j}`}
+                        time={time}
+                        onPress={showRemoveConfirmation}
+                    />
+                );
+            })
         } else {
             Object.keys(allDailyExecutions).forEach((dailyHabitId, i) => {
                 const habit = habits.find(habit => habit.id === dailyHabitId);
@@ -62,7 +77,7 @@ export default function DailyActivitySubsection(props) {
                 const onPress = () => router.push(routes.habitDetails(dailyHabitId));
                 listElements.push(
                     <HabitActivityButton
-                        key={i}
+                        key={`habit-button-${i}`}
                         type={type}
                         name={name}
                         goal={goal}
