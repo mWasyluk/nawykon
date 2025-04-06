@@ -12,11 +12,15 @@ export const HabitsProvider = ({ children }) => {
     const [isLoading, setIsLoading] = useState(false);
 
     const addHabit = async (newHabit) => {
+        setIsLoading(true);
         try {
             const savedHabit = await HabitService.saveHabit(newHabit);
             setHabits(prev => [...prev, savedHabit]);
+            return savedHabit;
         } catch (err) {
             ModalService.showError(err.message);
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -25,11 +29,15 @@ export const HabitsProvider = ({ children }) => {
             ModalService.showError('Napotkałem błąd w czasie aktualizowania nawyku. Odśwież aplikację i spróbuj ponownie.');
         }
 
+        setIsLoading(true);
         try {
             const savedHabit = await HabitService.saveHabit(updatedHabit);
             setHabits(prev => prev.map(habit => habit.id === savedHabit.id ? savedHabit : habit));
+            return savedHabit;
         } catch (err) {
             ModalService.showError(err.message);
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -61,6 +69,10 @@ export const HabitsProvider = ({ children }) => {
         if (!habits && !isLoading) {
             initHabits();
         }
+
+        return () => {
+            setHabits(null);
+        };
     }, [user]);
 
     return (

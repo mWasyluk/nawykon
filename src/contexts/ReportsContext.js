@@ -103,6 +103,10 @@ export const DailyReportsProvider = ({ children }) => {
         if (!dailyReports && !isLoading) {
             initDailyReports();
         }
+
+        return () => {
+            setDailyReports(null);
+        };
     }, [user]);
 
     return (

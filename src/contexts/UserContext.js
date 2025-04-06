@@ -44,14 +44,11 @@ export const UserProvider = ({ children }) => {
     };
 
     const logout = async () => {
-        setIsLoading(true);
         try {
             await UserService.logout();
             router.push('/');
         } catch (err) {
             ModalService.showError(err.message + " Odśwież aplikację i spróbuj ponownie.")
-        } finally {
-            setIsLoading(false);
         }
     };
 

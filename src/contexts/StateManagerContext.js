@@ -1,6 +1,6 @@
 import { ActivityRegistry } from "@models/reports/ActivityRegistry";
 import AuthScreen from "@screens/commons/auth/AuthScreen";
-import LoadingScreen from "@screens/commons/auth/LoadingScreen";
+import LoadingScreen, { LOADING_ANIMATION_DURATION } from "@screens/commons/auth/LoadingScreen";
 import { ModalService } from "@services/modalService";
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { useFonts } from "./FontsContext";
@@ -12,29 +12,29 @@ const StateManagerContext = createContext({ activityRegistry: null });
 
 export function StateManagerProvider({ children }) {
     const { isLoading: isFontsLoading } = useFonts();
-    const { isLoading: isUserLoading, user } = useUser();
-    const { isLoading: isHabitsLoading, habits } = useHabits();
-    const { isLoading: isReportsLoading, dailyReports } = useReports();
+    const { user } = useUser();
+    const { habits } = useHabits();
+    const { dailyReports } = useReports();
 
     const [activityRegistry, setActivityRegistry] = useState(null);
-    const [content, setContent] = useState(<AuthScreen />);
+    const [content, setContent] = useState(null);
 
     const loadingMessage = useMemo(() => {
-        if (isFontsLoading){
+        if (isFontsLoading) {
             return '';
         }
-        if (isUserLoading || isHabitsLoading || isReportsLoading) {
+        if (!user || !habits || !dailyReports) {
             return 'Pobieram dane' +
-                (isUserLoading ? ' o użytkowniku'
-                        : isHabitsLoading ? ' o nawykach'
-                            : isReportsLoading ? ' o raportach'
-                                : '') + '...';
-        } 
+                (!user ? ' o użytkowniku'
+                    : !habits ? ' o nawykach'
+                        : !dailyReports ? ' o raportach'
+                            : '') + '...';
+        }
         if (!activityRegistry) {
             return 'Tworzę rejestr aktywności...';
         }
-        return '';
-    }, [isUserLoading, isHabitsLoading, isReportsLoading, isFontsLoading, activityRegistry]);
+        return null;
+    }, [isFontsLoading, user, habits, dailyReports, activityRegistry]);
 
     useEffect(() => {
         if (!dailyReports || !habits) {
@@ -59,27 +59,29 @@ export function StateManagerProvider({ children }) {
     }, [dailyReports, habits]);
 
     const currentState = useMemo(() => {
-        if (!user && !isUserLoading) {
+        if (!user) {
             return "AUTH";
         }
-        if (activityRegistry && !loadingMessage) {
+        if (loadingMessage === null) {
             return "READY";
         }
         return "LOADING";
-    }, [activityRegistry, loadingMessage, user]);
+    }, [loadingMessage, user]);
 
     useEffect(() => {
-        const timer = setTimeout(() => {
-            if (currentState === "AUTH") {
-                setContent(<AuthScreen />);
-            } else if (currentState === "READY") {
+        let timer;
+        if (currentState === "AUTH") {
+            setContent(<AuthScreen />);
+        } else if (currentState === "READY") {
+            timer = setTimeout(() => {
                 setContent(children);
-            } else {
-                setContent(null);
-            }
-        }, 500);
+            }, LOADING_ANIMATION_DURATION);
+        } else {
+            setContent(null);
+        }
 
-        return () => clearTimeout(timer);
+
+        return () => timer && clearTimeout(timer);
     }, [currentState]);
 
     return (
