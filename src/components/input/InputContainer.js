@@ -3,16 +3,16 @@ import { colors, metrics, uiStyles } from "@styles";
 import { TouchableOpacity } from "react-native";
 
 export const INPUT_VARIANTS = {
-    DEFAULT: colors.modalBackground,
-    ERROR: colors.lightError,
-    PRIME: colors.primBlue,
-    DISABLED: colors.light,
+    DEFAULT: "DEFAULT",
+    PRIME: "PRIME",
+    ERROR: "ERROR",
+    DISABLED: "DISABLED",
 }
 
 export const INPUT_SIZES = {
-    DEFAULT: metrics.buttonSize.sm,
-    LARGE: metrics.buttonSize.lg,
-    AUTO: 'auto',
+    DEFAULT: "DEFAULT",
+    LARGE: "LARGE",
+    AUTO: "AUTO",
 }
 
 export default function InputContainer(props) {
@@ -24,22 +24,56 @@ export default function InputContainer(props) {
         onPress = () => { },
     } = props;
 
+    let backgroundColor;
+    switch (variant) {
+        case INPUT_VARIANTS.DISABLED && INPUT_VARIANTS.LOADING:
+            backgroundColor = colors.light;
+            break;
+        case INPUT_VARIANTS.ERROR:
+            backgroundColor = colors.lightError;
+            break;
+        case INPUT_VARIANTS.PRIME:
+            backgroundColor = colors.primBlue;
+            break;
+        default:
+            backgroundColor = colors.modalBackground;
+    }
+
+    let height, paddingHorizontal, paddingVertical, gap;
+    switch (size) {
+        case INPUT_SIZES.LARGE:
+            height = metrics.buttonSize.lg;
+            paddingHorizontal = metrics.spacing.lg;
+            paddingVertical = undefined;
+            gap = metrics.spacing.sm;
+            break;
+        case INPUT_SIZES.AUTO:
+            height = undefined;
+            paddingHorizontal = metrics.spacing.sm;
+            paddingVertical = metrics.spacing.sm;
+            gap = metrics.spacing.xs;
+            break;
+        default:
+            height = metrics.buttonSize.sm;
+            paddingHorizontal = metrics.spacing.sm;
+            paddingVertical = undefined;
+            gap = metrics.spacing.xs;
+    }
+
     const buttonStyles = [
         {
             flexDirection: 'row',
             justifyContent: 'center',
             alignItems: 'center',
 
-            height: size,
-            paddingHorizontal: size === INPUT_SIZES.LARGE ? metrics.spacing.lg : metrics.spacing.sm,
-            gap: size === INPUT_SIZES.LARGE ? metrics.spacing.sm : metrics.spacing.xs,
+            height,
+            paddingHorizontal,
+            paddingVertical,
+            gap,
 
+            backgroundColor,
             outlineStyle: 'none',
-            backgroundColor: variant,
             borderRadius: metrics.buttonRadius,
-        },
-        size === INPUT_SIZES.AUTO && {
-            paddingVertical: metrics.spacing.sm
         },
         uiStyles.lightShadow,
         style,
