@@ -5,9 +5,10 @@ import { Platform } from "react-native";
 import { app } from "src/configs/firebaseConfig";
 
 class SecureStorageAdapter {
-    #sanitizeKey(key) {
-        return key.split(":")[2] || key;
-    }
+    #sanitizeKey = (key) => {
+        return key.replace(/[^a-zA-Z0-9]/g, '_');
+    };
+
     async getItem(key) {
         try {
             return await SecureStore.getItemAsync(this.#sanitizeKey(key));
