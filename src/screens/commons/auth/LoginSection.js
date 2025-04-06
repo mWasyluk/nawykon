@@ -3,12 +3,12 @@ import { INPUT_SIZES, INPUT_VARIANTS } from '@components/input/InputContainer';
 import TextInput from '@components/input/TextInput';
 import { SectionContainer, SectionHeader, SubsectionHeader } from '@components/layout';
 import { BodyText, OptionalErrorText, PressableText } from '@components/text';
+import { AUTH_VALIDATION_DELAY } from '@constants/time';
 import { User } from '@models/user/User';
 import { ModalService } from '@services/modalService';
 import { colors, icons } from '@styles';
 import React, { createRef, useRef, useState } from 'react';
 import { Image, Keyboard, TouchableOpacity, View } from 'react-native';
-import { VALIDATION_DELAY } from './AuthScreen';
 
 export default function LoginSection({ login, goToRegister, styles }) {
     const [values, setValues] = useState({
@@ -45,7 +45,7 @@ export default function LoginSection({ login, goToRegister, styles }) {
         clearTimeout(timerRef.current);
         timerRef.current = setTimeout(() => {
             validate(name, value);
-        }, VALIDATION_DELAY);
+        }, AUTH_VALIDATION_DELAY);
     };
 
     const handleInputSubmit = (i) => {

@@ -7,3 +7,5 @@ export const fullMonths = ['Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Cz
 export const genitiveMonths = ['Stycznia', 'Lutego', 'Marca', 'Kwietnia', 'Maja', 'Czerwca', 'Lipca', 'Sierpnia', 'Września', 'Października', 'Listopada', 'Grudnia'];
 
 export const periodUnits = ['dni', 'tygodni', 'miesięcy'];
+
+export const AUTH_VALIDATION_DELAY = 500;

@@ -5,8 +5,6 @@ import { Image, SafeAreaView, StyleSheet } from 'react-native';
 import LoginSection from './LoginSection';
 import RegisterSection from './RegisterSection';
 
-export const VALIDATION_DELAY = 500;
-
 export default function AuthScreen() {
     const { login } = useUser();
     const [isLogin, setIsLogin] = useState(true);
