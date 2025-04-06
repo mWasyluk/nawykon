@@ -57,11 +57,13 @@ export class ActivityRegistry {
 
         const completed = executions.length;
         const status = ActivityUtil.calculateHabitStatus(goal, completed);
+        const effectual = Math.min(completed, goal);
 
         return {
             executions,
             goal,
             completed,
+            effectual,
             status,
         };
     }
@@ -73,7 +75,7 @@ export class ActivityRegistry {
         const recordDto = {
             date: dateKey,
             mood: dateRecord?.mood,
-            habits: dateRecord?.habits // { habitId: { goal, completed, status } }
+            habits: dateRecord?.habits // { habitId: { executions, goal, completed, effectual, status, } }
         };
 
         return recordDto;

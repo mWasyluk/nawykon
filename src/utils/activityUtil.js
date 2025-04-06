@@ -56,7 +56,7 @@ export const ActivityUtil = {
             streak: 0,
             points: 0,
             calendar: {
-                // date: { goal: 0, completed: 0, points: 0, status: ActivityRegistry.STATUSES.NEUTRAL 
+                // date: { goal: 0, completed: 0, effectual: 0, points: 0, status: ActivityRegistry.STATUSES.NEUTRAL 
             },
         };
 
@@ -68,6 +68,7 @@ export const ActivityUtil = {
                     [habitId]: {
                         goal: 0,
                         completed: 0,
+                        effectual: 0,
                         status: ActivityRegistry.STATUSES.NEUTRAL,
                     },
                 };
@@ -76,7 +77,7 @@ export const ActivityUtil = {
             const allStatuses = [];
 
             // ... for each habit in the record...
-            Object.entries(habits).forEach(([id, { executions, goal, completed, status }]) => {
+            Object.entries(habits).forEach(([id, { executions, goal, completed, effectual, status }]) => {
                 // ... if the habitId is provided and it does not match the current habit, skip it
                 if (habitId && habitId !== id) return;
 
@@ -86,6 +87,7 @@ export const ActivityUtil = {
                         goal: 0,
                         completed: 0,
                         points: 0,
+                        effectual: 0,
                         status: ActivityRegistry.STATUSES.NEUTRAL,
                     };
                 }
@@ -94,6 +96,7 @@ export const ActivityUtil = {
                 calendar[date].executions = { ...calendar[date].executions, [id]: executions };
                 calendar[date].goal += goal;
                 calendar[date].completed += completed;
+                calendar[date].effectual += effectual;
 
                 // ... calculate habit points and update the daily stats
                 calendar[date].points += calculatePointByStatus(status);
