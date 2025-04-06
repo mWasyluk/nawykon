@@ -1,11 +1,14 @@
 import HabitActivityButton from "@components/activity/HabitActivityButton";
 import MoodActivityButton from "@components/activity/MoodActivityButton";
 import TimeActivityButton from "@components/activity/TimeActivityButton";
+import Button from "@components/input/Button";
+import { INPUT_VARIANTS } from "@components/input/InputContainer";
 import { SubsectionHeader } from "@components/layout";
 import { LabelText } from "@components/text";
 import routes from "@constants/router";
 import { genitiveMonths } from "@constants/time";
 import { useHabits } from "@contexts/HabitsContext";
+import { useReports } from "@contexts/ReportsContext";
 import { useStateManager } from "@contexts/StateManagerContext";
 import { colors, icons, metrics } from "@styles";
 import { formatDate, validateTimestamp } from "@utils/dateUtil";
@@ -16,6 +19,7 @@ export default function DailyActivitySubsection(props) {
     const { date, habitStatistics, moodReport, habitId } = props;
     const { activityRegistry } = useStateManager();
     const { habits } = useHabits();
+    const { setHabitLog } = useReports();
 
     const allHabitsRegistryRecord = activityRegistry.getRecord(date).habits;
     const allDailyExecutions = habitStatistics && habitStatistics.executions;
@@ -68,6 +72,24 @@ export default function DailyActivitySubsection(props) {
                 );
             })
         }
+    }
+
+    if (habitId) {
+        const handleAddExecution = async () => {
+            const currentExecutions = allDailyExecutions[habitId];
+            const newExecutions = [...currentExecutions, new Date().getTime()];
+
+            await setHabitLog(date, { id: habitId, executions: newExecutions });
+        }
+
+        listElements.push(
+            <Button
+                key="add-execution-button"
+                icon={icons.plus}
+                onPress={handleAddExecution}
+                variant={INPUT_VARIANTS.PRIME}
+            />
+        )
     }
 
     const validDate = validateTimestamp(date);

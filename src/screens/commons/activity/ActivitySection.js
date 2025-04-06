@@ -4,7 +4,7 @@ import { useStateManager } from "@contexts/StateManagerContext";
 import { icons } from "@styles";
 import { ActivityUtil } from "@utils/activityUtil";
 import { formatDate, getMonthName } from "@utils/dateUtil";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import DailyActivitySubsection from "./DailyActivitySubsection";
 import StatusCalendarSubsection from "./StatusCalendarSubsection";
 
@@ -33,6 +33,8 @@ export default function ActivitySection(props) {
     const { habitId = undefined } = props;
     const { activityRegistry } = useStateManager();
 
+    const [selectedDate, setSelectedDate] = useState(formatDate(today, 'date'));
+
     const tabs = [
         { name: currentMonthName, getStatistics: () => getStatistics(activityRegistry, habitId, firstDateCurrentMonth, lastDateCurrentMonth) },
         { name: oneMonthAgoName, getStatistics: () => getStatistics(activityRegistry, habitId, firstDateOneMonthAgo, lastDateOneMonthAgo) },
@@ -46,36 +48,41 @@ export default function ActivitySection(props) {
         setSelectedTabIndex((selectedTabIndex + 1) % tabs.length);
     }
 
-    const [selectedDate, setSelectedDate] = useState(formatDate(today, 'date'));
-    const [dailyStatistics, setDailyStatistics] = useState(selectedTab.getStatistics().calendar[selectedDate]);
+    const monthlyStatistics = useMemo(() => (
+        selectedTab.getStatistics()
+    ), [selectedTab, activityRegistry, habitId]);
 
-    const statistics = selectedTab.getStatistics();
-    const moodReport = activityRegistry.getRecord(selectedDate)?.mood;
+    const dailyStatistics = useMemo(() => (
+        monthlyStatistics.calendar[selectedDate]
+    ), [selectedDate, monthlyStatistics]);
+
+    const dailyMoodReport = useMemo(() => (
+        activityRegistry.getRecord(selectedDate).mood
+    ), [selectedDate, activityRegistry]);
 
     const onSelectDate = (date) => {
         setSelectedDate(date);
-        setDailyStatistics(statistics.calendar[date]);
     };
 
     return (
         <SectionContainer style={{ alignItems: 'center' }}>
             <SectionHeader title="Aktywność"
                 badge={<TabToggle name={selectedTab.name} onPress={toggleTab} />}
-                right={<ActivityValueIcon value={statistics.streak} icon={icons.streak} />}
+                right={<ActivityValueIcon value={monthlyStatistics.streak} icon={icons.streak} />}
             />
 
             <StatusCalendarSubsection
-                data={statistics.calendar}
+                data={monthlyStatistics.calendar}
                 onSelectDate={onSelectDate}
                 selectedDate={selectedDate}
-                completed={statistics.completed}
-                failed={statistics.failed}
-                partial={statistics.partial}
+                completed={monthlyStatistics.completed}
+                failed={monthlyStatistics.failed}
+                partial={monthlyStatistics.partial}
             />
 
             <DailyActivitySubsection
                 date={selectedDate}
-                moodReport={moodReport}
+                moodReport={dailyMoodReport}
                 habitStatistics={dailyStatistics}
                 habitId={habitId}
             />
