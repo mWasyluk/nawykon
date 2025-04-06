@@ -1,87 +1,51 @@
-import HabitTypeAvatar from '@components/habit/HabitTypeAvatar';
+import ActivityValueIcon from '@components/activity/ActivityValueIcon';
+import HabitAvatar from '@components/habit/HabitAvatar';
+import InputContainer, { INPUT_SIZES } from '@components/input/InputContainer';
 import PieButton from '@components/input/PieButton';
 import { CaptionText, TitleText } from '@components/text';
-import { colors, icons } from '@styles';
-import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { colors, fontStyles, icons, metrics } from '@styles';
+import { StyleSheet, View } from 'react-native';
 
 export default function HabitCard(props) {
     const {
+        details: { type, color, name, description },
+        streak,
+        goal = 0,
+        completed = 0,
         onPress = () => { },
         addExecution = () => { },
-        type,
-        name,
-        streak,
-        description,
-        repetitions = 0,
-        executions = 0,
-
     } = props;
 
     return (
-        <TouchableOpacity style={styles.container} onPress={onPress}>
-            <HabitTypeAvatar type={type} />
+        <InputContainer size={INPUT_SIZES.AUTO} style={styles.container} onPress={onPress}>
+            <HabitAvatar type={type} color={color} />
 
             <View style={styles.detailsContainer}>
-                <View style={styles.head}>
-                    <TitleText style={styles.name}>{name}</TitleText>
-                    <CaptionText style={styles.description}>{description}</CaptionText>
-                </View>
-
-                <View style={styles.actionContainer}>
-                    <Image source={icons.streak} style={styles.streakIcon} />
-                    <TitleText style={styles.streakText}>{streak}</TitleText>
-                    <PieButton maxCount={repetitions} count={executions} onPress={addExecution} />
-                </View>
+                <TitleText style={styles.name} numberOfLines={1}>{name}</TitleText>
+                <CaptionText style={styles.description} numberOfLines={2}>{description}</CaptionText>
             </View>
-        </TouchableOpacity>
+
+            <ActivityValueIcon value={streak} icon={icons.streak} />
+
+            <PieButton maxCount={goal} count={completed} onPress={addExecution} />
+        </InputContainer>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        width: '100%',
-        borderRadius: 64,
-        padding: 10,
-        gap: 10,
+        gap: 0,
     },
     detailsContainer: {
         flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'flex-start',
-    },
-    actionContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    head: {
-        flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        alignItems: 'flex-start',
-        gap: 5,
-    },
-    bottom: {
-        width: '100%',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        gap: 5,
+        height: '100%',
+        marginHorizontal: metrics.spacing.xs,
     },
     name: {
         color: colors.darkGray,
     },
     description: {
         color: colors.midGray,
-    },
-    streakIcon: {
-        width: 22,
-        height: 22,
-    },
-    streakText: {
-        color: colors.darkGray,
-        marginRight: 10,
+        lineHeight: fontStyles.caption.fontSize,
     },
 });
