@@ -1,5 +1,5 @@
 import SelectableHabitColor from '@components/habit/SelectableHabitColor';
-import SelectableHabitTypeAvatar from '@components/habit/SelectableHabitTypeAvatar';
+import SelectableHabitType from '@components/habit/SelectableHabitType';
 import { SectionContainer, SectionHeader, SubsectionHeader } from '@components/layout';
 import { OptionalErrorText } from '@components/text';
 import { HabitDetails } from '@models/habit/HabitDetails';
@@ -52,7 +52,7 @@ export default function EditAvatarSection({ habitBuilder }) {
                 <SubsectionHeader title={'Typ'} isRequired={true} />
                 <View style={styles.palette}>
                     {HabitDetails.HABIT_TYPES.map((habitType, i) =>
-                        <SelectableHabitTypeAvatar
+                        <SelectableHabitType
                             key={i}
                             type={habitType}
                             color={color}

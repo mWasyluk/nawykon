@@ -1,5 +1,5 @@
-import HabitTypeAvatar from "@components/habit/HabitTypeAvatar";
-import ButtonContainer from "@components/input/ButtonContainer";
+import HabitAvatar from "@components/habit/HabitAvatar";
+import InputContainer from "@components/input/InputContainer";
 import { ActionText, BodyBoldText } from "@components/text";
 import { colors, icons, metrics } from "@styles";
 import { Image, View } from "react-native";
@@ -30,8 +30,8 @@ export default function HabitActivityButton(props) {
     }
 
     return (
-        <ButtonContainer onPress={onPress}>
-            <HabitTypeAvatar type={type} style={{ height: metrics.imageSize.xs, width: metrics.imageSize.xs }} />
+        <InputContainer onPress={onPress}>
+            <HabitAvatar type={type} style={{ height: metrics.imageSize.xs, width: metrics.imageSize.xs }} />
 
             <ActionText style={{ color: colors.midGray }}>{name}</ActionText>
 
@@ -49,6 +49,6 @@ export default function HabitActivityButton(props) {
                     {completed || 0}/{goal || 0}
                 </BodyBoldText>
             )}
-        </ButtonContainer>
+        </InputContainer>
     );
 }

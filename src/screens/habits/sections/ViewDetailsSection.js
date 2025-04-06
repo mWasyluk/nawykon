@@ -1,4 +1,4 @@
-import HabitAvatar from '@components/habit/HabitTypeAvatar';
+import HabitAvatar from '@components/habit/HabitAvatar';
 import Button from '@components/input/Button';
 import InputContainer, { INPUT_SIZES, INPUT_VARIANTS } from '@components/input/InputContainer';
 import { SectionContainer, SectionHeader } from '@components/layout';
@@ -65,11 +65,11 @@ export default function ViewDetailsSection({ habit }) {
 
     const handleDeletePress = () => {
         const message = `Czy chcesz trwale usunąć nawyk "${name}"?`;
-        const onPress = () => {
-            deleteHabit(id);
-            router.replace(routes.dashboard);
+        const onConfirm = async () => {
+            await deleteHabit(id);
+            router.replace(routes.home);
         };
-        ModalService.showConfirm(message, onPress);
+        ModalService.showConfirm(message, onConfirm);
     }
 
     const handleEditPress = () => {

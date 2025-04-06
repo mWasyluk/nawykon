@@ -60,15 +60,26 @@ export class Habit {
             return true;
         }
 
-        if (!Array.isArray(reminders) || !reminders.every(reminder => /^\d{2}:\d{2}$/.test(reminder))) {
+        if (!Array.isArray(reminders) || !reminders.every(reminder => /^\d{1,2}:\d{2}$/.test(reminder))) {
             throw new Error('Godziny przypomnień muszą mieć format HH:MM.');
         }
+
+        reminders.forEach(reminder => {
+            const parts = reminder.split(':');
+            const h = parseInt(parts[0]);
+            const m = parseInt(parts[1]);
+
+
+            if (h < 0 || h > 23 || m < 0 || m > 59) {
+                throw new Error('Godziny muszą się mieścić w 0-23, a minuty w 0-59.');
+            }
+        });
 
         return true;
     }
 
     static validateEndDate(endDate) {
-        if (!endDate) {
+        if (endDate === null || endDate === undefined) {
             return true;
         }
 
@@ -114,12 +125,19 @@ export class HabitBuilder {
 
     withDescription(description) {
         this.description = description;
+        this._validate(() => { }, description, 'description');
         return this;
     }
 
     withType(type) {
         this.type = type;
         this._validate(HabitDetails.validateType, type, 'type');
+        return this;
+    }
+
+    withColor(color) {
+        this.color = color;
+        this._validate(HabitDetails.validateColor, color, 'color');
         return this;
     }
 
@@ -169,14 +187,15 @@ export class HabitBuilder {
             const hasOwnName = this.hasOwnProperty('name');
             const hasOwnType = this.hasOwnProperty('type');
             const hasOwnDescription = this.hasOwnProperty('description');
-            var name = hasOwnName ? this.name : currentDetails?.name;
             var type = hasOwnType ? this.type : currentDetails?.type;
+            var color = hasOwnType ? this.color : currentDetails?.color;
+            var name = hasOwnName ? this.name : currentDetails?.name;
             var description = hasOwnDescription ? this.description : currentDetails?.description;
 
             if (currentDetails) {
-                this.habit.details = new HabitDetails({ name, type, description });
+                this.habit.details = new HabitDetails({ name, type, color, description });
             } else {
-                this.details = new HabitDetails({ name, type, description });
+                this.details = new HabitDetails({ name, type, color, description });
             }
         }
 

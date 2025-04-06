@@ -2,8 +2,8 @@ import Button from '@components/input/Button';
 import { INPUT_VARIANTS } from '@components/input/InputContainer';
 import TextInput from '@components/input/TextInput';
 import { SectionContainer, SectionHeader } from '@components/layout';
-import { AdaptiveRegularText, OptionalErrorText } from '@components/text';
-import { icons } from '@styles';
+import { BodyText, OptionalErrorText } from '@components/text';
+import { colors, icons } from '@styles';
 import { useState } from 'react';
 import { View } from 'react-native';
 
@@ -53,7 +53,7 @@ export default function EditRemindersSection({ habitBuilder }) {
             />
             {reminders.map((reminder, i) => (
                 <View key={`${i}${reminder}`} style={{ flex: 1, flexDirection: 'row', alignItems: 'center', gap: 10 }}>
-                    <AdaptiveRegularText>O godzinie</AdaptiveRegularText>
+                    <BodyText style={{ color: colors.midGray }}>O godzinie</BodyText>
                     <View style={{ width: 120 }}>
                         <TextInput
                             value={reminder}
