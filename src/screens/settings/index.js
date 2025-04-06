@@ -1,9 +1,10 @@
-import ScreenSection from '@components/layout/ScreenSection';
 import Button from '@components/input/Button';
-import { AdaptiveRegularText } from '@components/text';
+import { INPUT_SIZES } from '@components/input/InputContainer';
+import ScreenSection from '@components/layout/ScreenSection';
+import { PressableText } from '@components/text';
+import { useUser } from '@contexts/UserContext';
 import { icons } from '@styles';
 import { ScrollView } from 'react-native';
-import { useUser } from '@contexts/UserContext';
 
 export default function SettingsScreen() {
     const { logout } = useUser();
@@ -15,16 +16,21 @@ export default function SettingsScreen() {
     return (
         <ScrollView>
             <ScreenSection title="Aplikacja">
-                <AdaptiveRegularText disabled={true}>Powiadomienia</AdaptiveRegularText>
-                <AdaptiveRegularText disabled={true}>Wyświetlanie</AdaptiveRegularText>
+                <PressableText disabled={true}>Powiadomienia</PressableText>
+                <PressableText disabled={true}>Wyświetlanie</PressableText>
             </ScreenSection>
             <ScreenSection title="Informacje">
-                <AdaptiveRegularText disabled={true}>Regulamin użytkownika</AdaptiveRegularText>
-                <AdaptiveRegularText disabled={true}>Polityka prywatności</AdaptiveRegularText>
-                <AdaptiveRegularText disabled={true}>Pomoc</AdaptiveRegularText>
+                <PressableText disabled={true}>Regulamin użytkownika</PressableText>
+                <PressableText disabled={true}>Polityka prywatności</PressableText>
+                <PressableText disabled={true}>Pomoc</PressableText>
             </ScreenSection>
             <ScreenSection containerStyle={{ alignItems: 'flex-start' }}>
-                <Button icon={icons.logout} title="Wyloguj się" onPress={handleLogout} />
+                <Button
+                    title="Wyloguj się"
+                    icon={icons.logout}
+                    size={INPUT_SIZES.LARGE}
+                    onPress={handleLogout}
+                />
             </ScreenSection>
         </ScrollView>
     );
