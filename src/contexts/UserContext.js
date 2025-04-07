@@ -17,7 +17,7 @@ export const UserProvider = ({ children }) => {
                 if (currentUser) {
                     setIsLoading(true);
                     const userDetails = await UserService.getUserDetails(); // uid, username, prefs
-                    setUser(new User(userDetails));
+                    setUser(new User({ ...userDetails, email: currentUser.email }));
                 } else {
                     setUser(null);
                 }
@@ -52,8 +52,23 @@ export const UserProvider = ({ children }) => {
         }
     };
 
+    const updateUsername = async (newUsername) => {
+        setIsLoading(true);
+        try {
+            const userDto = { ...user, username: newUsername };
+            delete userDto.email;
+
+            const updatedUser = await UserService.updateUserDetails(userDto);
+            setUser(new User({ ...updatedUser, email: user.email }));
+        } catch (err) {
+            ModalService.showError(err.message);
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
     return (
-        <UserContext.Provider value={{ user, isLoading, login, logout }}>
+        <UserContext.Provider value={{ user, updateUsername, isLoading, login, logout }}>
             {children}
         </UserContext.Provider>
     );

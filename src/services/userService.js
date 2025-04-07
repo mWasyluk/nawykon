@@ -1,4 +1,4 @@
-import { getAllDocumentsByQuery } from '@services/firestoreService';
+import { getAllDocumentsByQuery, setDocument } from '@services/firestoreService';
 import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { limit } from 'firebase/firestore';
 import { auth } from './authService';
@@ -7,6 +7,7 @@ const collectionName = 'userDetails';
 
 export const UserService = {
     getUserDetails,
+    updateUserDetails,
     login,
     logout,
 }
@@ -33,4 +34,8 @@ async function logout() {
     } catch {
         throw new Error("Nie mogłem Cię wylogować.")
     }
+}
+
+async function updateUserDetails(user) {
+    return await setDocument(collectionName, user);
 }

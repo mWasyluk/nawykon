@@ -1,7 +1,9 @@
 export class User {
-    constructor({ uid, username, preferences }) {
+    constructor({ id, uid, username, email, preferences }) {
+        this.id = id;
         this.uid = uid;
         this.username = username;
+        this.email = email;
         this.preferences = preferences instanceof UserPreferences ? preferences : new UserPreferences({ ...preferences });
     }
 
