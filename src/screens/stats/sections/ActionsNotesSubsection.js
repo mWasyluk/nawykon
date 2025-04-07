@@ -1,7 +1,9 @@
 import MoodActivityButton from "@components/activity/MoodActivityButton";
 import { SubsectionHeader } from "@components/layout";
 import { BodyBoldText, BodyText } from "@components/text";
+import routes from "@constants/router";
 import { NumberUtil } from "@utils/numberUtil";
+import { router } from "expo-router";
 import { View } from "react-native";
 
 export default function ActionsNotesSubsection({ summary, styles }) {
@@ -11,13 +13,15 @@ export default function ActionsNotesSubsection({ summary, styles }) {
         longestNoteReport,
     } = summary;
 
-    // TODO: update after mood report edit screen is implemented
-    const longestNoteReportOnPress = () => { };
     const { humor, energy, note, date } = longestNoteReport || {};
+
+    const longestNoteReportOnPress = () => {
+        router.navigate(routes.editMoodByDate(date));
+    };
 
     return (
         <View>
-            <SubsectionHeader title="Nastrój" />
+            <SubsectionHeader title="Notatki" />
 
             <BodyText style={styles.regularText}>
                 {'Każdego tygodnia dodajesz średnio '}

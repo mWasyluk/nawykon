@@ -13,27 +13,24 @@ export default function MoodActivityButton(props) {
         onPress = () => { },
     } = props;
 
-    return (
-        <>
-            {isEmpty ? (
-                <InputContainer >
-                    <Image source={icons.mood} style={[styles.image, { filter: 'grayscale(100%)' }]} />
+    const actionTextStyle = isEmpty ? styles.emptyText : styles.text;
+    const actionTextValue = !date ? "Raport dzienny" : date;
 
-                    <ActionText style={styles.emptyText}>Raport dzienny</ActionText>
-                </InputContainer>
+    return (
+        <InputContainer onPress={onPress}>
+            {isEmpty ? (
+                <Image source={icons.mood} style={[styles.image, { filter: 'grayscale(100%)' }]} />
             ) : (
-                <InputContainer onPress={onPress}>
-                    <View style={{ flexDirection: 'row' }}>
-                        <Image source={icons[`mood${humor}`]} style={styles.image} />
-                        <Image source={icons[`energy${energy}`]} style={styles.image} />
-                        {isNote && (
-                            <Image source={icons.doc} style={styles.image} tintColor={colors.midGray} />
-                        )}
-                    </View>
-                    <ActionText style={styles.text}>{date ? date : "Raport dzienny"}</ActionText>
-                </InputContainer>
+                <View style={{ flexDirection: 'row' }}>
+                    <Image source={icons[`mood${humor}`]} style={styles.image} />
+                    <Image source={icons[`energy${energy}`]} style={styles.image} />
+                    {isNote && (
+                        <Image source={icons.doc} style={styles.image} tintColor={colors.midGray} />
+                    )}
+                </View>
             )}
-        </>
+            <ActionText style={actionTextStyle}>{actionTextValue}</ActionText>
+        </InputContainer>
     );
 }
 

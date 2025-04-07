@@ -1,8 +1,10 @@
 import MoodActivityButton from "@components/activity/MoodActivityButton";
 import { SubsectionHeader } from "@components/layout";
 import { BodyBoldText, BodyText } from "@components/text";
+import routes from "@constants/router";
 import { fullDays, pluralDays } from "@constants/time";
 import { NumberUtil } from "@utils/numberUtil";
+import { router } from "expo-router";
 import { View } from "react-native";
 
 export default function ActionsMoodSubsection({ summary, styles }) {
@@ -13,11 +15,13 @@ export default function ActionsMoodSubsection({ summary, styles }) {
         bestMoodDayOfPreviousWeekReport,
     } = summary;
 
-    // TODO: update after mood report edit screen is implemented
-    const bestMoodReportOnPress = () => { };
     const pluralDaysOfWeek = bestMoodDaysOfWeek.map(dayOfWeek => pluralDays[dayOfWeek].toLowerCase());
     const daysOfWeekString = pluralDaysOfWeek.join(', ');
     const { humor, energy, note, date } = bestMoodDayOfPreviousWeekReport || {};
+
+    const bestMoodReportOnPress = () => {
+        router.navigate(routes.editMoodByDate(date));
+    };
 
     return (
         <View>
@@ -35,7 +39,7 @@ export default function ActionsMoodSubsection({ summary, styles }) {
                         {'w '}{daysOfWeekString}
                     </BodyBoldText>
                 </>}
-                
+
                 {bestMoodDayOfPreviousWeek
                     ? <>
                         {', a ostatni taki dzień w poprzednim tygodniu to '}

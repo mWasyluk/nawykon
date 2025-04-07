@@ -9,11 +9,13 @@ import { Image, StyleSheet, View } from 'react-native';
 const todaysDate = new Date();
 const todaysDay = todaysDate.getDate();
 const todaysMonth = todaysDate.getMonth();
+const todaysYear = todaysDate.getFullYear();
 
 export default function MoodCalendarPage(props) {
     const {
         day = todaysDay,
         month = todaysMonth,
+        year = todaysYear,
         humor = undefined,
         isNote = true,
     } = props;
@@ -37,11 +39,8 @@ export default function MoodCalendarPage(props) {
     const noteColor = isToday ? colors.lightGray : colors.midGray;
 
     const onPress = () => {
-        // TODO: override after implementing mood report edit for any date
-        if (!isToday) {
-            return;
-        }
-        router.navigate(routes.newMood);
+        const targetDate = new Date(year, month, day);
+        router.navigate(routes.editMoodByDate(targetDate));
     }
 
     return (

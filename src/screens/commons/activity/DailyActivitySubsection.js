@@ -27,6 +27,10 @@ export default function DailyActivitySubsection(props) {
     const listElements = [];
 
     if (!habitId) {
+        const handleMoodButtonPress = () => {
+            router.navigate(routes.editMoodByDate(date));
+        }
+
         listElements.push(
             <MoodActivityButton
                 key="mood-button"
@@ -34,8 +38,7 @@ export default function DailyActivitySubsection(props) {
                 energy={moodReport?.energy}
                 isNote={!!moodReport?.note}
                 isEmpty={!moodReport}
-                // TODO: implement mood report edit screen or refactor current to handle date param, navigate there on press
-                onPress={() => { }}
+                onPress={handleMoodButtonPress}
             />
         );
     }

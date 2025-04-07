@@ -12,6 +12,7 @@ export default function MoodCalendarBar() {
         date.setDate(date.getDate() - i);
         const day = date.getDate();
         const month = date.getMonth();
+        const year = date.getFullYear();
 
         const { mood } = activityRegistry.getRecord(date);
         const humor = mood?.humor;
@@ -22,6 +23,7 @@ export default function MoodCalendarBar() {
                 key={`calendar-page-${i}`}
                 day={day}
                 month={month}
+                year={year}
                 humor={humor}
                 isNote={isNote}
             />
