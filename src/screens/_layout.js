@@ -16,7 +16,7 @@ export default function Layout() {
                 <Stack.Screen name="habits/add" options={{ title: 'Nowy Nawyk' }} />
                 <Stack.Screen name="habits/[id]/index" options={{ title: 'Informacje O Nawyku' }} />
                 <Stack.Screen name="habits/[id]/edit" options={{ title: 'Edycja Nawyku' }} />
-                <Stack.Screen name="mood/add" options={{ title: 'Nowy Raport' }} />
+                <Stack.Screen name="mood/[date]/index" options={{ title: 'Raport Nastroju' }} />
                 <Stack.Screen name="stats/index" options={{ title: 'Statystyki' }} />
                 <Stack.Screen name="settings/index" options={{ title: 'Ustawienia' }} />
             </Stack>

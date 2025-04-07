@@ -1,24 +1,30 @@
 import Button from '@components/input/Button';
 import { INPUT_SIZES, INPUT_VARIANTS } from '@components/input/InputContainer';
-import routes from '@constants/router';
 import { useReports } from '@contexts/ReportsContext';
 import { Mood } from '@models/mood/Mood';
 import { ModalService } from '@services/modalService';
 import { icons, metrics } from '@styles';
-import { router } from 'expo-router';
-import { useEffect, useState } from 'react';
-import { ScrollView } from 'react-native';
-import NoteSection from './sections/NoteSection';
-import PickEnergySection from './sections/PickEnergySection';
-import PickMoodSection from './sections/PickMoodSection';
+import { NavigationUtil } from '@utils/navUtil';
+import { useLocalSearchParams } from 'expo-router/build/hooks';
+import { useEffect, useMemo, useState } from 'react';
+import { ScreenContainer } from 'react-native-screens';
+import NoteSection from '../sections/NoteSection';
+import PickEnergySection from '../sections/PickEnergySection';
+import PickMoodSection from '../sections/PickMoodSection';
 
-export default function AddMoodScreen() {
-    const { todaysReport, setMood } = useReports();
+export default function EditMoodScreen() {
+    const { date: targetDate } = useLocalSearchParams();
+    const { dailyReports, setMood } = useReports();
 
-    const todaysMood = todaysReport?.mood || {};
+    const moodReport = useMemo(() => {
+        const targetDailyReport = dailyReports.find(report => report.date === targetDate);
+        return targetDailyReport?.mood;
+    }, [targetDate, dailyReports]);
 
-    const [moodDto, setMoodDto] = useState(todaysMood);
-    const [error, setError] = useState(null);
+    const [moodDto, setMoodDto] = useState(moodReport || {});
+    const [isError, setIsError] = useState(false);
+
+    const buttonVariant = isError ? INPUT_VARIANTS.DISABLED : INPUT_VARIANTS.PRIME;
 
     const handleHumorChange = (value) => {
         setMoodDto({ ...moodDto, humor: value });
@@ -32,12 +38,10 @@ export default function AddMoodScreen() {
         setMoodDto({ ...moodDto, note: value });
     }
 
-    const buttonVariant = error ? INPUT_VARIANTS.DISABLED : INPUT_VARIANTS.PRIME;
-
     const handleSave = () => {
         try {
-            setMood(todaysReport.date, new Mood(moodDto));
-            router.replace(routes.dashboard);
+            setMood(targetDate, new Mood(moodDto));
+            NavigationUtil.goBackOrHome();
         } catch (error) {
             ModalService.showError(error.message);
         }
@@ -46,14 +50,14 @@ export default function AddMoodScreen() {
     useEffect(() => {
         try {
             new Mood(moodDto);
-            setError(false);
+            setIsError(false);
         } catch (error) {
-            setError(true);
+            setIsError(true);
         }
     }, [moodDto]);
 
     return (
-        <ScrollView contentContainerStyle={{ alignItems: 'center' }}>
+        <ScreenContainer >
             <PickMoodSection
                 defaultValue={moodDto?.humor}
                 onChange={handleHumorChange} />
@@ -73,6 +77,6 @@ export default function AddMoodScreen() {
                 onPress={handleSave}
                 style={{ marginTop: metrics.spacing.md, alignSelf: 'center' }}
             />
-        </ScrollView>
+        </ScreenContainer>
     );
 }
