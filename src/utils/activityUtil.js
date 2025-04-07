@@ -133,7 +133,6 @@ export const ActivityUtil = {
         return totalStats;
     },
 
-
     calculateActionsSummary: (activityRegistry, habits = []) => {
         const summary = {
             actionsNumber: 0,
@@ -325,6 +324,45 @@ export const ActivityUtil = {
 
         return summary;
     },
+
+    calculateActionsNumber: (activityRecords = []) => {
+        return activityRecords.reduce((sum, record) => {
+            const allHabitLogs = Object.values(record.habits);
+            Object.values(allHabitLogs).forEach(({ executions }) => {
+                if (executions) {
+                    sum += executions.length;
+                }
+            });
+            if (record.mood) {
+                sum += 1;
+            }
+            return sum;
+        }, 0);
+    },
+
+    calculateAverageMoodsWeek: (activityRecords = []) => {
+        const weekDays = [0, 1, 2, 3, 4, 5, 6];
+        const moodByDayOfWeek = weekDays.reduce((acc, day) => {
+            acc[day] = { totalMood: 0, reportsNumber: 0 };
+            return acc;
+        }, {});
+
+        activityRecords.forEach(record => {
+            const dailyMood = record.mood;
+            if (dailyMood) {
+                const dayOfWeek = getFixedDayOfWeek(record.date);
+                moodByDayOfWeek[dayOfWeek].totalMood += dailyMood.humor;
+                moodByDayOfWeek[dayOfWeek].reportsNumber += 1;
+            }
+        });
+
+        return Object.entries(moodByDayOfWeek).map(([day, { totalMood, reportsNumber }]) => {
+            return {
+                day,
+                avgMood: reportsNumber ? totalMood / reportsNumber : undefined,
+            };
+        });
+    }
 }
 
 function calculatePointByStatus(status) {
