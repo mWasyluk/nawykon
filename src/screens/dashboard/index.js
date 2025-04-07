@@ -1,13 +1,13 @@
 import { ScreenContainer } from '@components/layout';
 import HabitsListSection from './sections/HabitsListSection';
 import RecentActivitySection from './sections/RecentActivitySection';
-import StatisticsChartSection from './sections/StatisticsChartSection';
+import StatisticsBriefSection from './sections/StatisticsBriefSection';
 
 export default function DashboardScreen() {
     return (
         <ScreenContainer>
             <RecentActivitySection />
-            <StatisticsChartSection />
+            <StatisticsBriefSection />
             <HabitsListSection />
         </ScreenContainer>
     );
