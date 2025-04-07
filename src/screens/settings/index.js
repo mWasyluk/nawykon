@@ -10,17 +10,24 @@ const SECTION_IDS = {
     ACCOUNT: 'account',
 }
 
-const ExpandButton = ({ title, onPress, isActive }) => (
-    <TouchableOpacity style={styles.expandButton} onPress={onPress}>
-        <Image
-            source={icons.chevronRight}
-            color={colors.darkGray}
-            style={{ height: metrics.imageSize.xs, width: metrics.imageSize.xs, transform: [{ rotate: isActive ? '90deg' : '0deg' }] }}
-            tintColor={colors.darkGray}
-        />
-        <TitleText>{title}</TitleText>
-    </TouchableOpacity>
-)
+const ExpandButton = ({ title, onPress, isActive }) => {
+    const iconStyle = [
+        styles.expandIcon,
+        { transform: [{ rotate: isActive ? '90deg' : '0deg' }] },
+    ];
+    const color = colors.darkGray;
+
+    return (
+        <TouchableOpacity style={styles.expandButton} onPress={onPress}>
+            <Image
+                source={icons.chevronRight}
+                style={iconStyle}
+                tintColor={color}
+            />
+            <TitleText style={{ color }}>{title}</TitleText>
+        </TouchableOpacity>
+    )
+}
 
 export default function SettingsScreen() {
     const [expanded, setExpanded] = useState(SECTION_IDS.ACCOUNT);
@@ -67,5 +74,9 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         gap: metrics.spacing.xs,
+    },
+    expandIcon: {
+        height: metrics.imageSize.xss,
+        width: metrics.imageSize.xss,
     },
 });

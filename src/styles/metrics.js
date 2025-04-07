@@ -17,6 +17,7 @@ const metrics = {
         circular: 999,
     },
     imageSize: {
+        xss: 10,
         xs: 15,
         sm: 20,
         md: 30,
