@@ -1,7 +1,8 @@
+import { ScreenContainer } from '@components/layout';
 import { useUser } from '@contexts/UserContext';
 import { colors, metrics, uiStyles } from '@styles';
 import { useState } from 'react';
-import { Image, SafeAreaView, StyleSheet } from 'react-native';
+import { Image, StyleSheet } from 'react-native';
 import LoginSection from './LoginSection';
 import RegisterSection from './RegisterSection';
 
@@ -14,7 +15,7 @@ export default function AuthScreen() {
     };
 
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: colors.light }}>
+        <ScreenContainer>
             <Image style={styles.image}
                 source={require("@assets/images/logo.png")}
                 resizeMode='contain'
@@ -34,7 +35,7 @@ export default function AuthScreen() {
                     styles={sectionStyles}
                 />
             )}
-        </SafeAreaView>
+        </ScreenContainer>
     );
 }
 
