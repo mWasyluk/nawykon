@@ -1,65 +1,60 @@
-import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
 
-export default function PieChart({ data, colors, size = 200, innerRadius = 40 }) {
-  const total = data.reduce((sum, val) => sum + val, 0);
-  let cumulativeAngle = 0;
+export default function PieChart({ data, innerRadius = 40 }) {
+    const total = data.reduce((sum, { value }) => sum + value, 0);
+    let cumulativeAngle = 0;
 
-  // Pomocnicza funkcja do przeliczeń biegunowych → kartezjańskie
-  const polarToCartesian = (centerX, centerY, radius, angleDeg) => {
-    const radians = ((angleDeg - 90) * Math.PI) / 180;
-    return {
-      x: centerX + radius * Math.cos(radians),
-      y: centerY + radius * Math.sin(radians),
+    const polarToCartesian = (centerX, centerY, radius, angleDeg) => {
+        const radians = ((angleDeg - 90) * Math.PI) / 180;
+        return {
+            x: centerX + radius * Math.cos(radians),
+            y: centerY + radius * Math.sin(radians),
+        };
     };
-  };
 
-  return (
-    <View style={styles.container}>
-      <Svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
-        {data.map((value, index) => {
-          // Wyznaczamy, jaki fragment koła przypada na wartość 'value'
-          const angle = (value / total) * 360;
-          const startAngle = cumulativeAngle;
-          const endAngle = startAngle + angle;
-          cumulativeAngle += angle;
+    return (
+        <View style={styles.container}>
+            <Svg viewBox={`0 0 100 100`}>
+                {data.map(({ value, color }, index) => {
+                    const angle = (value / total) * 360;
+                    const adjAngle = angle === 360 ? 359.99 : angle;
+                    const startAngle = cumulativeAngle;
+                    const endAngle = startAngle + adjAngle;
+                    cumulativeAngle += adjAngle;
 
-          // Flaga do określenia, czy rysujemy duży łuk > 180°
-          const largeArcFlag = angle > 180 ? 1 : 0;
+                    const largeArcFlag = adjAngle > 180 ? 1 : 0;
 
-          // Zewnętrzne punkty łuku
-          const outerStart = polarToCartesian(size / 2, size / 2, size / 2, startAngle);
-          const outerEnd = polarToCartesian(size / 2, size / 2, size / 2, endAngle);
+                    const outerStart = polarToCartesian(50, 50, 50, startAngle);
+                    const outerEnd = polarToCartesian(50, 50, 50, endAngle);
 
-          // Wewnętrzne punkty łuku
-          const innerStart = polarToCartesian(size / 2, size / 2, innerRadius, startAngle);
-          const innerEnd = polarToCartesian(size / 2, size / 2, innerRadius, endAngle);
+                    const innerStart = polarToCartesian(50, 50, innerRadius, startAngle);
+                    const innerEnd = polarToCartesian(50, 50, innerRadius, endAngle);
 
-          // Definicja ścieżki – „obrys” donut-a
-          const pathData = [
-            `M ${outerStart.x} ${outerStart.y}`,
-            `A ${size / 2} ${size / 2} 0 ${largeArcFlag} 1 ${outerEnd.x} ${outerEnd.y}`,
-            `L ${innerEnd.x} ${innerEnd.y}`,
-            `A ${innerRadius} ${innerRadius} 0 ${largeArcFlag} 0 ${innerStart.x} ${innerStart.y}`,
-            'Z',
-          ].join(' ');
+                    const pathData = [
+                        `M ${outerStart.x} ${outerStart.y}`,
+                        `A 50 50 0 ${largeArcFlag} 1 ${outerEnd.x} ${outerEnd.y}`,
+                        `L ${innerEnd.x} ${innerEnd.y}`,
+                        `A ${innerRadius} ${innerRadius} 0 ${largeArcFlag} 0 ${innerStart.x} ${innerStart.y}`,
+                        'Z',
+                    ].join(' ');
 
-          return <Path
-            key={index}
-            d={pathData}
-            fill={colors[index]}
-            stroke={'white'}
-            strokeWidth={2} />;
-        })}
-      </Svg>
-    </View>
-  );
+                    return <Path
+                        key={`pie-chart-slice-${index}`}
+                        d={pathData}
+                        fill={color}
+                    />;
+                })}
+            </Svg>
+        </View>
+    );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+    container: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '100%',
+        height: '100%',
+    },
 });

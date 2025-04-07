@@ -1,33 +1,15 @@
-import PieChart from '@components/charts/PieChart';
 import Button from '@components/input/Button';
-import TextOptionPicker from '@components/input/TextOptionPicker';
 import { SectionContainer, SectionHeader } from '@components/layout';
-import { BodyBoldText, BodyText, TitleText } from '@components/text';
+import { BodyBoldText } from '@components/text';
 import routes from '@constants/router';
-import { colors, icons } from '@styles';
+import { colors, metrics } from '@styles';
 import { router } from 'expo-router';
-import { useState } from 'react';
-import { Image, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import AverageMoodsWeekBar from './AverageMoodsWeekBar';
+import StatisticsSummaryRecords from './StatisticsSummaryRecords';
+import WeeklyProgressChart from './WeeklyProgressChart';
 
-export default function StatisticsChartSection(props) {
-    const {
-        periodRecords = [
-            { name: '30 dni', points: 195, done: 212, waiting: 3, failed: 17 },
-            { name: '7 dni', points: 45, done: 52, waiting: 3, failed: 7 },
-            { name: 'Dzień', points: 6, done: 8, waiting: 2, failed: 2 },
-        ],
-    } = props;
-
-    const defaultOption = periodRecords[periodRecords.length - 1];
-    const [selectedOption, setSelectedOption] = useState(defaultOption);
-
-    const handleOptionChange = (optionName) => {
-        const option = periodRecords.filter((item) => item.name === optionName)[0];
-        setSelectedOption(option);
-    };
-
-    const recordsSum = selectedOption.done + selectedOption.waiting + selectedOption.failed;
-
+export default function StatisticsBriefSection() {
     const handleDetailsPress = () => {
         router.push(routes.statistics);
     }
@@ -39,91 +21,60 @@ export default function StatisticsChartSection(props) {
                 right={<Button title={"Szczegóły"} onPress={handleDetailsPress} />}
             />
             <View style={styles.row}>
-                <View style={styles.pieChartContainer}>
-                    <PieChart
-                        data={[selectedOption.done, selectedOption.waiting, selectedOption.failed]}
-                        colors={[colors.lightSuccess, colors.lightWarning, colors.lightError]}
-                        size={128}
-                    />
-                    <View style={styles.pieChartCenter}>
-                        <TitleText style={styles.pointsText}>{selectedOption.points}</TitleText>
-                        <Image source={icons.point} style={styles.icon} />
+                <View style={styles.column}>
+                    <View style={styles.tile}>
+                        <BodyBoldText style={styles.tileTitle} numberOfLines={1}>{"Podsumowanie"}</BodyBoldText>
+                        <StatisticsSummaryRecords />
+                    </View>
+                    <View style={styles.tile}>
+                        <BodyBoldText style={styles.tileTitle} numberOfLines={1}>{"Uśredniony nastrój"}</BodyBoldText>
+                        <AverageMoodsWeekBar />
                     </View>
                 </View>
-
-                <View style={styles.container}>
-                    <TextOptionPicker
-                        options={periodRecords.map((item) => item.name)}
-                        initIndex={periodRecords.indexOf(selectedOption)}
-                        onOptionChange={handleOptionChange}
-                        style={{ marginBottom: 20 }}
-                    />
-
-                    <View style={styles.row}>
-                        <BodyBoldText style={styles.doneText}>{`${Math.round(selectedOption.done / recordsSum * 100)}% (${selectedOption.done} z ${recordsSum})`}</BodyBoldText>
-                        <BodyText style={styles.darkGrayText}> ukończonych</BodyText>
-                    </View>
-
-                    <View style={styles.row}>
-                        <BodyText style={styles.waitingText}>{`${Math.round(selectedOption.waiting / recordsSum * 100)}% (${selectedOption.waiting})`}</BodyText>
-                        <BodyText style={styles.darkGrayText}> oczekujących</BodyText>
-                    </View>
-
-                    <View style={styles.row}>
-                        <BodyText style={styles.failedText}>{`${Math.round(selectedOption.failed / recordsSum * 100)}% (${selectedOption.failed})`}</BodyText>
-                        <BodyText style={styles.darkGrayText}> niezaliczonych</BodyText>
-                    </View>
+                <View style={[styles.tile, styles.chartContainer]}>
+                    <BodyBoldText style={styles.tileTitle} numberOfLines={1}>{"7-dniowy postęp"}</BodyBoldText>
+                    <WeeklyProgressChart />
                 </View>
             </View>
-        </SectionContainer>
+        </SectionContainer >
     );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        flex: 2,
-    },
-    pieChartContainer: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        width: 'fit-content',
-        position: 'relative',
-    },
-    pieChartCenter: {
-        position: 'absolute',
-        top: 64,
-        left: 64,
-        transform: [{ translateX: "-50%" }, { translateY: "-50%" }],
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    icon: {
-        width: 32,
-        height: 32,
-    },
     row: {
         flexDirection: 'row',
-        width: '100%',
         justifyContent: 'center',
+        gap: metrics.spacing.sm,
     },
-    pointsText: {
+    column: {
+        flex: 1,
+        flexDirection: 'column',
+        gap: metrics.spacing.sm,
+    },
+    tile: {
+        backgroundColor: colors.modalBackground,
+        borderRadius: metrics.borderRadius.sm,
+        paddingVertical: metrics.spacing.xs,
+        paddingHorizontal: metrics.spacing.sm,
+    },
+    tileTitle: {
+        marginBottom: metrics.spacing.xs,
         color: colors.darkGray,
-        marginRight: -5,
     },
-    doneText: {
+    chartContainer: {
+        aspectRatio: '1',
+        maxWidth: '50%',
+        minHeight: '100%'
+    },
+    chartCenter: {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: [{ translateX: "-50%" }, { translateY: "-50%" }],
+        alignItems: 'center',
+        width: '70%',
+    },
+    completedText: {
         color: colors.lightSuccess,
-    },
-    waitingText: {
-        color: colors.darkWarning,
-    },
-    failedText: {
-        color: colors.lightError,
-    },
-    darkGrayText: {
-        color: colors.darkGray,
     },
 });
