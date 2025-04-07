@@ -9,7 +9,7 @@ import { icons } from "@styles";
 import { useEffect, useState } from "react";
 import { View } from "react-native";
 
-export default function AccountSectionContent({ style }) {
+export default function AccountSettingsContent({ style }) {
     const { user, updateUsername, logout, isLoading } = useUser();
     const {
         username,

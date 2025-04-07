@@ -4,7 +4,7 @@ import { PressableText, TitleText } from '@components/text';
 import { colors, icons, metrics, uiStyles } from '@styles';
 import { useState } from 'react';
 import { Image, StyleSheet, TouchableOpacity } from 'react-native';
-import AccountSectionContent from './sections/AccountSection';
+import AccountSettingsContent from './sections/AccountSettingsContent';
 
 const SECTION_IDS = {
     ACCOUNT: 'account',
@@ -45,7 +45,7 @@ export default function SettingsScreen() {
                     isActive={expanded === SECTION_IDS.ACCOUNT}
                 />
                 {expanded === SECTION_IDS.ACCOUNT && (
-                    <AccountSectionContent style={styles.section} />
+                    <AccountSettingsContent style={styles.section} />
                 )}
             </SectionContainer>
 
