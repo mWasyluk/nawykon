@@ -26,7 +26,7 @@ export default function InputContainer(props) {
 
     let backgroundColor;
     switch (variant) {
-        case INPUT_VARIANTS.DISABLED && INPUT_VARIANTS.LOADING:
+        case INPUT_VARIANTS.DISABLED || INPUT_VARIANTS.LOADING:
             backgroundColor = colors.light;
             break;
         case INPUT_VARIANTS.ERROR:
