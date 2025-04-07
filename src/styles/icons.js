@@ -33,6 +33,7 @@ const icons = {
     eye: require('@assets/icons/eye.png'),
     eyeCrossed: require('@assets/icons/eye-crossed.png'),
     doc: require('@assets/icons/doc.png'),
+    chevronRight: require('@assets/icons/chevron-right.png'),
 
     habit: {
         productivity: require('@assets/habit-icons/productivity.png'),
