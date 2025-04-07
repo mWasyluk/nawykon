@@ -1,4 +1,4 @@
-import Button from '@components/input/Button';
+import Button, { LOADING_ICON } from '@components/input/Button';
 import { INPUT_SIZES, INPUT_VARIANTS } from '@components/input/InputContainer';
 import { useReports } from '@contexts/ReportsContext';
 import { Mood } from '@models/mood/Mood';
@@ -14,7 +14,8 @@ import PickMoodSection from '../sections/PickMoodSection';
 
 export default function EditMoodScreen() {
     const { date: targetDate } = useLocalSearchParams();
-    const { dailyReports, setMood } = useReports();
+    const { dailyReports, setMood, isLoading } = useReports();
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const moodReport = useMemo(() => {
         const targetDailyReport = dailyReports.find(report => report.date === targetDate);
@@ -24,7 +25,8 @@ export default function EditMoodScreen() {
     const [moodDto, setMoodDto] = useState(moodReport || {});
     const [isError, setIsError] = useState(false);
 
-    const buttonVariant = isError ? INPUT_VARIANTS.DISABLED : INPUT_VARIANTS.PRIME;
+    const buttonIcon = isSubmitting ? LOADING_ICON : icons.check;
+    const buttonVariant = (isError || isSubmitting) ? INPUT_VARIANTS.DISABLED : INPUT_VARIANTS.PRIME;
 
     const handleHumorChange = (value) => {
         setMoodDto({ ...moodDto, humor: value });
@@ -38,14 +40,21 @@ export default function EditMoodScreen() {
         setMoodDto({ ...moodDto, note: value });
     }
 
-    const handleSave = () => {
+    const handleSave = async () => {
         try {
-            setMood(targetDate, new Mood(moodDto));
-            NavigationUtil.goBackOrHome();
+            setIsSubmitting(true);
+            await setMood(targetDate, new Mood(moodDto));
         } catch (error) {
             ModalService.showError(error.message);
         }
     }
+
+    useEffect(() => {
+        if (isSubmitting && !isLoading) {
+            setIsSubmitting(false);
+            NavigationUtil.goBackOrHome();
+        }
+    }, [isLoading, isSubmitting]);
 
     useEffect(() => {
         try {
@@ -70,7 +79,7 @@ export default function EditMoodScreen() {
 
             <Button
                 title={"Zapisz"}
-                icon={icons.check}
+                icon={buttonIcon}
                 size={INPUT_SIZES.LARGE}
                 variant={buttonVariant}
 

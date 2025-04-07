@@ -21,6 +21,7 @@ export const DailyReportsProvider = ({ children }) => {
     }, [dailyReports]);
 
     const setMood = async (date, mood) => {
+        setIsLoading(true);
         try {
             var isFound = false;
             const newReports = await Promise.all(dailyReports.map(async (report) => {
@@ -43,10 +44,13 @@ export const DailyReportsProvider = ({ children }) => {
             setDailyReports([...newReports]);
         } catch (error) {
             ModalService.showError(error.message);
+        } finally {
+            setIsLoading(false);
         }
     };
 
     const setHabitLog = async (date, { id, executions }) => {
+        setIsLoading(true);
         try {
             var isFound = false;
             const newReports = await Promise.all(dailyReports.map(async (report) => {
@@ -69,6 +73,8 @@ export const DailyReportsProvider = ({ children }) => {
             setDailyReports([...newReports]);
         } catch (error) {
             ModalService.showError(error.message);
+        } finally {
+            setIsLoading(false);
         }
     };
 
