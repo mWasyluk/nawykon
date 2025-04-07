@@ -73,7 +73,7 @@ export const HabitsProvider = ({ children }) => {
         return () => {
             setHabits(null);
         };
-    }, [user]);
+    }, [user?.uid]);
 
     return (
         <HabitsContext.Provider value={{ habits, addHabit, updateHabit, deleteHabit, isLoading }}>

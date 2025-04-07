@@ -113,7 +113,7 @@ export const DailyReportsProvider = ({ children }) => {
         return () => {
             setDailyReports(null);
         };
-    }, [user]);
+    }, [user?.uid]);
 
     return (
         <DailyReportsContext.Provider
