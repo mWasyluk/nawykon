@@ -7,25 +7,26 @@ import InputContainer, { INPUT_VARIANTS } from "./InputContainer";
 
 export default function NumberInput(props) {
     const {
-        value: defaultValue,
+        value: defaultValue = 0,
         minValue,
         maxValue,
+        shiftValue = 1,
         onChange = () => { }
     } = props;
 
     const [value, setValue] = useState(defaultValue || minValue);
 
     const handleIncrement = () => {
-        const newValue = value + 1;
-        if (Number.isInteger(maxValue) && newValue <= maxValue) {
+        const newValue = value + shiftValue;
+        if (!Number.isInteger(maxValue) || newValue <= maxValue) {
             setValue(newValue);
             onChange(newValue);
         }
     }
 
     const handleDecrement = () => {
-        const newValue = value - 1;
-        if (Number.isInteger(minValue) && newValue >= minValue) {
+        const newValue = value - shiftValue;
+        if (!Number.isInteger(minValue) || newValue >= minValue) {
             setValue(newValue);
             onChange(newValue);
         }
