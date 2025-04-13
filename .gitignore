@@ -38,3 +38,6 @@ yarn-error.*
 
 src/configs
 .vscode/launch.json
+
+src/constants/termsOfService.js
+src/constants/privacyPolicy.js

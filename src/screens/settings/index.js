@@ -1,6 +1,7 @@
 import { ScreenContainer, SectionContainer } from '@components/layout';
 import ScreenSection from '@components/layout/ScreenSection';
 import { PressableText, TitleText } from '@components/text';
+import { ModalService } from '@services/modalService';
 import { colors, icons, metrics, uiStyles } from '@styles';
 import { useState } from 'react';
 import { Image, StyleSheet, TouchableOpacity } from 'react-native';
@@ -54,9 +55,8 @@ export default function SettingsScreen() {
                 <PressableText disabled={true}>Wyświetlanie</PressableText>
             </ScreenSection>
             <ScreenSection title="Informacje">
-                <PressableText disabled={true}>Regulamin użytkownika</PressableText>
-                <PressableText disabled={true}>Polityka prywatności</PressableText>
-                <PressableText disabled={true}>Pomoc</PressableText>
+                <PressableText onPress={ModalService.showTermsOfService}>Regulamin użytkowania</PressableText>
+                <PressableText onPress={ModalService.showPrivacyPolicy}>Polityka prywatności</PressableText>
             </ScreenSection>
         </ScreenContainer>
     );

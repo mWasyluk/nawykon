@@ -9,3 +9,4 @@ export const genitiveMonths = ['Stycznia', 'Lutego', 'Marca', 'Kwietnia', 'Maja'
 export const periodUnits = ['dni', 'tygodni', 'miesięcy'];
 
 export const AUTH_VALIDATION_DELAY = 500;
+export const MODAL_ANIMATION_DURATION = 300;
