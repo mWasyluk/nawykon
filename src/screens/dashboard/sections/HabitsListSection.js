@@ -10,11 +10,14 @@ import { ModalService } from "@services/modalService";
 import { icons } from "@styles";
 import { formatDate } from "@utils/dateUtil";
 import { router } from "expo-router";
+import { useEffect, useState } from "react";
 
 export default function HabitsListSection() {
     const { habits } = useHabits();
     const { setHabitLog } = useReports();
     const { activityRegistry } = useStateManager();
+
+    const [isAdding, setIsAdding] = useState(false);
 
     const todaysActivityRecord = activityRegistry.getRecord(new Date());
 
@@ -41,10 +44,11 @@ export default function HabitsListSection() {
         cardProps.completed = Math.min(completed, goal);
 
         cardProps.addExecution = () => {
-            if (cardProps.completed >= cardProps.goal) {
+            if (cardProps.completed >= cardProps.goal || isAdding) {
                 return;
             }
             try {
+                setIsAdding(habit.id);
                 let newExecutionsArray = [...currentExecutionsArray, new Date().getTime()];
                 const date = formatDate(new Date(), 'date');
                 setHabitLog(date, { id: habit.id, executions: newExecutionsArray });
@@ -53,12 +57,18 @@ export default function HabitsListSection() {
             }
         };
 
+        cardProps.isLoading = isAdding === habit.id;
+
         cardProps.onPress = () => {
             router.push(routes.habitDetails(habit.id));
         }
 
         return cardProps;
     }).sort((a, b) => b.goal - a.goal);
+
+    useEffect(() => {
+        setIsAdding(false);
+    }, [activityRegistry]);
 
     const handleAddPress = () => {
         router.push(routes.newHabit);

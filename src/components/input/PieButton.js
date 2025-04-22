@@ -1,3 +1,4 @@
+import { LoadingIndicator } from '@components/layout';
 import { TitleText } from '@components/text';
 import { colors, metrics, uiStyles } from '@styles';
 import { useEffect, useRef, useState } from 'react';
@@ -15,7 +16,8 @@ const PieButton = (props) => {
     const {
         count = 0,
         maxCount = 1,
-        onPress = () => { }
+        onPress = () => { },
+        isLoading = false,
     } = props;
 
     const [dashOffset, setDashOffset] = useState(CIRCUMFERENCE.toString());
@@ -61,6 +63,12 @@ const PieButton = (props) => {
         };
     }, [count, maxCount]);
 
+    const textStyle = {
+        color: count && count >= maxCount ? colors.darkSuccess : colors.midGray,
+        position: 'absolute',
+    }
+
+
     return (
         <TouchableOpacity onPress={onPress} activeOpacity={0.8}>
             <View style={styles.container}>
@@ -86,7 +94,11 @@ const PieButton = (props) => {
                         transform={`rotate(-90, ${BUTTON_SIZE / 2}, ${BUTTON_SIZE / 2})`}
                     />
                 </Svg>
-                <TitleText style={styles.text}>{count}/{maxCount}</TitleText>
+                {isLoading ? (
+                    <LoadingIndicator size={metrics.imageSize.sm} style={{ position: 'absolute' }} />
+                ) : (
+                    <TitleText style={textStyle}>{count}/{maxCount}</TitleText>
+                )}
             </View>
         </TouchableOpacity>
     );
@@ -99,10 +111,7 @@ const styles = StyleSheet.create({
         position: 'relative',
         borderRadius: metrics.borderRadius.circular,
         ...uiStyles.lightShadow,
-    },
-    text: {
-        position: 'absolute',
-    },
+    }
 });
 
 export default PieButton;

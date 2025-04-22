@@ -7,7 +7,7 @@ const ANIMATION_DURATION = 500;
 const ANIMATION_STEPS = 30;
 const STROKE_WIDTH = 10;
 
-export default function LoadingIndicator({ size = '100%' }) {
+export default function LoadingIndicator({ size = '100%', style }) {
     const [rotation, setRotation] = useState(0);
     const animationRef = useRef(null);
 
@@ -32,7 +32,7 @@ export default function LoadingIndicator({ size = '100%' }) {
     }, []);
 
     return (
-        <View style={{ aspectRatio: 1, width: size, height: size }}>
+        <View style={[{ aspectRatio: 1, width: size, height: size }, style]}>
             <Svg width="100%" height="100%" viewBox="0 0 100 100">
                 <Circle
                     stroke={colors.lightGray}

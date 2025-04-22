@@ -14,6 +14,7 @@ export default function HabitCard(props) {
         completed = 0,
         onPress = () => { },
         addExecution = () => { },
+        isLoading = false,
     } = props;
 
     return (
@@ -27,7 +28,7 @@ export default function HabitCard(props) {
 
             <ActivityValueIcon value={streak} icon={icons.streak} />
 
-            <PieButton maxCount={goal} count={completed} onPress={addExecution} />
+            <PieButton maxCount={goal} count={completed} onPress={addExecution} isLoading={isLoading} />
         </InputContainer>
     );
 }
