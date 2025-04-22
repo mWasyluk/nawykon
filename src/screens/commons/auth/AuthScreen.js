@@ -46,7 +46,6 @@ const sectionStyles = StyleSheet.create({
     container: {
         marginHorizontal: metrics.spacing.md,
         padding: metrics.spacing.sm,
-        paddingBottom: metrics.spacing.md,
 
         borderRadius: metrics.borderRadius.sm,
         backgroundColor: colors.modalBackground,
@@ -54,7 +53,7 @@ const sectionStyles = StyleSheet.create({
     },
     info: {
         color: colors.midGray,
-        marginBottom: metrics.spacing.xl,
+        marginBottom: metrics.spacing.md,
     },
     forgotPasswordContainer: {
         alignSelf: 'flex-end',

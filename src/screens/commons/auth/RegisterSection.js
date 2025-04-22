@@ -1,13 +1,14 @@
 import Button from '@components/input/Button';
 import { INPUT_SIZES, INPUT_VARIANTS } from '@components/input/InputContainer';
+import Switch from '@components/input/Switch';
 import TextInput from '@components/input/TextInput';
 import { SectionContainer, SectionHeader, SubsectionHeader } from '@components/layout';
-import { BodyText, OptionalErrorText, PressableText } from '@components/text';
+import { BodyBoldText, BodyText, OptionalErrorText, PressableText } from '@components/text';
 import { AUTH_VALIDATION_DELAY } from '@constants/time';
 import { User } from '@models/user/User';
 import { ModalService } from '@services/modalService';
 import { UserService } from '@services/userService';
-import { colors, icons } from '@styles';
+import { colors, icons, metrics } from '@styles';
 import React, { createRef, useRef, useState } from 'react';
 import { Image, Keyboard, TouchableOpacity, View } from 'react-native';
 
@@ -22,12 +23,14 @@ export default function RegisterSection({ goToLogin, styles }) {
         email: '',
         password: '',
         passwordConfirmation: '',
+        regulations: false,
     });
 
     const [errors, setErrors] = useState({
         email: undefined,
         password: undefined,
         passwordConfirmation: undefined,
+        regulations: undefined,
     });
 
     const [securePassword, setSecurePassword] = useState(true);
@@ -73,6 +76,11 @@ export default function RegisterSection({ goToLogin, styles }) {
             validate(name, value);
         }, AUTH_VALIDATION_DELAY);
     };
+
+    const handleRegulationsChange = (value) => {
+        setValues({ ...values, regulations: value });
+        setErrors({ ...errors, regulations: value ? null : 'Zaakceptowanie regulacji prawnych jest wymagane.' });
+    }
 
     const handleInputSubmit = (i) => {
         const inputName = formProps[i].name;
@@ -197,6 +205,29 @@ export default function RegisterSection({ goToLogin, styles }) {
                     <OptionalErrorText>{errors[name]}</OptionalErrorText>
                 </React.Fragment>
             ))}
+
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Switch
+                    isOn={values.regulations}
+                    onChange={handleRegulationsChange}
+                />
+                <BodyText style={{ color: colors.midGray, marginLeft: metrics.spacing.sm }}>
+                    {'Akceptuję '}
+                    <TouchableOpacity onPress={() => ModalService.showTermsOfService()}>
+                        <BodyBoldText style={{ textDecoration: 'underline' }}>
+                            {"regulamin użytkowania"}
+                        </BodyBoldText>
+                    </TouchableOpacity>
+                    {' oraz '}
+                    <TouchableOpacity onPress={() => ModalService.showPrivacyPolicy()}>
+                        <BodyBoldText style={{ textDecoration: 'underline' }}>
+                            {"politykę prywatności"}
+                        </BodyBoldText>
+                    </TouchableOpacity>
+                    {'.'}
+                </BodyText>
+            </View>
+            <OptionalErrorText>{errors.regulations}</OptionalErrorText>
 
             <Button
                 title={"Zarejestruj się"}
