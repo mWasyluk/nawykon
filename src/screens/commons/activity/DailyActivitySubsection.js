@@ -1,7 +1,6 @@
 import HabitActivityButton from "@components/activity/HabitActivityButton";
 import MoodActivityButton from "@components/activity/MoodActivityButton";
-import TimeActivityButton from "@components/activity/TimeActivityButton";
-import Button from "@components/input/Button";
+import Button, { LOADING_ICON } from "@components/input/Button";
 import { INPUT_VARIANTS } from "@components/input/InputContainer";
 import { SubsectionHeader } from "@components/layout";
 import { LabelText } from "@components/text";
@@ -14,6 +13,7 @@ import { ModalService } from "@services/modalService";
 import { colors, icons, metrics } from "@styles";
 import { formatDate, validateTimestamp } from "@utils/dateUtil";
 import { router } from "expo-router";
+import { useEffect, useState } from "react";
 import { Image, StyleSheet, View } from "react-native";
 
 export default function DailyActivitySubsection(props) {
@@ -21,6 +21,9 @@ export default function DailyActivitySubsection(props) {
     const { activityRegistry } = useStateManager();
     const { habits } = useHabits();
     const { setHabitLog } = useReports();
+
+    const [isAdding, setIsAdding] = useState(false);
+    const [isRemoving, setIsRemoving] = useState(false);
 
     const allHabitsRegistryRecord = activityRegistry.getRecord(date).habits;
     const allDailyExecutions = habitStatistics && habitStatistics.executions;
@@ -50,21 +53,30 @@ export default function DailyActivitySubsection(props) {
                 const time = formatDate(execution, 'shorttime');
 
                 const handleRemoveExecution = async () => {
+                    setIsRemoving(execution);
                     const newExecutions = executions.filter(e => e !== execution);
                     await setHabitLog(date, { id: habitId, executions: newExecutions });
                 }
 
                 const showRemoveConfirmation = () => {
+                    if (isRemoving) {
+                        return;
+                    }
                     ModalService.showConfirm(
                         `Czy chcesz trwale usunąć zapis wykonania nawyku z godziny ${time}?`,
                         handleRemoveExecution,
                     );
                 }
 
+                const buttonIcon = isRemoving === execution ? LOADING_ICON : icons.check;
+                const buttonVariant = isRemoving === execution ? INPUT_VARIANTS.DISABLED : INPUT_VARIANTS.DEFAULT;
+
                 listElements.push(
-                    <TimeActivityButton
+                    <Button
                         key={`execution-button-${j}`}
-                        time={time}
+                        title={time}
+                        icon={buttonIcon}
+                        variant={buttonVariant}
                         onPress={showRemoveConfirmation}
                     />
                 );
@@ -109,23 +121,33 @@ export default function DailyActivitySubsection(props) {
                 ModalService.showError('Nawyk był nieaktywny wybranego dnia.');
                 return;
             }
+            if (isAdding) {
+                return;
+            }
+            setIsAdding(true);
             const currentExecutions = allDailyExecutions[habitId];
             const newExecutions = [...currentExecutions, new Date().getTime()];
 
             await setHabitLog(date, { id: habitId, executions: newExecutions });
         }
 
-        const isButtonActive = wasActive && !isFuture;
+        const buttonIcon = isAdding ? LOADING_ICON : icons.plus;
+        const buttonVariant = wasActive && !isFuture && !isAdding ? INPUT_VARIANTS.PRIME : INPUT_VARIANTS.DISABLED;
 
         listElements.push(
             <Button
                 key="add-execution-button"
-                icon={icons.plus}
+                icon={buttonIcon}
+                variant={buttonVariant}
                 onPress={handleAddExecution}
-                variant={isButtonActive ? INPUT_VARIANTS.PRIME : INPUT_VARIANTS.DISABLED}
             />
         )
     }
+
+    useEffect(() => {
+        setIsAdding(false);
+        setIsRemoving(false);
+    }, [activityRegistry]);
 
     const validDate = validateTimestamp(date);
     const remaining = Math.max(0, habitStatistics.goal - habitStatistics.completed);
