@@ -1,5 +1,6 @@
 import { FontsProvider } from './FontsContext';
 import { HabitsProvider } from './HabitsContext';
+import { NotificationsProvider } from './NotificationsContext';
 import { DailyReportsProvider } from './ReportsContext';
 import { StateManagerProvider } from './StateManagerContext';
 import { UserProvider } from './UserContext';
@@ -10,9 +11,11 @@ export default function ProvidersWrapper({ children }) {
             <UserProvider>
                 <HabitsProvider>
                     <DailyReportsProvider>
-                        <StateManagerProvider>
-                            {children}
-                        </StateManagerProvider>
+                        <NotificationsProvider>
+                            <StateManagerProvider>
+                                {children}
+                            </StateManagerProvider>
+                        </NotificationsProvider>
                     </DailyReportsProvider>
                 </HabitsProvider>
             </UserProvider>

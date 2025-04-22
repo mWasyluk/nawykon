@@ -1,5 +1,5 @@
 import { DailyReport } from '@models/reports/DailyReport';
-import { deleteDocument, getAllDocuments, getAllDocumentsByQuery, setDocument } from '@services/firestoreService';
+import { deleteAllDocuments, deleteDocument, getAllDocuments, getAllDocumentsByQuery, setDocument } from '@services/firestoreService';
 import { formatDate } from '@utils/dateUtil';
 import { where } from 'firebase/firestore';
 
@@ -10,6 +10,7 @@ export const DailyReportService = {
     getAllDailyReports,
     getAllDailyReportsByDateRange,
     saveDailyReport,
+    deleteAllDailyReports,
 };
 
 async function getDailyReportByDate(date) {
@@ -50,4 +51,8 @@ async function saveDailyReport(dailyReport) {
         const savedReport = await setDocument(collectionName, dailyReport);
         return new DailyReport(savedReport);
     }
+}
+
+async function deleteAllDailyReports() {
+    await deleteAllDocuments(collectionName);
 }

@@ -1,23 +1,41 @@
+import { Settings } from '@models/user/Settings';
 import { User } from '@models/user/User';
 import { auth } from '@services/authService';
 import { ModalService } from '@services/modalService';
 import { UserService } from '@services/userService';
-import { router } from 'expo-router';
 import { createContext, useContext, useEffect, useState } from 'react';
 
 const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
     const [user, setUser] = useState(auth.currentUser?.uid ? { uid: auth.currentUser.uid } : null);
+    const [settings, setSettings] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+
+    const updateSettings = async (newSettings) => {
+        let updatedSettings = { ...settings, ...newSettings };
+        try {
+            updatedSettings = new Settings(updatedSettings);
+        } catch (err) {
+            console.error(err.message);
+            ModalService.showError('Ustawienia są niepoprawne. Sprawdź wprowadzone dane i spróbuj ponownie.');
+            return;
+        }
+        try {
+            const savedSettings = await UserService.saveSettings(updatedSettings);
+            setSettings(savedSettings);
+        } catch (err) {
+            ModalService.showError('Nie mogłem zapisać Twoich ustawień. Spróbuj ponownie później.');
+        }
+    }
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(async (currentUser) => {
+            setIsLoading(true);
             try {
                 if (currentUser) {
-                    setIsLoading(true);
-                    const userDetails = await UserService.getUserDetails(); // uid, username, prefs
-                    setUser(new User({ ...userDetails, email: currentUser.email }));
+                    setUser(new User(currentUser));
+                    setSettings(await UserService.getSettings());
                 } else {
                     setUser(null);
                 }
@@ -32,43 +50,8 @@ export const UserProvider = ({ children }) => {
         return () => unsubscribe();
     }, []);
 
-    const login = async (email, password) => {
-        setIsLoading(true);
-        try {
-            await UserService.login(email, password);
-        } catch (err) {
-            ModalService.showError(err.message)
-        } finally {
-            setIsLoading(false);
-        }
-    };
-
-    const logout = async () => {
-        try {
-            await UserService.logout();
-            router.push('/');
-        } catch (err) {
-            ModalService.showError(err.message + " Odśwież aplikację i spróbuj ponownie.")
-        }
-    };
-
-    const updateUsername = async (newUsername) => {
-        setIsLoading(true);
-        try {
-            const userDto = { ...user, username: newUsername };
-            delete userDto.email;
-
-            const updatedUser = await UserService.updateUserDetails(userDto);
-            setUser(new User({ ...updatedUser, email: user.email }));
-        } catch (err) {
-            ModalService.showError(err.message);
-        } finally {
-            setIsLoading(false);
-        }
-    }
-
     return (
-        <UserContext.Provider value={{ user, updateUsername, isLoading, login, logout }}>
+        <UserContext.Provider value={{ user, settings, updateSettings, isLoading }}>
             {children}
         </UserContext.Provider>
     );

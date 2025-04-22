@@ -3,21 +3,21 @@ import { INPUT_VARIANTS } from '@components/input/InputContainer';
 import TextInput from '@components/input/TextInput';
 import { SectionContainer, SectionHeader } from '@components/layout';
 import { BodyText, OptionalErrorText } from '@components/text';
+import { useUser } from '@contexts/UserContext';
 import { colors, icons } from '@styles';
 import { useState } from 'react';
 import { View } from 'react-native';
-
-const DEFAULT_REMINDER = '08:00';
 
 export default function EditRemindersSection({ habitBuilder }) {
     const {
         reminders = habitBuilder.habit?.reminders || []
     } = habitBuilder;
 
+    const { settings: { notificationsTime } } = useUser();
     const [reminderError, setReminderError] = useState(null);
 
     const addDefaultReminder = () => {
-        handleRemindersChange([...reminders, DEFAULT_REMINDER]);
+        handleRemindersChange([...reminders, notificationsTime]);
     }
 
     const removeReminder = (index) => {

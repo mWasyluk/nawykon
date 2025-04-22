@@ -6,6 +6,7 @@ import { BodyText, OptionalErrorText, PressableText } from '@components/text';
 import { AUTH_VALIDATION_DELAY } from '@constants/time';
 import { User } from '@models/user/User';
 import { ModalService } from '@services/modalService';
+import { UserService } from '@services/userService';
 import { colors, icons } from '@styles';
 import React, { createRef, useRef, useState } from 'react';
 import { Image, Keyboard, TouchableOpacity, View } from 'react-native';
@@ -16,16 +17,14 @@ function validatePasswordConfirmation(password, passwordConfirmation) {
     }
 }
 
-export default function RegisterSection({ register, goToLogin, styles }) {
+export default function RegisterSection({ goToLogin, styles }) {
     const [values, setValues] = useState({
-        username: '',
         email: '',
         password: '',
         passwordConfirmation: '',
     });
 
     const [errors, setErrors] = useState({
-        username: undefined,
         email: undefined,
         password: undefined,
         passwordConfirmation: undefined,
@@ -39,17 +38,30 @@ export default function RegisterSection({ register, goToLogin, styles }) {
     const buttonVariant = isFormValid ? INPUT_VARIANTS.PRIME : INPUT_VARIANTS.DISABLED;
 
     const validate = (name, value) => {
-        try {
-            if (name === 'passwordConfirmation') {
-                validatePasswordConfirmation(values.password, value);
-            } else {
+        const newErrors = { ...errors };
+        const requiresConfirmationValidation = name === 'passwordConfirmation'
+            || (name === 'password' && !!values.passwordConfirmation);
+        if (requiresConfirmationValidation) {
+            try {
+                const pass = name === 'password' ? value : values.password;
+                const passConf = name === 'passwordConfirmation' ? value : values.passwordConfirmation;
+                validatePasswordConfirmation(pass, passConf);
+                newErrors.passwordConfirmation = null;
+            } catch (error) {
+                newErrors.passwordConfirmation = error.message;
+            }
+        }
+
+        if (name !== 'passwordConfirmation') {
+            try {
                 const validationFunction = User[`validate${name.charAt(0).toUpperCase()}${name.slice(1)}`];
                 validationFunction(value);
+                newErrors[name] = null;
+            } catch (error) {
+                newErrors[name] = error.message;
             }
-            setErrors({ ...errors, [name]: null });
-        } catch (error) {
-            setErrors({ ...errors, [name]: error.message });
         }
+        setErrors(newErrors);
     };
 
     const handleChange = (name, value) => {
@@ -75,17 +87,18 @@ export default function RegisterSection({ register, goToLogin, styles }) {
     };
 
     const formProps = [
+        // {
+        //     name: 'username',
+        //     headerProps: {
+        //         title: "Imię",
+        //         isRequired: true,
+        //     },
+        //     inputProps: {
+        //         inputMode: "text",
+        //         autoComplete: "given-name",
+        //     },
+        // }, 
         {
-            name: 'username',
-            headerProps: {
-                title: "Imię",
-                isRequired: true,
-            },
-            inputProps: {
-                inputMode: "text",
-                autoComplete: "given-name",
-            },
-        }, {
             name: 'email',
             headerProps: {
                 title: "E-mail",
@@ -147,10 +160,11 @@ export default function RegisterSection({ register, goToLogin, styles }) {
         }
 
         try {
-            const { username, email, password } = values;
-            await register({ username, email, password });
-        } catch (error) {
-            ModalService.showError('Nie mogłem Cię zarejestrować. Sprawdź wprowadzone dane i spróbuj jeszcze raz.');
+            const { email, password } = values;
+            await UserService.register(email, password);
+            goToLogin();
+        } catch (err) {
+            ModalService.showError(err.message);
         }
     }
 

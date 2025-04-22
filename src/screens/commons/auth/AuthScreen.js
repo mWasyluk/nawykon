@@ -1,5 +1,4 @@
 import { ScreenContainer } from '@components/layout';
-import { useUser } from '@contexts/UserContext';
 import { colors, metrics, uiStyles } from '@styles';
 import { useState } from 'react';
 import { Image, StyleSheet } from 'react-native';
@@ -7,7 +6,6 @@ import LoginSection from './LoginSection';
 import RegisterSection from './RegisterSection';
 
 export default function AuthScreen() {
-    const { login } = useUser();
     const [isLogin, setIsLogin] = useState(true);
 
     const switchAuth = () => {
@@ -23,14 +21,11 @@ export default function AuthScreen() {
 
             {isLogin ? (
                 <LoginSection
-                    login={login}
                     goToRegister={switchAuth}
                     styles={sectionStyles}
                 />
             ) : (
-                // TODO: Implement register function and pass it the section
                 <RegisterSection
-                    register={() => { alert('Register not implemented') }}
                     goToLogin={switchAuth}
                     styles={sectionStyles}
                 />

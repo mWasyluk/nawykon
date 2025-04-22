@@ -1,12 +1,13 @@
 import { Habit } from '@models/habit/Habit';
-import { setDocument, getAllDocuments, deleteDocument } from '@services/firestoreService';
+import { setDocument, getAllDocuments, deleteDocument, deleteAllDocuments } from '@services/firestoreService';
 
 const collectionName = 'habits';
 
 export const HabitService = {
     getAllHabits,
     saveHabit,
-    deleteHabit
+    deleteHabit,
+    deleteAllHabits,
 };
 
 async function getAllHabits() {
@@ -21,4 +22,8 @@ async function saveHabit(habit) {
 
 async function deleteHabit(habitId) {
     await deleteDocument(collectionName, habitId);
+}
+
+async function deleteAllHabits() {
+    await deleteAllDocuments(collectionName);
 }

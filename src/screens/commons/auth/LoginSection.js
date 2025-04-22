@@ -6,11 +6,12 @@ import { BodyText, OptionalErrorText, PressableText } from '@components/text';
 import { AUTH_VALIDATION_DELAY } from '@constants/time';
 import { User } from '@models/user/User';
 import { ModalService } from '@services/modalService';
+import { UserService } from '@services/userService';
 import { colors, icons } from '@styles';
 import React, { createRef, useRef, useState } from 'react';
 import { Image, Keyboard, TouchableOpacity, View } from 'react-native';
 
-export default function LoginSection({ login, goToRegister, styles }) {
+export default function LoginSection({ goToRegister, styles }) {
     const [values, setValues] = useState({
         email: '',
         password: '',
@@ -110,11 +111,10 @@ export default function LoginSection({ login, goToRegister, styles }) {
         }
 
         try {
-            // TODO: Add loading indicator and username handling
-            const { username, email, password } = values;
-            await login(email, password);
-        } catch (error) {
-            ModalService.showError('Nie mogłem Cię zalogować. Sprawdź wprowadzone dane i spróbuj jeszcze raz.');
+            const { email, password } = values;
+            await UserService.login(email, password);
+        } catch (err) {
+            ModalService.showError(err.message);
         }
     }
 

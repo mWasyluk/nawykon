@@ -1,20 +1,17 @@
-import { getAllDocumentsByQuery, setDocument } from '@services/firestoreService';
-import { signInWithEmailAndPassword, signOut } from 'firebase/auth';
-import { limit } from 'firebase/firestore';
+import { createUserWithEmailAndPassword, deleteUser, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { auth } from './authService';
+import { Settings } from '@models/user/Settings';
+import { deleteAllDocuments, deleteDocument, getAllDocuments, setDocument } from './firestoreService';
 
-const collectionName = 'userDetails';
+const settingsCollectionName = 'settings';
 
 export const UserService = {
-    getUserDetails,
-    updateUserDetails,
     login,
     logout,
-}
-
-async function getUserDetails() {
-    const userDetails = await getAllDocumentsByQuery(collectionName, [limit(1)]);
-    return userDetails[0];
+    register,
+    getSettings,
+    saveSettings,
+    deleteAccount,
 }
 
 async function login(email, password) {
@@ -36,6 +33,33 @@ async function logout() {
     }
 }
 
-async function updateUserDetails(user) {
-    return await setDocument(collectionName, user);
+async function register(email, password) {
+    try {
+        await createUserWithEmailAndPassword(auth, email, password);
+        // await sendEmailVerification(auth.currentUser);
+    } catch (err) {
+        if (err.code === "auth/email-already-in-use") {
+            throw new Error("Taki użytkownik już istnieje. Wprowadź inny adres e-mail i spróbuj ponownie.");
+        }
+        throw new Error("Nie mogłem Cię zarejestrować. Sprawdź połączenie z Internetem i spróbuj ponownie.");
+    }
+}
+
+
+async function getSettings() {
+    const docs = await getAllDocuments(settingsCollectionName);
+    if (!docs || docs.length === 0) {
+        return new Settings({});
+    }
+    return new Settings(docs[0]);
+}
+
+async function saveSettings(settings) {
+    const doc = await setDocument(settingsCollectionName, settings);
+    return new Settings(doc);
+}
+
+async function deleteAccount() {
+    await deleteAllDocuments(settingsCollectionName);
+    await deleteUser(auth.currentUser);
 }

@@ -1,4 +1,4 @@
-import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, limit, query, setDoc, where } from 'firebase/firestore';
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, getFirestore, limit, query, setDoc, where } from 'firebase/firestore';
 import { db } from 'src/configs/firebaseConfig';
 import { auth } from './authService';
 
@@ -77,11 +77,12 @@ export const deleteDocument = async (collectionName, id) => {
 };
 
 export const deleteAllDocuments = async (collectionName) => {
-    verifyUid();
+    const uid = verifyUid();
 
     try {
         const collectionRef = collection(db, collectionName);
-        const snapshot = await getDocs(collectionRef);
+        const q = query(collectionRef, where('uid', '==', uid));
+        const snapshot = await getDocs(q);
         await Promise.all(snapshot.docs.map(doc => deleteDoc(doc.ref)));
     } catch (error) {
         throw new Error("Nie udało się usunąć danych z serwera.");
