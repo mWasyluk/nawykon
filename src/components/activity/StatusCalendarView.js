@@ -61,12 +61,11 @@ export const StatusCalendarView = (props) => {
                     variant = CALENDAR_RECORD_VARIANTS.UNDEFINED;
                     break;
             }
-            const isSelectable = variant !== CALENDAR_RECORD_VARIANTS.UNDEFINED;
-            calendarRecords.push({ date: isSelectable && date, variant });
+            calendarRecords.push({ date, variant });
             continue;
         }
 
-        calendarRecords.push({ variant: CALENDAR_RECORD_VARIANTS.UNDEFINED });
+        calendarRecords.push({ date, variant: CALENDAR_RECORD_VARIANTS.UNDEFINED });
     }
 
     for (let i = 0; i < 42 - lastDateOfDataMonth.getDate() - firstDayOfWeek; i++) {

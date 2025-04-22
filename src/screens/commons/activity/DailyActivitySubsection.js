@@ -93,19 +93,36 @@ export default function DailyActivitySubsection(props) {
     }
 
     if (habitId) {
+        const habit = habits.find(habit => habit.id === habitId);
+        if (!habit) {
+            return;
+        }
+        const isFuture = date > formatDate(new Date(), 'date');
+        const wasActive = (!habit.endDate || habit.endDate >= date) && formatDate(habit.createdAt, 'date') <= date;
+
         const handleAddExecution = async () => {
+            if (isFuture) {
+                ModalService.showError('Nie możesz dodać aktywności w przyszłości.');
+                return;
+            }
+            if (!wasActive) {
+                ModalService.showError('Nawyk był nieaktywny wybranego dnia.');
+                return;
+            }
             const currentExecutions = allDailyExecutions[habitId];
             const newExecutions = [...currentExecutions, new Date().getTime()];
 
             await setHabitLog(date, { id: habitId, executions: newExecutions });
         }
 
+        const isButtonActive = wasActive && !isFuture;
+
         listElements.push(
             <Button
                 key="add-execution-button"
                 icon={icons.plus}
                 onPress={handleAddExecution}
-                variant={INPUT_VARIANTS.PRIME}
+                variant={isButtonActive ? INPUT_VARIANTS.PRIME : INPUT_VARIANTS.DISABLED}
             />
         )
     }
