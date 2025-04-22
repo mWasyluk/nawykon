@@ -1,5 +1,6 @@
 import Button, { LOADING_ICON } from '@components/input/Button';
 import { INPUT_SIZES, INPUT_VARIANTS } from '@components/input/InputContainer';
+import { ScreenContainer } from '@components/layout';
 import { useReports } from '@contexts/ReportsContext';
 import { Mood } from '@models/mood/Mood';
 import { ModalService } from '@services/modalService';
@@ -7,7 +8,6 @@ import { icons, metrics } from '@styles';
 import { NavigationUtil } from '@utils/navUtil';
 import { useLocalSearchParams } from 'expo-router/build/hooks';
 import { useEffect, useMemo, useState } from 'react';
-import { ScreenContainer } from 'react-native-screens';
 import NoteSection from '../sections/NoteSection';
 import PickEnergySection from '../sections/PickEnergySection';
 import PickMoodSection from '../sections/PickMoodSection';
