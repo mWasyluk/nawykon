@@ -1,6 +1,6 @@
 import BackgroundGradient from '@components/effects/BackgroundGradient';
 import { colors, metrics } from '@styles';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { Animated, StyleSheet } from 'react-native';
 import InputContainer, { INPUT_VARIANTS } from './InputContainer';
 
@@ -9,12 +9,11 @@ const ANIMATION_DURATION = 200;
 
 export default function Switch(props) {
     const {
-        isOn: defaultIsOn = false,
+        isOn = false,
         onChange = () => { },
     } = props;
 
-    const [isOn, setIsOn] = useState(defaultIsOn);
-    const slideAnimation = useRef(new Animated.Value(defaultIsOn ? 1 : 0)).current;
+    const slideAnimation = useRef(new Animated.Value(isOn ? 1 : 0)).current;
 
     const buttonVariant = isOn ? INPUT_VARIANTS.PRIME : INPUT_VARIANTS.DEFAULT;
 
@@ -31,7 +30,6 @@ export default function Switch(props) {
 
     const handleChange = () => {
         const newState = !isOn;
-        setIsOn(newState);
         onChange(newState);
     };
 
