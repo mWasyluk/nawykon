@@ -52,7 +52,7 @@ export default function EditRemindersSection({ habitBuilder }) {
                 />}
             />
             {reminders.map((reminder, i) => (
-                <View key={`${i}${reminder}`} style={{ flex: 1, flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+                <View key={`reminder-${i}`} style={{ flex: 1, flexDirection: 'row', alignItems: 'center', gap: 10 }}>
                     <BodyText style={{ color: colors.midGray }}>O godzinie</BodyText>
                     <View style={{ width: 120 }}>
                         <TextInput
