@@ -17,7 +17,7 @@ export const NavHeader = ({ title, back, home }) => {
 
     return (
         <View style={styles.container}>
-            {back && <NavButton icon={icons.circleLeft} onPress={handleBackPress} />}
+            {back && <NavButton icon={icons.arrowLeft} onPress={handleBackPress} />}
             <HeaderText style={styles.title}>{title}</HeaderText>
             {home && <NavButton icon={icons.home} onPress={handleHomePress} />}
         </View>
