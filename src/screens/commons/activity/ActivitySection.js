@@ -54,7 +54,7 @@ export default function ActivitySection(props) {
 
     const dailyStatistics = useMemo(() => (
         monthlyStatistics.calendar[selectedDate]
-    ), [selectedDate, monthlyStatistics]);
+    ), [selectedDate]);
 
     const dailyMoodReport = useMemo(() => (
         activityRegistry.getRecord(selectedDate).mood
