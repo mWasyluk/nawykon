@@ -18,8 +18,13 @@ export function PressableText(props) {
         style,
     ];
 
+    const containerStyles = [
+        { alignSelf: 'flex-start' },
+        containerStyle,
+    ];
+
     return (
-        <TouchableOpacity disabled={disabled} style={containerStyle} onPress={onPress}>
+        <TouchableOpacity disabled={disabled} style={containerStyles} onPress={onPress}>
             <ActionText style={textStyles} {...otherProps}>
                 {children}
             </ActionText>
