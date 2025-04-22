@@ -4,6 +4,7 @@ import TextInput from '@components/input/TextInput';
 import { SectionContainer, SectionHeader } from '@components/layout';
 import { BodyText, OptionalErrorText } from '@components/text';
 import { useUser } from '@contexts/UserContext';
+import { ModalService } from '@services/modalService';
 import { colors, icons } from '@styles';
 import { useState } from 'react';
 import { View } from 'react-native';
@@ -13,10 +14,12 @@ export default function EditRemindersSection({ habitBuilder }) {
         reminders = habitBuilder.habit?.reminders || []
     } = habitBuilder;
 
-    const { settings: { notificationsTime } } = useUser();
+    const { settings: { notificationsEnabled, notificationsTime } } = useUser();
+    const [isWarningShown, setIsWarningShown] = useState(false);
     const [reminderError, setReminderError] = useState(null);
 
     const addDefaultReminder = () => {
+        verifyNotificationsEnabled();
         handleRemindersChange([...reminders, notificationsTime]);
     }
 
@@ -27,6 +30,7 @@ export default function EditRemindersSection({ habitBuilder }) {
     }
 
     const changeReminder = (index, value) => {
+        verifyNotificationsEnabled();
         const newReminders = [...reminders];
         newReminders[index] = value;
         handleRemindersChange(newReminders);
@@ -38,6 +42,18 @@ export default function EditRemindersSection({ habitBuilder }) {
             setReminderError(null);
         } catch (error) {
             setReminderError(error.message);
+        }
+    }
+
+    const verifyNotificationsEnabled = () => {
+        if (!notificationsEnabled && !isWarningShown) {
+            ModalService.showInfo(
+                "Powiadomienia są wyłączone",
+                <BodyText>
+                    {"Nie otrzymasz przypomnienia, dopóki powiadomienia są wyłączone. Przejdź do ustawień, aby je włączyć."}
+                </BodyText>
+            );
+            setIsWarningShown(true);
         }
     }
 
