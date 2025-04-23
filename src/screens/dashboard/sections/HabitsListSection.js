@@ -1,70 +1,85 @@
 import HabitCard from "@components/habit/HabitCard";
 import Button from "@components/input/Button";
 import { INPUT_VARIANTS } from "@components/input/InputContainer";
-import { SectionContainer, SectionHeader } from "@components/layout";
+import { SectionContainer, SectionHeader, TabToggle } from "@components/layout";
 import routes from "@constants/router";
 import { useHabits } from "@contexts/HabitsContext";
 import { useReports } from "@contexts/ReportsContext";
 import { useStateManager } from "@contexts/StateManagerContext";
+import { Habit } from "@models/habit/Habit";
 import { ModalService } from "@services/modalService";
 import { icons } from "@styles";
 import { formatDate } from "@utils/dateUtil";
 import { router } from "expo-router";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 export default function HabitsListSection() {
     const { habits } = useHabits();
     const { setHabitLog } = useReports();
     const { activityRegistry } = useStateManager();
 
+    const [activeTabIndex, setActiveTabIndex] = useState(0);
     const [isAdding, setIsAdding] = useState(false);
 
-    const todaysActivityRecord = activityRegistry.getRecord(new Date());
+    const todaysActivityRecord = useMemo(() => activityRegistry.getRecord(new Date()), [activityRegistry]);
 
-    const habitCardPropsArray = habits.map(habit => {
-        const cardProps = {
-            // details,
-            // streak,
-            // goal,
-            // completed,
-            // addExecution,
-            // onPress,
-        };
+    const tabs = useMemo(() => [
+        { name: "Aktywne", onPress: () => setActiveTabIndex(1), habitsFilter: (habit) => habit.status === Habit.STATUSES.ACTIVE },
+        { name: "Ukończone", onPress: () => setActiveTabIndex(2), habitsFilter: (habit) => habit.status === Habit.STATUSES.COMPLETED },
+        { name: "Wszystkie", onPress: () => setActiveTabIndex(0), habitsFilter: () => true },
+    ], []);
 
-        cardProps.details = habit.details;
-        cardProps.streak = habit.streak;
+    const activeTab = useMemo(() => tabs[activeTabIndex], [activeTabIndex]);
+    const activeHabits = useMemo(() => habits.filter(activeTab?.habitsFilter), [activeTab, habits]);
 
-        const {
-            executions: currentExecutionsArray = [],
-            goal = 0,
-            completed = 0
-        } = todaysActivityRecord.habits[habit.id] || {};
+    const habitCardPropsArray = useMemo(() => {
+        return activeHabits.map(habit => {
+            const cardProps = {
+                // details,
+                // streak,
+                // goal,
+                // completed,
+                // addExecution,
+                // onPress,
+            };
 
-        cardProps.goal = goal;
-        cardProps.completed = Math.min(completed, goal);
+            cardProps.details = habit.details;
+            cardProps.streak = habit.streak;
 
-        cardProps.addExecution = () => {
-            if (cardProps.completed >= cardProps.goal || isAdding) {
-                return;
+            const {
+                executions: currentExecutionsArray = [],
+                goal = 0,
+                completed = 0
+            } = todaysActivityRecord.habits[habit.id] || {};
+
+            cardProps.goal = goal;
+            cardProps.completed = Math.min(completed, goal);
+
+            cardProps.addExecution = () => {
+                if (cardProps.completed >= cardProps.goal || isAdding) {
+                    return;
+                }
+                try {
+                    setIsAdding(habit.id);
+                    let newExecutionsArray = [...currentExecutionsArray, new Date().getTime()];
+                    const date = formatDate(new Date(), 'date');
+                    setHabitLog(date, { id: habit.id, executions: newExecutionsArray });
+                } catch (error) {
+                    ModalService.showError(error.message);
+                }
+            };
+
+            cardProps.isLoading = isAdding === habit.id;
+
+            cardProps.onPress = () => {
+                router.push(routes.habitDetails(habit.id));
             }
-            try {
-                setIsAdding(habit.id);
-                let newExecutionsArray = [...currentExecutionsArray, new Date().getTime()];
-                const date = formatDate(new Date(), 'date');
-                setHabitLog(date, { id: habit.id, executions: newExecutionsArray });
-            } catch (error) {
-                ModalService.showError(error.message);
-            }
-        };
 
-        cardProps.isLoading = isAdding === habit.id;
-
-        cardProps.onPress = () => {
-            router.push(routes.habitDetails(habit.id));
-        }
-
-        return cardProps;
-    }).sort((a, b) => b.goal - a.goal);
+            return cardProps;
+        }) // sort by name and goal, prioritize goal
+            .sort((a, b) => a.details.name.localeCompare(b.details.name))
+            .sort((a, b) => b.goal - a.goal);
+    }, [activeHabits, todaysActivityRecord, isAdding]);
 
     useEffect(() => {
         setIsAdding(false);
@@ -78,6 +93,7 @@ export default function HabitsListSection() {
         <SectionContainer>
             <SectionHeader
                 title={"Nawyki"}
+                badge={<TabToggle name={activeTab.name} onPress={activeTab.onPress} />}
                 right={<Button
                     title={"Dodaj"}
                     icon={icons.plus}
