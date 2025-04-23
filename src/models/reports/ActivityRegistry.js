@@ -131,8 +131,12 @@ export class ActivityRegistry {
                 }
             }
 
+            const currentHabitIds = Object.keys(this.records[dailyReport.date].habits || {});
+            const newHabitIds = [];
+
             // Update habit records
             habits.forEach((habit) => {
+                newHabitIds.push(habit.id);
                 const newGoal = habit.getGoalForDate(dailyReport.date);
                 // Skip if habit was not active on the given date
                 if (newGoal === null) return;
@@ -155,6 +159,14 @@ export class ActivityRegistry {
                         this.records[dailyReport.date].habits[habit.id] = this.#calculateRecord(newGoal, newExecutions);
                         isUpdated = true;
                     }
+                }
+            });
+
+            // Remove records of habits that are no longer present
+            currentHabitIds.forEach((habitId) => {
+                if (!newHabitIds.includes(habitId)) {
+                    delete this.records[dailyReport.date].habits[habitId];
+                    isUpdated = true;
                 }
             });
         });

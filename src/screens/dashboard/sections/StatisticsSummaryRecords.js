@@ -4,6 +4,7 @@ import { useReports } from "@contexts/ReportsContext";
 import { useStateManager } from "@contexts/StateManagerContext";
 import { colors, icons, metrics } from "@styles";
 import { ActivityUtil } from "@utils/activityUtil";
+import { useMemo } from "react";
 import { Image, View } from "react-native";
 
 function StatisticsSummaryRecord(props) {
@@ -27,12 +28,12 @@ export default function StatisticsSummaryRecords() {
     const { dailyReports } = useReports();
     const { activityRegistry } = useStateManager();
 
-    const habitsCount = habits.length;
-    const moodReportsCount = dailyReports.filter(report => !!report.mood).length;
+    const habitsCount = useMemo(() => habits.length, [habits]);
+    const moodReportsCount = useMemo(() => dailyReports.filter(report => !!report.mood).length, [dailyReports]);
 
-    const allRecords = activityRegistry.getRecords();
-    const totalPoints = ActivityUtil.calculateHabitPoints(allRecords);
-    const totalActionsNumber = ActivityUtil.calculateActionsNumber(allRecords);
+    const allRecords = useMemo(() => activityRegistry.getRecords(), [activityRegistry]);
+    const totalPoints = useMemo(() => ActivityUtil.calculateHabitPoints(allRecords), [allRecords]);
+    const totalActionsNumber = useMemo(() => ActivityUtil.calculateActionsNumber(allRecords), [allRecords]);
 
     return (
         <>

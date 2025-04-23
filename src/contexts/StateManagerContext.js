@@ -42,16 +42,14 @@ export function StateManagerProvider({ children }) {
         }
 
         try {
-            let registry = activityRegistry;
-            if (!registry) {
-                registry = new ActivityRegistry(dailyReports, habits);
+            if (!activityRegistry) {
+                setActivityRegistry(new ActivityRegistry(dailyReports, habits));
             } else {
-                const isUpdated = registry.update(dailyReports, habits);
+                const isUpdated = activityRegistry.update(dailyReports, habits);
                 if (isUpdated) {
-                    registry = registry.clone();
+                    setActivityRegistry(activityRegistry.clone());
                 }
             }
-            setActivityRegistry(registry);
         } catch (err) {
             console.error(err);
             ModalService.showError('Nie mogłem wygenerować rejestru aktywności. Odśwież aplikację, żebym mógł spróbować jeszcze raz.');
