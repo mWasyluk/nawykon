@@ -37,6 +37,11 @@ export function StateManagerProvider({ children }) {
     }, [isFontsLoading, user, habits, dailyReports, activityRegistry]);
 
     useEffect(() => {
+        if (!user) {
+            setActivityRegistry(null);
+            return;
+        }
+
         if (!dailyReports || !habits) {
             return;
         }
@@ -54,7 +59,7 @@ export function StateManagerProvider({ children }) {
             console.error(err);
             ModalService.showError('Nie mogłem wygenerować rejestru aktywności. Odśwież aplikację, żebym mógł spróbować jeszcze raz.');
         }
-    }, [dailyReports, habits]);
+    }, [user, dailyReports, habits]);
 
     const currentState = useMemo(() => {
         if (!user) {
