@@ -76,6 +76,8 @@ export default function ViewDetailsSection({ habit }) {
         router.push(routes.editHabit(id));
     }
 
+    const endDateColor = endDate && endDate < formatDate(new Date(), 'date') ? colors.lightError : styles.captionText.color;
+
     return (
         <SectionContainer>
             <SectionHeader title="Szczegóły" />
@@ -98,8 +100,8 @@ export default function ViewDetailsSection({ habit }) {
 
                     {endDate && (
                         <View style={styles.detailsContainer}>
-                            <LabelText style={styles.captionText}>{endDate}</LabelText>
-                            <Image source={icons.calendarCross} style={styles.detailsIcon} tintColor={styles.captionText.color} />
+                            <LabelText style={[styles.captionText, { color: endDateColor }]}>{endDate}</LabelText>
+                            <Image source={icons.calendarCross} style={styles.detailsIcon} tintColor={endDateColor} />
                         </View>
                     )}
 
