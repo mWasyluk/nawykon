@@ -1,36 +1,39 @@
 import { Platform } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { app } from '@configs/firebaseConfig';
+
+const sanitizeKey = (key) => `${app.name}_${key}`;
 
 const StoreService = {
-    async setItem(key, data, secured = true) {
+    async setItem(key, data, secured = false) {
         // Serialize data
         const value = JSON.stringify(data);
 
         if (Platform.OS === 'web') {
             // WEB -> localStorage
-            localStorage.setItem(key, value);
+            localStorage.setItem(sanitizeKey(key), value);
         } else {
             // MOBILE
             if (secured) {
-                await SecureStore.setItemAsync(key, value);
+                await SecureStore.setItemAsync(sanitizeKey(key), value);
             } else {
-                await AsyncStorage.setItem(key, value);
+                await AsyncStorage.setItem(sanitizeKey(key), value);
             }
         }
     },
 
-    async getItem(key, secured = true) {
+    async getItem(key, secured = false) {
         let value = null;
 
         if (Platform.OS === 'web') {
             // WEB -> localStorage
-            value = localStorage.getItem(key);
+            value = localStorage.getItem(sanitizeKey(key));
         } else {
             // MOBILE
             value = secured
-                ? await SecureStore.getItemAsync(key)
-                : await AsyncStorage.getItem(key);
+                ? await SecureStore.getItemAsync(sanitizeKey(key))
+                : await AsyncStorage.getItem(sanitizeKey(key));
         }
 
         if (!value) return null;
@@ -44,14 +47,14 @@ const StoreService = {
         }
     },
 
-    async removeItem(key, secured = true) {
+    async removeItem(key, secured = false) {
         if (Platform.OS === 'web') {
-            localStorage.removeItem(key);
+            localStorage.removeItem(sanitizeKey(key));
         } else {
             if (secured) {
-                await SecureStore.deleteItemAsync(key);
+                await SecureStore.deleteItemAsync(sanitizeKey(key));
             } else {
-                await AsyncStorage.removeItem(key);
+                await AsyncStorage.removeItem(sanitizeKey(key));
             }
         }
     }
