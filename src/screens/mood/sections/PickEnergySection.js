@@ -1,5 +1,5 @@
-import ScreenSection from "@components/layout/ScreenSection";
 import IconToggleGroup from "@components/input/IconToggleGroup";
+import { SectionContainer, SectionHeader } from "@components/layout";
 import { icons } from "@styles";
 
 export default function PickEnergySection(props) {
@@ -9,11 +9,14 @@ export default function PickEnergySection(props) {
     } = props;
 
     return (
-        <ScreenSection title="Ile masz energii?*">
+        <SectionContainer style={{ gap: 0 }}>
+            <SectionHeader
+                title="Ile masz energii?*"
+            />
             <IconToggleGroup
                 icons={[icons.energy0, icons.energy1, icons.energy2]}
                 selected={defaultValue}
                 onChange={onChange} />
-        </ScreenSection>
+        </SectionContainer>
     );
 }

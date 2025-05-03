@@ -1,5 +1,5 @@
-import ScreenSection from "@components/layout/ScreenSection";
 import IconToggleGroup from "@components/input/IconToggleGroup";
+import { SectionContainer, SectionHeader } from "@components/layout";
 import { icons } from "@styles";
 
 export default function PickMoodSection(props) {
@@ -9,11 +9,14 @@ export default function PickMoodSection(props) {
     } = props;
 
     return (
-        <ScreenSection title="Jaki masz nastrój?*" containerStyle={{ justifyContent: 'space-between' }}>
+        <SectionContainer style={{ gap: 0 }}>
+            <SectionHeader
+                title="Jaki masz nastrój?*"
+            />
             <IconToggleGroup
                 icons={[icons.mood0, icons.mood1, icons.mood2, icons.mood3, icons.mood4]}
                 selected={defaultValue}
                 onChange={onChange} />
-        </ScreenSection>
+        </SectionContainer>
     );
 }
