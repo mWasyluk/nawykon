@@ -1,18 +1,17 @@
 import { ActivityRegistry } from "@models/reports/ActivityRegistry";
-import AuthScreen from "@screens/commons/auth/AuthScreen";
-import LoadingScreen, { LOADING_ANIMATION_DURATION } from "@screens/commons/auth/LoadingScreen";
+import LoadingScreen, { LOADING_ANIMATION_DURATION } from "@screens/commons/LoadingScreen";
 import { ModalService } from "@services/modalService";
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { useFonts } from "./FontsContext";
 import { useHabits } from "./HabitsContext";
 import { useReports } from "./ReportsContext";
-import { useUser } from "./UserContext";
+import { useSettings } from "./SettingsContext";
 
 const StateManagerContext = createContext({ activityRegistry: null });
 
 export function StateManagerProvider({ children }) {
     const { isLoading: isFontsLoading } = useFonts();
-    const { user } = useUser();
+    const { settings } = useSettings();
     const { habits } = useHabits();
     const { dailyReports } = useReports();
 
@@ -23,9 +22,9 @@ export function StateManagerProvider({ children }) {
         if (isFontsLoading) {
             return '';
         }
-        if (!user || !habits || !dailyReports) {
+        if (!settings || !habits || !dailyReports) {
             return 'Pobieram dane' +
-                (!user ? ' o użytkowniku'
+                (!settings ? ' o ustawieniach'
                     : !habits ? ' o nawykach'
                         : !dailyReports ? ' o raportach'
                             : '') + '...';
@@ -34,14 +33,9 @@ export function StateManagerProvider({ children }) {
             return 'Tworzę rejestr aktywności...';
         }
         return null;
-    }, [isFontsLoading, user, habits, dailyReports, activityRegistry]);
+    }, [isFontsLoading, settings, habits, dailyReports, activityRegistry]);
 
     useEffect(() => {
-        if (!user) {
-            setActivityRegistry(null);
-            return;
-        }
-
         if (!dailyReports || !habits) {
             return;
         }
@@ -59,23 +53,18 @@ export function StateManagerProvider({ children }) {
             console.error(err);
             ModalService.showError('Nie mogłem wygenerować rejestru aktywności. Odśwież aplikację, żebym mógł spróbować jeszcze raz.');
         }
-    }, [user, dailyReports, habits]);
+    }, [dailyReports, habits]);
 
     const currentState = useMemo(() => {
-        if (!user) {
-            return "AUTH";
-        }
         if (loadingMessage === null) {
             return "READY";
         }
         return "LOADING";
-    }, [loadingMessage, user]);
+    }, [loadingMessage]);
 
     useEffect(() => {
         let timer;
-        if (currentState === "AUTH") {
-            setContent(<AuthScreen />);
-        } else if (currentState === "READY") {
+        if (currentState === "READY") {
             timer = setTimeout(() => {
                 setContent(children);
             }, LOADING_ANIMATION_DURATION);

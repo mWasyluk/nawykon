@@ -15,7 +15,7 @@ import EditRemindersSection from '../sections/EditRemindersSection';
 
 export default function EditHabitScreen() {
     const { id } = useLocalSearchParams();
-    const { habits, updateHabit, isLoading } = useHabits();
+    const { habits, saveHabit, isLoading } = useHabits();
     const [builderErrors, setBuilderErrors] = useState([]);
     const [isUpdated, setIsUpdated] = useState(null);
 
@@ -45,7 +45,7 @@ export default function EditHabitScreen() {
             let habit = habitBuilder.build();
 
             if (!isSubmitted && !isError) {
-                await updateHabit(habit);
+                await saveHabit(habit);
                 setIsUpdated(true);
             }
         } catch (error) {

@@ -35,7 +35,7 @@ export default function ViewDetailsSection({ habit }) {
 
     const days = habit.goal.days.length;
 
-    const { deleteHabit } = useHabits();
+    const { deleteHabitById } = useHabits();
     const [isExpanded, setIsExpanded] = useState(false);
     const slideAnimation = useRef(new Animated.Value(0)).current;
 
@@ -66,8 +66,7 @@ export default function ViewDetailsSection({ habit }) {
     const handleDeletePress = () => {
         const message = `Czy chcesz trwale usunąć nawyk "${name}"?`;
         const onConfirm = async () => {
-            await deleteHabit(id);
-            router.replace(routes.home);
+            await deleteHabitById(id);
         };
         ModalService.showConfirm(message, onConfirm);
     }

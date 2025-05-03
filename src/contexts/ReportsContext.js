@@ -1,24 +1,13 @@
 import { DailyReport } from '@models/reports/DailyReport';
-import { DailyReportService } from '@services/dailyReportService';
 import { ModalService } from '@services/modalService';
-import { formatDate } from '@utils/dateUtil';
-import { createContext, useContext, useEffect, useMemo, useState } from 'react';
-import { useUser } from './UserContext';
+import { ReportsService } from '@services/reportsService';
+import { createContext, useContext, useEffect, useState } from 'react';
 
 const DailyReportsContext = createContext();
 
 export const DailyReportsProvider = ({ children }) => {
-    const { user } = useUser();
-
     const [dailyReports, setDailyReports] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
-
-    const todaysReport = useMemo(() => {
-        if (!dailyReports || dailyReports.length === 0) {
-            return undefined;
-        }
-        return dailyReports.find(report => formatDate(report.date, 'date') === formatDate(new Date(), 'date'));
-    }, [dailyReports]);
 
     const setMood = async (date, mood) => {
         setIsLoading(true);
@@ -28,7 +17,7 @@ export const DailyReportsProvider = ({ children }) => {
                 if (report.date === date) {
                     isFound = true;
                     report.setMood(mood);
-                    const saved = await DailyReportService.saveDailyReport(report);
+                    const saved = await ReportsService.save(report);
                     return saved;
                 }
                 return report;
@@ -37,13 +26,14 @@ export const DailyReportsProvider = ({ children }) => {
             if (!isFound) {
                 const lackReport = new DailyReport({ date });
                 lackReport.setMood(mood);
-                const saved = await DailyReportService.saveDailyReport(lackReport);
+                const saved = await ReportsService.save(lackReport);
                 newReports.push(saved);
             }
 
             setDailyReports([...newReports]);
         } catch (error) {
-            ModalService.showError(error.message);
+            console.error(error);
+            ModalService.showError("Nie udało się zapisać nastroju. Odśwież aplikację i spróbuj ponownie.");
         } finally {
             setIsLoading(false);
         }
@@ -57,7 +47,7 @@ export const DailyReportsProvider = ({ children }) => {
                 if (report.date === date) {
                     isFound = true;
                     report.setHabitLog(id, executions);
-                    const saved = await DailyReportService.saveDailyReport(report);
+                    const saved = await ReportsService.save(report);
                     return saved;
                 }
                 return report;
@@ -66,60 +56,54 @@ export const DailyReportsProvider = ({ children }) => {
             if (!isFound) {
                 const lackReport = new DailyReport({ date });
                 lackReport.setHabitLog(id, executions);
-                const saved = await DailyReportService.saveDailyReport(lackReport);
+                const saved = await ReportsService.save(lackReport);
                 newReports.push(saved);
             }
 
             setDailyReports([...newReports]);
         } catch (error) {
-            ModalService.showError(error.message);
+            ModalService.showError("Nie udało się zapisać aktywności. Odśwież aplikację i spróbuj ponownie.");
         } finally {
             setIsLoading(false);
         }
     };
 
     useEffect(() => {
-        if (!user || !user.uid) {
-            return;
-        }
-
         const initDailyReports = async () => {
             setIsLoading(true);
             try {
                 // fetch all from database
-                const reports = await DailyReportService.getAllDailyReports();
+                const reports = await ReportsService.getAll();
 
-                // verify todays report and create or update if needed
-                var todaysReport = reports.find(report => report.date === formatDate(new Date(), 'date'));
-                if (!todaysReport) {
-                    todaysReport = new DailyReport({ date: new Date() });
-                    const saved = await DailyReportService.saveDailyReport(todaysReport);
-                    reports.push(saved);
-                }
+                // // verify todays report and create or update if needed
+                // var todaysReport = reports.find(report => report.date === formatDate(new Date(), 'date'));
+                // if (!todaysReport) {
+                //     todaysReport = new DailyReport({ date: new Date() });
+                //     const saved = await ActivitiesService.save(todaysReport);
+                //     reports.push(saved);
+                // }
 
                 setDailyReports(reports);
             } catch (error) {
-                ModalService.showError(error.message);
+                console.error(error);
+                ModalService.showError("Nie udało się pobrać raportów. Odśwież aplikację i spróbuj ponownie.");
             } finally {
                 setIsLoading(false);
             }
         };
 
 
-        if (!dailyReports && !isLoading) {
-            initDailyReports();
-        }
+        initDailyReports();
 
         return () => {
             setDailyReports(null);
         };
-    }, [user?.uid]);
+    }, []);
 
     return (
         <DailyReportsContext.Provider
             value={{
                 dailyReports,
-                todaysReport,
                 setHabitLog,
                 setMood,
                 isLoading,

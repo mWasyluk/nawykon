@@ -14,7 +14,7 @@ import EditGoalSection from './sections/EditGoalSection';
 import EditRemindersSection from './sections/EditRemindersSection';
 
 export default function AddHabitScreen() {
-	const { addHabit, isLoading } = useHabits();
+	const { saveHabit, isLoading } = useHabits();
 	const [builderErrors, setBuilderErrors] = useState([]);
 	const [createdHabit, setCreatedHabit] = useState(null);
 
@@ -40,7 +40,7 @@ export default function AddHabitScreen() {
 			let habit = habitBuilder.build();
 
 			if (!isSubmitted && !isError) {
-				setCreatedHabit(await addHabit(habit));
+				setCreatedHabit(await saveHabit(habit));
 			}
 		} catch (error) {
 			ModalService.showError(error.message);

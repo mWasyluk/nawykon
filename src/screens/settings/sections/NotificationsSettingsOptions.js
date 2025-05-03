@@ -4,33 +4,28 @@ import Switch from "@components/input/Switch";
 import TextInput from "@components/input/TextInput";
 import { SubsectionHeader } from "@components/layout";
 import { OptionalErrorText } from "@components/text";
-import { useUser } from '@contexts/UserContext';
+import { useSettings } from "@contexts/SettingsContext";
 import { Habit } from '@models/habit/Habit';
-import { ModalService } from '@services/modalService';
 import { icons, metrics } from "@styles";
 import { useMemo, useState } from "react";
 import { View } from "react-native";
 
 export default function NotificationsSettingsOptions() {
-    const { settings: { notificationsEnabled, notificationsTime }, updateSettings } = useUser();
+    const { settings, updateSettings } = useSettings();
     const [isNotificationTimeChanged, setIsNotificationTimeChanged] = useState(false);
-    const [newNotificationsTime, setNewNotificationTime] = useState(notificationsTime);
+    const [newNotificationsTime, setNewNotificationTime] = useState(settings.notificationsTime);
     const [notificationError, setNotificationError] = useState(false);
 
     const notificationTimeButtonVariant = useMemo(() => (
-        notificationError || !isNotificationTimeChanged || !notificationsEnabled ? INPUT_VARIANTS.DISABLED : INPUT_VARIANTS.PRIME
-    ), [notificationError, isNotificationTimeChanged, notificationsEnabled]);
+        notificationError || !isNotificationTimeChanged || !settings.notificationsEnabled ? INPUT_VARIANTS.DISABLED : INPUT_VARIANTS.PRIME
+    ), [notificationError, isNotificationTimeChanged, settings.notificationsEnabled]);
 
     const notificationTimeTextVariant = useMemo(() => (
-        notificationsEnabled ? INPUT_VARIANTS.DEFAULT : INPUT_VARIANTS.DISABLED
-    ), [notificationsEnabled]);
+        settings.notificationsEnabled ? INPUT_VARIANTS.DEFAULT : INPUT_VARIANTS.DISABLED
+    ), [settings.notificationsEnabled]);
 
     const handleNotificationEnabledChange = async (value) => {
-        try {
-            await updateSettings({ notificationsEnabled: value });
-        } catch (err) {
-            ModalService.showError(err.message);
-        }
+        await updateSettings({ notificationsEnabled: value });
     }
 
     const handleNotificationTimeChange = (value) => {
@@ -59,7 +54,7 @@ export default function NotificationsSettingsOptions() {
             <View>
                 <SubsectionHeader title="Włącz / wyłącz" />
                 <Switch
-                    isOn={notificationsEnabled}
+                    isOn={settings.notificationsEnabled}
                     onChange={handleNotificationEnabledChange}
                 />
             </View>

@@ -8,9 +8,8 @@ export class Habit {
         COMPLETED: 'completed',
     };
 
-    constructor({ id, uid, details, goal, goalHistory, reminders, createdAt, endDate }) {
+    constructor({ id, details, goal, goalHistory, reminders, createdAt, endDate }) {
         this.id = id || null;
-        this.uid = uid || null;
         this.details = details instanceof HabitDetails ? details : new HabitDetails({ ...details });
         this.goalHistory = Array.isArray(goalHistory) ? goalHistory : [];
         this.goal = goal instanceof HabitGoal ? goal : new HabitGoal({ ...goal });

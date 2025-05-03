@@ -1,63 +1,33 @@
-import { Platform } from 'react-native';
-import * as SecureStore from 'expo-secure-store';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { app } from '@configs/firebaseConfig';
 
-const sanitizeKey = (key) => `${app.name}_${key}`;
+const keyPrefix = 'nawykon_storage_';
+const sanitizeKey = (key) => `${keyPrefix}${key}`;
 
-const StoreService = {
-    async setItem(key, data, secured = false) {
-        // Serialize data
+const StorageService = {
+    setItem: async (key, data) => {
         const value = JSON.stringify(data);
-
-        if (Platform.OS === 'web') {
-            // WEB -> localStorage
-            localStorage.setItem(sanitizeKey(key), value);
-        } else {
-            // MOBILE
-            if (secured) {
-                await SecureStore.setItemAsync(sanitizeKey(key), value);
-            } else {
-                await AsyncStorage.setItem(sanitizeKey(key), value);
-            }
-        }
+        await AsyncStorage.setItem(sanitizeKey(key), value);
     },
 
-    async getItem(key, secured = false) {
-        let value = null;
-
-        if (Platform.OS === 'web') {
-            // WEB -> localStorage
-            value = localStorage.getItem(sanitizeKey(key));
-        } else {
-            // MOBILE
-            value = secured
-                ? await SecureStore.getItemAsync(sanitizeKey(key))
-                : await AsyncStorage.getItem(sanitizeKey(key));
-        }
-
-        if (!value) return null;
-
-        // Serialize if string
-        try {
-            return JSON.parse(value);
-        } catch (err) {
-            // If not a string, return as is
-            return value;
-        }
+    getItem: async (key) => {
+        const value = await AsyncStorage.getItem(sanitizeKey(key));
+        return value ? JSON.parse(value) : null;
     },
 
-    async removeItem(key, secured = false) {
-        if (Platform.OS === 'web') {
-            localStorage.removeItem(sanitizeKey(key));
-        } else {
-            if (secured) {
-                await SecureStore.deleteItemAsync(sanitizeKey(key));
-            } else {
-                await AsyncStorage.removeItem(sanitizeKey(key));
-            }
-        }
-    }
+    getAllKeys: async (prefix = '') => {
+        return (await AsyncStorage.getAllKeys())
+            .filter((key) => key.startsWith(`${keyPrefix}${prefix}`))
+            .map((key) => key.replace(keyPrefix, ''));
+    },
+
+    removeItem: async (key) => {
+        await AsyncStorage.removeItem(sanitizeKey(key));
+    },
+
+    clear: async () => {
+        const keys = await AsyncStorage.getAllKeys();
+        await AsyncStorage.multiRemove(keys);
+    },
 };
 
-export default StoreService;
+export default StorageService;

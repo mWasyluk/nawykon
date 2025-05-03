@@ -3,7 +3,7 @@ import { INPUT_VARIANTS } from '@components/input/InputContainer';
 import TextInput from '@components/input/TextInput';
 import { SectionContainer, SectionHeader } from '@components/layout';
 import { BodyText, OptionalErrorText } from '@components/text';
-import { useUser } from '@contexts/UserContext';
+import { useSettings } from '@contexts/SettingsContext';
 import { ModalService } from '@services/modalService';
 import { colors, icons } from '@styles';
 import { useState } from 'react';
@@ -14,13 +14,13 @@ export default function EditRemindersSection({ habitBuilder }) {
         reminders = habitBuilder.habit?.reminders || []
     } = habitBuilder;
 
-    const { settings: { notificationsEnabled, notificationsTime } } = useUser();
+    const { settings } = useSettings();
     const [isWarningShown, setIsWarningShown] = useState(false);
     const [reminderError, setReminderError] = useState(null);
 
     const addDefaultReminder = () => {
         verifyNotificationsEnabled();
-        handleRemindersChange([...reminders, notificationsTime]);
+        handleRemindersChange([...reminders, settings.notificationsTime]);
     }
 
     const removeReminder = (index) => {
@@ -46,7 +46,7 @@ export default function EditRemindersSection({ habitBuilder }) {
     }
 
     const verifyNotificationsEnabled = () => {
-        if (!notificationsEnabled && !isWarningShown) {
+        if (!settings.notificationsEnabled && !isWarningShown) {
             ModalService.showInfo(
                 "Powiadomienia są wyłączone",
                 <BodyText>

@@ -1,9 +1,9 @@
 import { ModalService } from '@services/modalService';
 import * as Notifications from 'expo-notifications';
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Linking } from 'react-native';
 import { useHabits } from './HabitsContext';
-import { useUser } from './UserContext';
+import { useSettings } from './SettingsContext';
 
 // Configure default notification behavior
 Notifications.setNotificationHandler({
@@ -16,15 +16,18 @@ Notifications.setNotificationHandler({
 
 export function NotificationsProvider({ children }) {
     const { habits } = useHabits();
-    const { settings, isLoading: isUserLoading } = useUser();
+    const { settings } = useSettings(null);
+    const [isAnySet, setIsAnySet] = useState(false);
 
     const isNotificationsEnabled = useMemo(() => settings?.notificationsEnabled, [settings?.notificationsEnabled]);
 
     useEffect(() => {
-        if (isUserLoading || !habits) return;
+        if (!habits) return;
 
         const syncNotifications = async (enabled) => {
-            cancelAllNotifications();
+            if (isAnySet) {
+                cancelAllNotifications();
+            }
             if (enabled) {
                 const hasPermissions = await requestPermissions();
                 if (!hasPermissions) {
@@ -38,7 +41,7 @@ export function NotificationsProvider({ children }) {
         }
 
         syncNotifications(isNotificationsEnabled);
-    }, [isUserLoading, habits, isNotificationsEnabled]);
+    }, [habits, isNotificationsEnabled]);
 
     // Check and request permissions
     const requestPermissions = async () => {
@@ -94,6 +97,7 @@ export function NotificationsProvider({ children }) {
                         trigger,
                         identifier,
                     });
+                    setIsAnySet(true);
                 }
             }
         } catch (error) {
@@ -104,6 +108,7 @@ export function NotificationsProvider({ children }) {
     const cancelAllNotifications = async () => {
         try {
             await Notifications.cancelAllScheduledNotificationsAsync();
+            setIsAnySet(false);
         } catch (error) {
             ModalService.showError("Nie udało się wyłączyć powiadomień. Spróbuj ponownie później.");
         }

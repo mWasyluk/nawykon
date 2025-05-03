@@ -104,10 +104,10 @@ export default function DailyActivitySubsection(props) {
         }
     }
 
-    if (habitId) {
+    skipme: if (habitId) {
         const habit = habits.find(habit => habit.id === habitId);
         if (!habit) {
-            return;
+            break skipme;
         }
         const isFuture = date > formatDate(new Date(), 'date');
         const wasActive = (!habit.endDate || habit.endDate >= date) && formatDate(habit.createdAt, 'date') <= date;

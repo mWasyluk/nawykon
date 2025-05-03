@@ -2,9 +2,8 @@ import { Mood } from "@models/mood/Mood";
 import { formatDate } from "@utils/dateUtil";
 
 export class DailyReport {
-    constructor({ id, uid, date, executions, mood }) {
+    constructor({ id, date, executions, mood }) {
         this.id = id || null;
-        this.uid = uid || null;
         this.date = date ? formatDate(date, 'date') : formatDate(new Date(), 'date');
 
         this.executions = executions || {};

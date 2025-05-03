@@ -1,82 +1,69 @@
-import { HabitService } from '@services/habitsService';
+import { HabitsService } from '@services/habitsService';
 import { ModalService } from '@services/modalService';
 import { createContext, useContext, useEffect, useState } from 'react';
-import { useUser } from './UserContext';
 
 const HabitsContext = createContext();
 
 export const HabitsProvider = ({ children }) => {
-    const { user } = useUser();
-
     const [habits, setHabits] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
 
-    const addHabit = async (newHabit) => {
+    const saveHabit = async (habit) => {
         setIsLoading(true);
+        const isUpdate = habit.id && habit.id.length > 0;
         try {
-            const savedHabit = await HabitService.saveHabit(newHabit);
-            setHabits(prev => [...prev, savedHabit]);
+            const savedHabit = await HabitsService.save(habit);
+            if (!isUpdate) {
+                setHabits(prev => [...prev, savedHabit]);
+            } else {
+                setHabits(prev => prev.map(h => h.id === savedHabit.id ? savedHabit : h));
+            }
             return savedHabit;
         } catch (err) {
-            ModalService.showError(err.message);
+            console.error(err);
+            ModalService.showError("Nie udało się zapisać nawyku. Odśwież aplikację i spróbuj ponownie.");
         } finally {
             setIsLoading(false);
         }
-    };
+    }
 
-    const updateHabit = async (updatedHabit) => {
-        if (!updatedHabit.id) {
-            ModalService.showError('Napotkałem błąd w czasie aktualizowania nawyku. Odśwież aplikację i spróbuj ponownie.');
-        }
-
+    const deleteHabitById = async (habitId) => {
         setIsLoading(true);
         try {
-            const savedHabit = await HabitService.saveHabit(updatedHabit);
-            setHabits(prev => prev.map(habit => habit.id === savedHabit.id ? savedHabit : habit));
-            return savedHabit;
+            const isDeleted = await HabitsService.deleteById(habitId);
+            if (isDeleted) {
+                setHabits(prev => prev.filter(h => h.id !== habitId));
+            }
+            return isDeleted;
         } catch (err) {
-            ModalService.showError(err.message);
+            console.error(err);
+            ModalService.showError("Nie udało się usunąć nawyku. Odśwież aplikację i spróbuj ponownie.");
         } finally {
             setIsLoading(false);
         }
-    };
-
-    const deleteHabit = async (habitId) => {
-        try {
-            await HabitService.deleteHabit(habitId);
-            setHabits(prev => prev.filter(habit => habit.id !== habitId));
-        } catch (err) {
-            ModalService.showError(err.message);
-        }
-    };
+    }
 
     useEffect(() => {
-        if (!user || !user.uid) {
-            return;
-        }
-
         const initHabits = async () => {
             setIsLoading(true);
             try {
-                setHabits(await HabitService.getAllHabits());
+                setHabits(await HabitsService.getAll());
             } catch (err) {
-                ModalService.showError(err.message);
+                ModalService.showError("Nie udało się pobrać nawyków. Odśwież aplikację i spróbuj ponownie.");
             } finally {
                 setIsLoading(false);
             }
         };
 
-        if (!habits && !isLoading) {
-            initHabits();
-        }
+        initHabits();
 
         return () => {
             setHabits(null);
         };
-    }, [user?.uid]);
+    }, []);
 
     return (
-        <HabitsContext.Provider value={{ habits, addHabit, updateHabit, deleteHabit, isLoading }}>
+        <HabitsContext.Provider value={{ habits, saveHabit, deleteHabitById, isLoading }}>
             {children}
         </HabitsContext.Provider>
     );
