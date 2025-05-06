@@ -20,7 +20,7 @@ export default function Switch(props) {
     const toggleStyle = [
         styles.toggle,
         {
-            backgroundColor: isOn ? colors.darkBlue : colors.lightGray,
+            backgroundColor: isOn ? colors.darkBlue : colors.midGray,
             left: slideAnimation.interpolate({
                 inputRange: [0, 1],
                 outputRange: [0, metrics.buttonSize.sm - TOGGLE_SIZE]
