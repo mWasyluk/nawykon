@@ -1,5 +1,6 @@
 import { ActivityRegistry } from "@models/reports/ActivityRegistry";
 import LoadingScreen, { LOADING_ANIMATION_DURATION } from "@screens/commons/LoadingScreen";
+import WelcomeScreen from "@screens/commons/WelcomeScreen";
 import { ModalService } from "@services/modalService";
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import { useFonts } from "./FontsContext";
@@ -11,7 +12,7 @@ const StateManagerContext = createContext({ activityRegistry: null });
 
 export function StateManagerProvider({ children }) {
     const { isLoading: isFontsLoading } = useFonts();
-    const { settings } = useSettings();
+    const { settings, updateSettings } = useSettings();
     const { habits } = useHabits();
     const { dailyReports } = useReports();
 
@@ -56,22 +57,25 @@ export function StateManagerProvider({ children }) {
     }, [dailyReports, habits]);
 
     const currentState = useMemo(() => {
-        if (loadingMessage === null) {
+        if (settings?.firstRun) {
+            return "FIRST_RUN";
+        } else if (loadingMessage === null) {
             return "READY";
         }
         return "LOADING";
-    }, [loadingMessage]);
+    }, [settings, loadingMessage]);
 
     useEffect(() => {
         let timer;
-        if (currentState === "READY") {
+        if (currentState === "FIRST_RUN") {
+            setContent(<WelcomeScreen onSkip={() => updateSettings({ firstRun: false })} />);
+        } else if (currentState === "READY") {
             timer = setTimeout(() => {
                 setContent(children);
             }, LOADING_ANIMATION_DURATION);
         } else {
             setContent(null);
         }
-
 
         return () => timer && clearTimeout(timer);
     }, [currentState]);

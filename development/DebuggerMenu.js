@@ -5,21 +5,29 @@ import { colors, icons, metrics } from "@styles";
 import { useState } from "react";
 import { View } from "react-native";
 import { DebugService } from "./debugService";
+import { useSettings } from "@contexts/SettingsContext";
 
 export const DebuggerMenu = () => {
     const [isOpen, setIsOpen] = useState(false);
     const { resetApp } = useReset();
+    const { updateSettings } = useSettings();
+
+    const handleReset = async () => {
+        resetApp();
+    }
 
     const handleImport = async () => {
         await DebugService.importDumpData();
+        handleReset();
     };
 
     const handleExport = async () => {
         await DebugService.exportDumpData();
     }
 
-    const handleReset = async () => {
-        resetApp();
+    const invokeFirstRun = async () => {
+        await updateSettings({ firstRun: true });
+        handleReset();
     }
 
     const handleClear = async () => {
@@ -41,6 +49,11 @@ export const DebuggerMenu = () => {
                     title="Reset state"
                     variant={INPUT_VARIANTS.PRIME}
                     onPress={handleReset}
+                />
+                <Button
+                    title="Invoke first run"
+                    variant={INPUT_VARIANTS.DEFAULT}
+                    onPress={invokeFirstRun}
                 />
                 <Button
                     title="Import data"

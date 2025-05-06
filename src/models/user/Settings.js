@@ -1,13 +1,14 @@
 import { Habit } from "@models/habit/Habit";
 
 export class Settings {
-    constructor({ id = null, notificationsEnabled = false, notificationsTime = '08:00', theme = 'light', fontScale = 1 }) {
+    constructor({ id = null, notificationsEnabled = false, notificationsTime = '08:00', theme = 'light', fontScale = 1, firstRun = true }) {
         Settings.validate({ notificationsEnabled, notificationsTime, theme, fontScale });
         this.id = id;
         this.notificationsEnabled = notificationsEnabled;
         this.notificationsTime = notificationsTime;
         this.theme = theme;
         this.fontScale = fontScale;
+        this.firstRun = firstRun;
     }
 
     static validate(settings) {
