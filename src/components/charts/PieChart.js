@@ -1,5 +1,5 @@
 import { StyleSheet, View } from 'react-native';
-import Svg, { Path } from 'react-native-svg';
+import Svg, { Circle, Path } from 'react-native-svg';
 
 export default function PieChart({ data, innerRadius = 40 }) {
     const total = data.reduce((sum, { value }) => sum + value, 0);
@@ -12,6 +12,17 @@ export default function PieChart({ data, innerRadius = 40 }) {
             y: centerY + radius * Math.sin(radians),
         };
     };
+
+    if (total === 0) {
+        return (
+            <View style={styles.container}>
+                <Svg viewBox={`0 0 100 100`}>
+                    <Circle cx="50" cy="50" r="50" fill="#E0E0E0" />
+                    {innerRadius > 0 && <Circle cx="50" cy="50" r={innerRadius} fill="white" />}
+                </Svg>
+            </View>
+        );
+    }
 
     return (
         <View style={styles.container}>
