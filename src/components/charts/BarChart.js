@@ -26,8 +26,9 @@ export function BarChart(props) {
     });
 
     const ySpan = maxY + Math.abs(minY);
-    const stepHeight = (containerHeight - LABEL_HEIGHT) / ySpan;
-    const positiveHeight = maxY * stepHeight;
+    const stepHeight = ySpan ? (containerHeight - LABEL_HEIGHT) / ySpan : 0;
+    const emptyChartTopMargin = ySpan === 0 ? containerHeight / 2 - LABEL_HEIGHT : 0;
+    const positiveHeight = maxY * stepHeight || emptyChartTopMargin || 0;
 
     const showEverySecond = data.length > 20;
     const isLastXEven = data.length % 2 === 0;
