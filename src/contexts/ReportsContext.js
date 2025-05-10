@@ -1,6 +1,7 @@
 import { DailyReport } from '@models/reports/DailyReport';
 import { ModalService } from '@services/modalService';
 import { ReportsService } from '@services/reportsService';
+import { formatDate } from '@utils/dateUtil';
 import { createContext, useContext, useEffect, useState } from 'react';
 
 const DailyReportsContext = createContext();
@@ -75,13 +76,13 @@ export const DailyReportsProvider = ({ children }) => {
                 // fetch all from database
                 const reports = await ReportsService.getAll();
 
-                // // verify todays report and create or update if needed
-                // var todaysReport = reports.find(report => report.date === formatDate(new Date(), 'date'));
-                // if (!todaysReport) {
-                //     todaysReport = new DailyReport({ date: new Date() });
-                //     const saved = await ActivitiesService.save(todaysReport);
-                //     reports.push(saved);
-                // }
+                // verify todays report and create or update if needed
+                var todaysReport = reports.find(report => report.date === formatDate(new Date(), 'date'));
+                if (!todaysReport) {
+                    todaysReport = new DailyReport({ date: new Date() });
+                    const saved = await ReportsService.save(todaysReport);
+                    reports.push(saved);
+                }
 
                 setDailyReports(reports);
             } catch (error) {
