@@ -17,8 +17,7 @@ export const DebuggerMenu = () => {
     }
 
     const handleImport = async () => {
-        await DebugService.importDumpData();
-        handleReset();
+        await DebugService.importDumpData() && handleReset();
     };
 
     const handleExport = async () => {
@@ -30,8 +29,15 @@ export const DebuggerMenu = () => {
         handleReset();
     }
 
-    const handleClear = async () => {
-        await DebugService.clearAll();
+    const handleClearSkipWelcome = async () => {
+        if (await DebugService.clearAll()) {
+            await updateSettings({ firstRun: false });
+            handleReset();
+        }
+    }
+
+    const handleClearAll = async () => {
+        await DebugService.clearAll() && handleReset();
     };
 
     const handleToggle = () => {
@@ -68,7 +74,12 @@ export const DebuggerMenu = () => {
                 <Button
                     title="Clear all data"
                     variant={INPUT_VARIANTS.ERROR}
-                    onPress={handleClear}
+                    onPress={handleClearAll}
+                />
+                <Button
+                    title="Clear without welcome"
+                    variant={INPUT_VARIANTS.ERROR}
+                    onPress={handleClearSkipWelcome}
                 />
                 <Button
                     icon={icons.eyeCrossed}

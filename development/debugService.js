@@ -10,40 +10,49 @@ const repositories = [
 
 export const DebugService = {
     importDumpData: async () => {
-        const fileHandle = await window.showOpenFilePicker({
-            types: [{
-                accept: { 'application/json': ['.json'] },
-            }],
-        });
+        try {
+            const [fileHandle] = await window.showOpenFilePicker({
+                types: [{
+                    accept: { 'application/json': ['.json'] },
+                }],
+            });
 
-        const file = await fileHandle[0].getFile();
-        const reader = new FileReader();
-        reader.readAsText(file);
-        reader.onload = async () => {
-            const dumpData = reader.result;
+            const file = await fileHandle.getFile();
+            const dumpData = await file.text();
             const obj = JSON.parse(dumpData);
             const keys = Object.keys(obj);
+
             for (const key of keys) {
                 const data = obj[key];
                 data.id = key.split('_')[1];
 
-                repositories.forEach(async repository => {
+                for (const repository of repositories) {
                     if (key.startsWith(repository.keyPrefix)) {
                         await repository.save(data);
                     }
-                });
+                }
             }
-        };
+            return true;
+        } catch (error) {
+            console.error("Error importing dump data:", error.message);
+            ModalService.showError('Wczytywanie zrzutu danych nie powiodło się.');
+        }
+        return false;
     },
 
     clearAll: async () => {
-        await Promise.all(repositories.map(repository => repository.deleteAll()));
+        try {
+            await Promise.all(repositories.map(repository => repository.deleteAll()));
+            return true;
+        } catch (error) {
+            console.error("Error clearing all data:", error.message);
+            ModalService.showError('Usuwanie wszystkich danych nie powiodło się.');
+        }
+        return false;
     },
 
     exportDumpData: async () => {
         try {
-
-            // Funkcja dostępna tylko w środowisku web
             const fileHandle = await window.showSaveFilePicker({
                 suggestedName: `dump_${formatDate(new Date(), 'date')}.json`,
                 types: [{
@@ -72,8 +81,11 @@ export const DebugService = {
             await writable.close();
 
             ModalService.showError(`Zrzut danych zapisany w pliku ${filename}.`);
+            return true;
         } catch (error) {
+            console.error("Error exporting dump data:", error.message);
             ModalService.showError('Zrzut danych nie został zapisany.');
         }
+        return false;
     }
 }
