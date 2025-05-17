@@ -1,61 +1,76 @@
 import { ActivityUtil } from "@utils/activityUtil";
+import { ObjectUtil } from "@utils/objectUtil";
 import { formatDate } from "@utils/dateUtil";
 
 export class ActivityRegistry {
-    static STATUSES = {
-        COMPLETED: 'completed',
-        FAILED: 'failed',
-        PARTIAL: 'partial',
-        NEUTRAL: 'neutral',
-    };
-
     constructor(dailyReports = [], habits = []) {
-        // Find the oldest date from daily reports (first user's activity)
-        this.startDate = dailyReports.reduce((oldest, report) => {
-            const reportDate = report.date;
-            return reportDate < oldest ? reportDate : oldest;
-        }, formatDate(new Date(), 'date'));
-
+        this.startDate = formatDate(new Date(), 'date');
         this.records = {};
-        // Initialize records for each day from the oldest date to today
-        const today = formatDate(new Date(), 'date');
-        for (let date = new Date(this.startDate); formatDate(date, 'date') <= today; date.setDate(date.getDate() + 1)) {
-            this.records[formatDate(date, 'date')] = { mood: null, executions: {}, habits: {} };
+        this.habitIdsSet = new Set(habits.map(habit => habit.id));
+
+        for (const report of dailyReports) {
+            const dateKey = formatDate(report.date, 'date');
+            this.#initRecord(dateKey);
+            const dateRecord = this.records[dateKey];
+
+            if (report.mood) {
+                dateRecord.mood = { ...report.mood };
+            }
+            if (report.executions) {
+                dateRecord.executions = { ...report.executions };
+            }
         }
 
-        // Update records with available data from daily reports
-        dailyReports.forEach((dailyReport) => {
-            this.records[dailyReport.date].mood = dailyReport.mood;
-            this.records[dailyReport.date].executions = dailyReport.executions;
-        });
+        for (let date = new Date(this.startDate); formatDate(date, 'date') <= formatDate(new Date(), 'date'); date.setDate(date.getDate() + 1)) {
+            const dateKey = formatDate(date, 'date');
+            this.#initRecord(dateKey);
+            const dateRecord = this.records[dateKey];
 
-        // Update every present record with available data from habits
-        habits.forEach((habit) => {
-            Object.keys(this.records).forEach((date) => {
-                const goal = habit.getGoalForDate(date);
-                // Skip if habit was not active on the given date
-                if (goal === null) return;
+            for (const habit of habits) {
+                const habitId = habit.id;
+                const goal = habit.getGoalForDate(dateKey);
+                dateRecord.goals[habitId] = goal;
+            }
+        }
 
-                const executions = this.records[date].executions[habit.id] || [];
-
-                this.records[date].habits[habit.id] = this.#calculateRecord(goal, executions);
-            });
-        });
+        this.modifiedAt = new Date().getTime();
     }
 
     clone() {
         const clone = new ActivityRegistry();
         clone.startDate = this.startDate;
         clone.records = this.records;
+        clone.habitIdsSet = this.habitIdsSet;
+        clone.modifiedAt = this.modifiedAt;
         return clone;
     }
 
-    #calculateRecord = (goal, executions) => {
-        if ((!goal && goal !== 0) || !executions) {
-            throw new Error("Cannot generate a record without habit's goal and executions.");
+    #getDefaultRecord = () => {
+        return {
+            mood: null,
+            executions: {},
+            goals: {},
+        };
+    }
+
+    #initRecord = (date) => {
+        let isUpdated = false;
+        const dateKey = formatDate(date, 'date');
+
+        if (!this.records[dateKey]) {
+            if (this.startDate > dateKey) {
+                this.startDate = dateKey;
+                isUpdated = true;
+            }
+            this.records[dateKey] = this.#getDefaultRecord();
+            isUpdated = true;
         }
 
-        const completed = executions.length;
+        return isUpdated;
+    }
+
+    #calculateHabitSummary = (goal, executions) => {
+        const completed = executions.length || 0;
         const status = ActivityUtil.calculateHabitStatus(goal, completed);
         const effectual = Math.min(completed, goal);
 
@@ -68,14 +83,96 @@ export class ActivityRegistry {
         };
     }
 
+    updateAllRecords = (dailyReports, habits) => {
+        let isUpdated = false;
+
+        for (const report of dailyReports) {
+            const dateKey = formatDate(report.date, 'date');
+            isUpdated = this.#initRecord(dateKey) || isUpdated;
+            const dateRecord = this.records[dateKey];
+
+            if (!ObjectUtil.areEqual(dateRecord.mood, report.mood)) {
+                dateRecord.mood = { ...report.mood };
+                isUpdated = true;
+            }
+
+            if (!ObjectUtil.areEqual(dateRecord.executions, report.executions)) {
+                dateRecord.executions = { ...report.executions };
+                isUpdated = true;
+            }
+        }
+
+        for (const habit of habits) {
+            const habitId = habit.id;
+
+            const dateKey = formatDate(new Date(), 'date');
+            const dateRecord = this.records[dateKey];
+
+            const goal = habit.getGoalForDate(dateKey);
+            if (dateRecord.goals[habitId] !== goal) {
+                dateRecord.goals[habitId] = goal;
+                isUpdated = true;
+            }
+            this.habitIdsSet.add(habitId);
+        }
+
+        if (isUpdated) {
+            this.modifiedAt = new Date().getTime();
+        }
+        return isUpdated;
+    }
+
+    getHabitIds = () => {
+        return Array.from(this.habitIdsSet);
+    }
+
+    removeHabitRecords = (habitId) => {
+        if (!habitId) {
+            throw new Error("HabitId is required to remove habit records in the ActivityRegistry.");
+        }
+        if (!this.habitIdsSet.has(habitId)) {
+            console.warn(`Habit with id ${habitId} is not found in the ActivityRegistry.`);
+            return false;
+        }
+
+        let isUpdated = false;
+
+        for (const dateKey in this.records) {
+            const dateRecord = this.records[dateKey];
+            if (dateRecord.executions[habitId]) {
+                delete dateRecord.executions[habitId];
+                isUpdated = true;
+            }
+            if (dateRecord.goals[habitId]) {
+                delete dateRecord.goals[habitId];
+                isUpdated = true;
+            }
+        }
+
+        if (isUpdated) {
+            this.habitIdsSet.delete(habitId);
+            this.modifiedAt = new Date().getTime();
+        }
+        return isUpdated;
+    }
+
+    #calculateAllHabitSummaries = (record) => {
+        return Object.keys(record.goals).reduce((acc, habitId) => {
+            const goal = record.goals[habitId];
+            const executions = record.executions[habitId] || [];
+            acc[habitId] = this.#calculateHabitSummary(goal, executions);
+            return acc;
+        }, {});
+    }
+
     getRecord(date) {
         const dateKey = formatDate(date, 'date');
-        const dateRecord = this.records[dateKey];
+        const dateRecord = this.records[dateKey] || this.#getDefaultRecord();
 
         const recordDto = {
             date: dateKey,
-            mood: dateRecord?.mood,
-            habits: dateRecord?.habits // { habitId: { executions, goal, completed, effectual, status, } }
+            mood: dateRecord.mood,
+            habits: this.#calculateAllHabitSummaries(dateRecord) // { habitId: { executions, goal, completed, effectual, status, } }
         };
 
         return recordDto;
@@ -96,87 +193,4 @@ export class ActivityRegistry {
 
         return records;
     }
-
-    update = (dailyReports = [], habits = []) => {
-        let isUpdated = false;
-        dailyReports.forEach((dailyReport) => {
-            if (!this.records[dailyReport.date]) {
-                this.records[dailyReport.date] = {};
-                isUpdated = true;
-            }
-
-            // Update mood if present in daily report
-            if (dailyReport.mood) {
-                // If mood is not present in records - add it, otherwise update only if changed
-                if (!this.records[dailyReport.date].mood) {
-                    this.records[dailyReport.date].mood = dailyReport.mood;
-                    isUpdated = true;
-                } else {
-                    const newHumor = dailyReport.mood.humor;
-                    const newEnergy = dailyReport.mood.energy;
-                    const newNote = dailyReport.mood.note;
-
-                    const prevHumor = this.records[dailyReport.date].mood.humor;
-                    const prevEnergy = this.records[dailyReport.date].mood.energy;
-                    const prevNote = this.records[dailyReport.date].mood.note;
-
-                    const isHumorChanged = prevHumor !== newHumor;
-                    const isEnergyChanged = prevEnergy !== newEnergy;
-                    const isNoteChanged = prevNote !== newNote;
-
-                    if (isHumorChanged || isEnergyChanged || isNoteChanged) {
-                        this.records[dailyReport.date].mood = { humor: newHumor, energy: newEnergy, note: newNote };
-                        isUpdated = true;
-                    }
-                }
-            }
-
-            const currentHabitIds = Object.keys(this.records[dailyReport.date].habits || {});
-            const newHabitIds = [];
-
-            // Update habit records
-            habits.forEach((habit) => {
-                newHabitIds.push(habit.id);
-                const newGoal = habit.getGoalForDate(dailyReport.date);
-                // Skip if habit was not active on the given date
-                if (newGoal === null) return;
-
-                const newExecutions = dailyReport.executions[habit.id] || [];
-
-                // If habit is not present in records - add it, otherwise update only if changed
-                if (!this.records[dailyReport.date].habits[habit.id]) {
-                    this.records[dailyReport.date].habits[habit.id] = this.#calculateRecord(newGoal, newExecutions);
-                    isUpdated = true;
-                } else {
-                    const prevGoal = this.records[dailyReport.date].habits[habit.id].goal;
-                    const prevExecutions = this.records[dailyReport.date].habits[habit.id].executions;
-
-                    const isGoalChanged = prevGoal !== newGoal;
-                    const isExecutionsChanged = prevExecutions?.length !== newExecutions?.length
-                        || prevExecutions.some(execution => !newExecutions.includes(execution));
-
-                    if (isGoalChanged || isExecutionsChanged) {
-                        this.records[dailyReport.date].habits[habit.id] = this.#calculateRecord(newGoal, newExecutions);
-                        isUpdated = true;
-                    }
-                }
-            });
-
-            // Remove records of habits that are no longer present
-            currentHabitIds.forEach((habitId) => {
-                if (!newHabitIds.includes(habitId)) {
-                    delete this.records[dailyReport.date].habits[habitId];
-                    isUpdated = true;
-                }
-            });
-        });
-
-        return isUpdated;
-    }
-
-    static NEUTRAL_HABIT_RECORD = {
-        goal: 0,
-        completed: 0,
-        status: ActivityRegistry.STATUSES.NEUTRAL,
-    };
 }

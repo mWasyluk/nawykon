@@ -1,5 +1,11 @@
-import { ActivityRegistry } from "@models/reports/ActivityRegistry";
 import { formatDate, getFixedDayOfWeek, validateTimestamp } from "./dateUtil";
+
+export const ACTIVITY_STATUSES = {
+    COMPLETED: 'completed',
+    FAILED: 'failed',
+    PARTIAL: 'partial',
+    NEUTRAL: 'neutral',
+};
 
 export const ActivityUtil = {
     extractRecords: (activityRecords = [], startDate, endDate = new Date()) => {
@@ -14,18 +20,18 @@ export const ActivityUtil = {
 
     calculateHabitStatus: (goal, completed) => {
         if (!goal) {
-            return ActivityRegistry.STATUSES.NEUTRAL;
+            return ACTIVITY_STATUSES.NEUTRAL;
         }
 
         const progress = completed / goal;
         if (progress >= 1) {
-            return ActivityRegistry.STATUSES.COMPLETED;
+            return ACTIVITY_STATUSES.COMPLETED;
         }
         if (progress === 0) {
-            return ActivityRegistry.STATUSES.FAILED;
+            return ACTIVITY_STATUSES.FAILED;
         }
 
-        return ActivityRegistry.STATUSES.PARTIAL
+        return ACTIVITY_STATUSES.PARTIAL
     },
 
     calculateHabitPoints: (activityRecords = [], habitId = undefined) => {
@@ -56,7 +62,7 @@ export const ActivityUtil = {
             streak: 0,
             points: 0,
             calendar: {
-                // date: { goal: 0, completed: 0, effectual: 0, points: 0, status: ActivityRegistry.STATUSES.NEUTRAL 
+                // date: { goal: 0, completed: 0, effectual: 0, points: 0, status: STATUSES.NEUTRAL 
             },
         };
 
@@ -66,10 +72,11 @@ export const ActivityUtil = {
             if (isRecordEmpty) {
                 habits = {
                     [habitId]: {
+                        executions: [],
                         goal: 0,
                         completed: 0,
                         effectual: 0,
-                        status: ActivityRegistry.STATUSES.NEUTRAL,
+                        status: ACTIVITY_STATUSES.NEUTRAL,
                     },
                 };
             }
@@ -88,7 +95,7 @@ export const ActivityUtil = {
                         completed: 0,
                         points: 0,
                         effectual: 0,
-                        status: ActivityRegistry.STATUSES.NEUTRAL,
+                        status: ACTIVITY_STATUSES.NEUTRAL,
                     };
                 }
 
@@ -113,15 +120,15 @@ export const ActivityUtil = {
 
             // ... update the overall stats based on the daily status
             switch (status) {
-                case ActivityRegistry.STATUSES.COMPLETED:
+                case ACTIVITY_STATUSES.COMPLETED:
                     totalStats.completed += 1;
                     totalStats.streak += 1;
                     break;
-                case ActivityRegistry.STATUSES.PARTIAL:
+                case ACTIVITY_STATUSES.PARTIAL:
                     totalStats.partial += 1;
                     totalStats.streak = 0;
                     break;
-                case ActivityRegistry.STATUSES.FAILED:
+                case ACTIVITY_STATUSES.FAILED:
                     totalStats.failed += 1;
                     totalStats.streak = 0;
                     break;
@@ -367,9 +374,9 @@ export const ActivityUtil = {
 
 function calculatePointByStatus(status) {
     switch (status) {
-        case ActivityRegistry.STATUSES.COMPLETED:
+        case ACTIVITY_STATUSES.COMPLETED:
             return 1;
-        case ActivityRegistry.STATUSES.FAILED:
+        case ACTIVITY_STATUSES.FAILED:
             return -1;
         default:
             return 0;
@@ -377,18 +384,18 @@ function calculatePointByStatus(status) {
 }
 
 function combineStatuses(statuses = []) {
-    const isEmptyOrEveryNeutral = !statuses.length || statuses.every(status => status === ActivityRegistry.STATUSES.NEUTRAL);
+    const isEmptyOrEveryNeutral = !statuses.length || statuses.every(status => status === ACTIVITY_STATUSES.NEUTRAL);
     if (isEmptyOrEveryNeutral) {
-        return ActivityRegistry.STATUSES.NEUTRAL;
+        return ACTIVITY_STATUSES.NEUTRAL;
     }
-    const isEveryCompletedOrNeutral = statuses.every(status => status === ActivityRegistry.STATUSES.COMPLETED || status === ActivityRegistry.STATUSES.NEUTRAL);
+    const isEveryCompletedOrNeutral = statuses.every(status => status === ACTIVITY_STATUSES.COMPLETED || status === ACTIVITY_STATUSES.NEUTRAL);
     if (isEveryCompletedOrNeutral) {
-        return ActivityRegistry.STATUSES.COMPLETED;
+        return ACTIVITY_STATUSES.COMPLETED;
     }
-    const isEveryFailedOrNeutral = statuses.every(status => status === ActivityRegistry.STATUSES.FAILED || status === ActivityRegistry.STATUSES.NEUTRAL);
+    const isEveryFailedOrNeutral = statuses.every(status => status === ACTIVITY_STATUSES.FAILED || status === ACTIVITY_STATUSES.NEUTRAL);
     if (isEveryFailedOrNeutral) {
-        return ActivityRegistry.STATUSES.FAILED;
+        return ACTIVITY_STATUSES.FAILED;
     }
 
-    return ActivityRegistry.STATUSES.PARTIAL;
+    return ACTIVITY_STATUSES.PARTIAL;
 }

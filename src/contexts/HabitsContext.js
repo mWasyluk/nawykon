@@ -49,6 +49,7 @@ export const HabitsProvider = ({ children }) => {
             try {
                 setHabits(await HabitsService.getAll());
             } catch (err) {
+                console.error(err);
                 ModalService.showError("Nie udało się pobrać nawyków. Odśwież aplikację i spróbuj ponownie.");
             } finally {
                 setIsLoading(false);

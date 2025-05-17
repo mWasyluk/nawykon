@@ -1,10 +1,10 @@
+import { createContext, useContext, useState } from 'react';
+import { ActivityProvider } from './ActivitiesContext';
 import { FontsProvider } from './FontsContext';
 import { HabitsProvider } from './HabitsContext';
 import { NotificationsProvider } from './NotificationsContext';
 import { DailyReportsProvider } from './ReportsContext';
-import { StateManagerProvider } from './StateManagerContext';
 import { SettingsProvider } from './SettingsContext';
-import { createContext, useContext, useState } from 'react';
 
 const ResetContext = createContext();
 
@@ -23,11 +23,11 @@ export default function ProvidersWrapper({ children }) {
                 <SettingsProvider key={`settings-${key}`}>
                     <HabitsProvider key={`habits-${key}`}>
                         <DailyReportsProvider key={`reports-${key}`}>
-                            <NotificationsProvider key={`notifications-${key}`}>
-                                <StateManagerProvider key={`state-${key}`}>
+                            <ActivityProvider key={`activities-${key}`}>
+                                <NotificationsProvider key={`notifications-${key}`}>
                                     {children}
-                                </StateManagerProvider>
-                            </NotificationsProvider>
+                                </NotificationsProvider>
+                            </ActivityProvider>
                         </DailyReportsProvider>
                     </HabitsProvider>
                 </SettingsProvider>
