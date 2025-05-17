@@ -1,0 +1,2320 @@
+{
+  "habit_1UbWtQKo06ePxpP3SGg8": {
+    "status": "active",
+    "reminders": [],
+    "goalHistory": [
+      {
+        "days": [
+          3,
+          5,
+          2,
+          1,
+          4,
+          6,
+          0
+        ],
+        "repetitions": 6,
+        "startDate": "2025-03-30",
+        "endDate": "2025-04-05"
+      },
+      {
+        "endDate": "2025-03-30",
+        "days": [
+          3,
+          5,
+          2,
+          1,
+          4,
+          6,
+          0
+        ],
+        "repetitions": 3,
+        "startDate": "2025-03-28"
+      },
+      {
+        "startDate": "2025-03-26",
+        "repetitions": 3,
+        "endDate": "2025-03-28",
+        "days": [
+          3,
+          5,
+          2,
+          1,
+          4,
+          6,
+          0
+        ]
+      },
+      {
+        "startDate": "2025-03-05",
+        "days": [
+          3,
+          5,
+          2,
+          1,
+          4,
+          6,
+          0
+        ],
+        "repetitions": 1,
+        "endDate": "2025-03-26"
+      },
+      {
+        "repetitions": 3,
+        "endDate": "2025-03-05",
+        "days": [
+          3,
+          5,
+          2,
+          1,
+          4,
+          6,
+          0
+        ],
+        "startDate": "2025-02-23"
+      },
+      {
+        "startDate": "2025-02-13",
+        "endDate": "2025-02-23",
+        "repetitions": 5,
+        "days": [
+          3,
+          5,
+          2,
+          1,
+          4,
+          6,
+          0
+        ]
+      },
+      {
+        "days": [
+          3,
+          5,
+          2,
+          1
+        ],
+        "endDate": "2025-02-13",
+        "startDate": "2025-02-11",
+        "repetitions": 2
+      }
+    ],
+    "endDate": "2027-05-04",
+    "streak": 0,
+    "goal": {
+      "repetitions": 6,
+      "days": [
+        3,
+        5,
+        2,
+        1,
+        4,
+        6,
+        0
+      ],
+      "startDate": "2025-04-05"
+    },
+    "details": {
+      "color": "#FFC107",
+      "name": "Testowanieee3",
+      "description": "Jakiś randomowy opis do sprawdzenia layoutów, a głównie wysokości.",
+      "type": "selfCare"
+    },
+    "createdAt": 1739283662000
+  },
+  "habit_YkhogTdR8uZk3gp0XtLg": {
+    "endDate": null,
+    "details": {
+      "color": "#FFC107",
+      "name": "Test",
+      "description": "",
+      "type": "sleep"
+    },
+    "createdAt": 1739265662000,
+    "streak": 0,
+    "status": "active",
+    "goalHistory": [],
+    "goal": {
+      "startDate": "2025-02-11",
+      "repetitions": 1,
+      "days": [
+        1,
+        2,
+        3,
+        6,
+        4,
+        0
+      ]
+    },
+    "reminders": []
+  },
+  "habit_LtnN9g7tTl4Hu0nO4VXA": {
+    "createdAt": 1745447136884,
+    "streak": 0,
+    "goal": {
+      "days": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "repetitions": 1,
+      "startDate": "2025-04-24"
+    },
+    "status": "active",
+    "endDate": null,
+    "reminders": [],
+    "details": {
+      "description": "",
+      "color": "#CED4DA",
+      "type": "health",
+      "name": "wefq"
+    },
+    "goalHistory": []
+  },
+  "habit_0JNBsuCj1E9HV2EyAC91": {
+    "status": "active",
+    "reminders": [],
+    "endDate": null,
+    "goal": {
+      "days": [
+        0,
+        1,
+        6,
+        5,
+        4
+      ],
+      "startDate": "2025-04-23",
+      "repetitions": 1
+    },
+    "streak": 0,
+    "createdAt": 1741958462000,
+    "details": {
+      "type": "relationships",
+      "name": "wergehwerht",
+      "color": "#28A745",
+      "description": ""
+    },
+    "goalHistory": [
+      {
+        "days": [
+          0,
+          1,
+          6,
+          5,
+          4
+        ],
+        "startDate": "2025-04-06",
+        "endDate": "2025-04-23",
+        "repetitions": 1
+      },
+      {
+        "endDate": "2025-04-06",
+        "repetitions": 1,
+        "days": [
+          0,
+          1,
+          6,
+          5,
+          4
+        ],
+        "startDate": "2025-03-28"
+      },
+      {
+        "endDate": "2025-03-28",
+        "startDate": "2025-03-26",
+        "days": [
+          0,
+          1,
+          6,
+          5,
+          4
+        ],
+        "repetitions": 1
+      },
+      {
+        "startDate": "2025-03-14",
+        "repetitions": 1,
+        "endDate": "2025-03-19",
+        "days": [
+          0,
+          1,
+          6
+        ]
+      },
+      {
+        "repetitions": 1,
+        "endDate": "2025-03-26",
+        "startDate": "2025-03-14",
+        "days": [
+          0,
+          1,
+          6,
+          5,
+          4
+        ]
+      }
+    ]
+  },
+  "habit_GXDt0u9FzXb7ZJmNszBt": {
+    "details": {
+      "type": "productivity",
+      "name": "werqwerqwer",
+      "color": "#007BFF",
+      "description": ""
+    },
+    "goalHistory": [],
+    "goal": {
+      "repetitions": 1,
+      "days": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "startDate": "2025-05-13"
+    },
+    "reminders": [],
+    "streak": 0,
+    "createdAt": 1747090353813,
+    "endDate": null,
+    "status": "active",
+    "modifiedAt": 1747090353813
+  },
+  "habit_ZkSvilMx6BZ1q9d7F2pw": {
+    "status": "active",
+    "endDate": null,
+    "createdAt": 1739438462000,
+    "goal": {
+      "repetitions": 1,
+      "days": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "startDate": "2025-04-22"
+    },
+    "reminders": [
+      "11:34"
+    ],
+    "streak": 0,
+    "goalHistory": [
+      {
+        "startDate": "2025-03-26",
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "endDate": "2025-04-22",
+        "repetitions": 1
+      },
+      {
+        "repetitions": 1,
+        "endDate": "2025-03-26",
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "startDate": "2025-02-13"
+      }
+    ],
+    "details": {
+      "color": "#28A745",
+      "name": "cfasdf",
+      "description": "",
+      "type": "diet"
+    }
+  },
+  "habit_9UbWtQKo06ePxpP3SGg8": {
+    "status": "active",
+    "reminders": [],
+    "goalHistory": [
+      {
+        "days": [
+          3,
+          5,
+          2,
+          1,
+          4,
+          6,
+          0
+        ],
+        "repetitions": 6,
+        "startDate": "2025-03-30",
+        "endDate": "2025-04-05"
+      },
+      {
+        "endDate": "2025-03-30",
+        "days": [
+          3,
+          5,
+          2,
+          1,
+          4,
+          6,
+          0
+        ],
+        "repetitions": 3,
+        "startDate": "2025-03-28"
+      },
+      {
+        "startDate": "2025-03-26",
+        "repetitions": 3,
+        "endDate": "2025-03-28",
+        "days": [
+          3,
+          5,
+          2,
+          1,
+          4,
+          6,
+          0
+        ]
+      },
+      {
+        "startDate": "2025-03-05",
+        "days": [
+          3,
+          5,
+          2,
+          1,
+          4,
+          6,
+          0
+        ],
+        "repetitions": 1,
+        "endDate": "2025-03-26"
+      },
+      {
+        "repetitions": 3,
+        "endDate": "2025-03-05",
+        "days": [
+          3,
+          5,
+          2,
+          1,
+          4,
+          6,
+          0
+        ],
+        "startDate": "2025-02-23"
+      },
+      {
+        "startDate": "2025-02-13",
+        "endDate": "2025-02-23",
+        "repetitions": 5,
+        "days": [
+          3,
+          5,
+          2,
+          1,
+          4,
+          6,
+          0
+        ]
+      },
+      {
+        "days": [
+          3,
+          5,
+          2,
+          1
+        ],
+        "endDate": "2025-02-13",
+        "startDate": "2025-02-11",
+        "repetitions": 2
+      }
+    ],
+    "endDate": "2027-05-04",
+    "streak": 0,
+    "goal": {
+      "repetitions": 6,
+      "days": [
+        3,
+        5,
+        2,
+        1,
+        4,
+        6,
+        0
+      ],
+      "startDate": "2025-04-05"
+    },
+    "details": {
+      "color": "#FFC107",
+      "name": "Testowanieee",
+      "description": "Jakiś randomowy opis do sprawdzenia layoutów, a głównie wysokości.",
+      "type": "selfCare"
+    },
+    "createdAt": 1739283662000
+  },
+  "habit_ZW6rQkLFQdUIRE3ov2Ij": {
+    "goalHistory": [],
+    "reminders": [
+      "17:11"
+    ],
+    "endDate": null,
+    "details": {
+      "name": "Przygotować zdrową kolację ",
+      "description": "Żeby zacząć się zdrowo odżywiać, zacznę od przygotowania zdrowej kolacji co najmniej 5 razy w tygodniu.",
+      "type": "diet",
+      "color": "#28A745"
+    },
+    "streak": 0,
+    "createdAt": 1745334645838,
+    "goal": {
+      "repetitions": 1,
+      "startDate": "2025-04-22",
+      "days": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "status": "active"
+  },
+  "habit_0UbWtQKo06ePxpP3SGg8": {
+    "status": "active",
+    "reminders": [],
+    "goalHistory": [
+      {
+        "days": [
+          3,
+          5,
+          2,
+          1,
+          4,
+          6,
+          0
+        ],
+        "repetitions": 6,
+        "startDate": "2025-03-30",
+        "endDate": "2025-04-05"
+      },
+      {
+        "endDate": "2025-03-30",
+        "days": [
+          3,
+          5,
+          2,
+          1,
+          4,
+          6,
+          0
+        ],
+        "repetitions": 3,
+        "startDate": "2025-03-28"
+      },
+      {
+        "startDate": "2025-03-26",
+        "repetitions": 3,
+        "endDate": "2025-03-28",
+        "days": [
+          3,
+          5,
+          2,
+          1,
+          4,
+          6,
+          0
+        ]
+      },
+      {
+        "startDate": "2025-03-05",
+        "days": [
+          3,
+          5,
+          2,
+          1,
+          4,
+          6,
+          0
+        ],
+        "repetitions": 1,
+        "endDate": "2025-03-26"
+      },
+      {
+        "repetitions": 3,
+        "endDate": "2025-03-05",
+        "days": [
+          3,
+          5,
+          2,
+          1,
+          4,
+          6,
+          0
+        ],
+        "startDate": "2025-02-23"
+      },
+      {
+        "startDate": "2025-02-13",
+        "endDate": "2025-02-23",
+        "repetitions": 5,
+        "days": [
+          3,
+          5,
+          2,
+          1,
+          4,
+          6,
+          0
+        ]
+      },
+      {
+        "days": [
+          3,
+          5,
+          2,
+          1
+        ],
+        "endDate": "2025-02-13",
+        "startDate": "2025-02-11",
+        "repetitions": 2
+      }
+    ],
+    "endDate": "2027-05-04",
+    "streak": 0,
+    "goal": {
+      "repetitions": 6,
+      "days": [
+        3,
+        5,
+        2,
+        1,
+        4,
+        6,
+        0
+      ],
+      "startDate": "2025-04-05"
+    },
+    "details": {
+      "color": "#FFC107",
+      "name": "Testowanieee2",
+      "description": "Jakiś randomowy opis do sprawdzenia layoutów, a głównie wysokości.",
+      "type": "selfCare"
+    },
+    "createdAt": 1739283662000
+  },
+  "habit_3UbWtQKo06ePxpP3SGg8": {
+    "status": "active",
+    "reminders": [],
+    "goalHistory": [
+      {
+        "days": [
+          3,
+          5,
+          2,
+          1,
+          4,
+          6,
+          0
+        ],
+        "repetitions": 6,
+        "startDate": "2025-03-30",
+        "endDate": "2025-04-05"
+      },
+      {
+        "endDate": "2025-03-30",
+        "days": [
+          3,
+          5,
+          2,
+          1,
+          4,
+          6,
+          0
+        ],
+        "repetitions": 3,
+        "startDate": "2025-03-28"
+      },
+      {
+        "startDate": "2025-03-26",
+        "repetitions": 3,
+        "endDate": "2025-03-28",
+        "days": [
+          3,
+          5,
+          2,
+          1,
+          4,
+          6,
+          0
+        ]
+      },
+      {
+        "startDate": "2025-03-05",
+        "days": [
+          3,
+          5,
+          2,
+          1,
+          4,
+          6,
+          0
+        ],
+        "repetitions": 1,
+        "endDate": "2025-03-26"
+      },
+      {
+        "repetitions": 3,
+        "endDate": "2025-03-05",
+        "days": [
+          3,
+          5,
+          2,
+          1,
+          4,
+          6,
+          0
+        ],
+        "startDate": "2025-02-23"
+      },
+      {
+        "startDate": "2025-02-13",
+        "endDate": "2025-02-23",
+        "repetitions": 5,
+        "days": [
+          3,
+          5,
+          2,
+          1,
+          4,
+          6,
+          0
+        ]
+      },
+      {
+        "days": [
+          3,
+          5,
+          2,
+          1
+        ],
+        "endDate": "2025-02-13",
+        "startDate": "2025-02-11",
+        "repetitions": 2
+      }
+    ],
+    "endDate": "2027-05-04",
+    "streak": 0,
+    "goal": {
+      "repetitions": 6,
+      "days": [
+        3,
+        5,
+        2,
+        1,
+        4,
+        6,
+        0
+      ],
+      "startDate": "2025-04-05"
+    },
+    "details": {
+      "color": "#FFC107",
+      "name": "Testowanieee5",
+      "description": "Jakiś randomowy opis do sprawdzenia layoutów, a głównie wysokości.",
+      "type": "selfCare"
+    },
+    "createdAt": 1739283662000
+  },
+  "habit_2UbWtQKo06ePxpP3SGg8": {
+    "status": "active",
+    "reminders": [],
+    "goalHistory": [
+      {
+        "days": [
+          3,
+          5,
+          2,
+          1,
+          4,
+          6,
+          0
+        ],
+        "repetitions": 6,
+        "startDate": "2025-03-30",
+        "endDate": "2025-04-05"
+      },
+      {
+        "endDate": "2025-03-30",
+        "days": [
+          3,
+          5,
+          2,
+          1,
+          4,
+          6,
+          0
+        ],
+        "repetitions": 3,
+        "startDate": "2025-03-28"
+      },
+      {
+        "startDate": "2025-03-26",
+        "repetitions": 3,
+        "endDate": "2025-03-28",
+        "days": [
+          3,
+          5,
+          2,
+          1,
+          4,
+          6,
+          0
+        ]
+      },
+      {
+        "startDate": "2025-03-05",
+        "days": [
+          3,
+          5,
+          2,
+          1,
+          4,
+          6,
+          0
+        ],
+        "repetitions": 1,
+        "endDate": "2025-03-26"
+      },
+      {
+        "repetitions": 3,
+        "endDate": "2025-03-05",
+        "days": [
+          3,
+          5,
+          2,
+          1,
+          4,
+          6,
+          0
+        ],
+        "startDate": "2025-02-23"
+      },
+      {
+        "startDate": "2025-02-13",
+        "endDate": "2025-02-23",
+        "repetitions": 5,
+        "days": [
+          3,
+          5,
+          2,
+          1,
+          4,
+          6,
+          0
+        ]
+      },
+      {
+        "days": [
+          3,
+          5,
+          2,
+          1
+        ],
+        "endDate": "2025-02-13",
+        "startDate": "2025-02-11",
+        "repetitions": 2
+      }
+    ],
+    "endDate": "2027-05-04",
+    "streak": 0,
+    "goal": {
+      "repetitions": 6,
+      "days": [
+        3,
+        5,
+        2,
+        1,
+        4,
+        6,
+        0
+      ],
+      "startDate": "2025-04-05"
+    },
+    "details": {
+      "color": "#FFC107",
+      "name": "Testowanieee4",
+      "description": "Jakiś randomowy opis do sprawdzenia layoutów, a głównie wysokości.",
+      "type": "selfCare"
+    },
+    "createdAt": 1739283662000
+  },
+  "habit_Ww1QQQxo8lQ0jGiBrFu6": {
+    "endDate": "2025-04-21",
+    "reminders": [
+      "22:30",
+      "08:21"
+    ],
+    "createdAt": 1740572462000,
+    "status": "active",
+    "streak": 0,
+    "goalHistory": [
+      {
+        "repetitions": 1,
+        "startDate": "2025-03-15",
+        "endDate": "2025-03-26",
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      {
+        "repetitions": 1,
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "startDate": "2025-03-05",
+        "endDate": "2025-03-15"
+      },
+      {
+        "repetitions": 2,
+        "endDate": "2025-03-05",
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "startDate": "2025-02-26"
+      },
+      {
+        "endDate": "2025-04-22",
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "startDate": "2025-03-26",
+        "repetitions": 1
+      }
+    ],
+    "details": {
+      "description": "",
+      "name": "23",
+      "type": "productivity",
+      "color": "#DC3545"
+    },
+    "goal": {
+      "startDate": "2025-04-22",
+      "days": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "repetitions": 1
+    }
+  },
+  "day_wN3TGJ3qm1CfiHHpbdGq": {
+    "date": "2025-03-27",
+    "modifiedAt": 1747091770342,
+    "executions": {
+      "2UbWtQKo06ePxpP3SGg8": [
+        1747091676588
+      ],
+      "3UbWtQKo06ePxpP3SGg8": [
+        1747091681649
+      ],
+      "1UbWtQKo06ePxpP3SGg8": [
+        1747091770299
+      ]
+    },
+    "mood": null
+  },
+  "day_Tsqekynxra8M0VuSBckp": {
+    "date": "2025-03-02",
+    "modifiedAt": 1747091747037,
+    "executions": {
+      "2UbWtQKo06ePxpP3SGg8": [
+        1747091676588
+      ],
+      "3UbWtQKo06ePxpP3SGg8": [
+        1747091681649
+      ],
+      "1UbWtQKo06ePxpP3SGg8": [
+        1747091742710,
+        1747091747037
+      ]
+    },
+    "mood": null
+  },
+  "day_j5q8EVAc9F2stxbAm78v": {
+    "date": "2025-03-26",
+    "modifiedAt": 1747091767392,
+    "executions": {
+      "9UbWtQKo06ePxpP3SGg8": [
+        1743014257321
+      ],
+      "2UbWtQKo06ePxpP3SGg8": [
+        1747091676588
+      ],
+      "3UbWtQKo06ePxpP3SGg8": [
+        1747091681649
+      ],
+      "1UbWtQKo06ePxpP3SGg8": [
+        1747091757559,
+        1747091765780,
+        1747091767392
+      ]
+    },
+    "mood": null
+  },
+  "day_j5q8EVAc9F2stxbAm78M": {
+    "date": "2025-04-16",
+    "mood": null,
+    "executions": {
+      "qVhknUrcfKuj7IXQZFiX": [
+        1745416544978,
+        1745416546385
+      ]
+    }
+  },
+  "day_3gO3DTO78SLW1r1Y9XnO": {
+    "date": "2025-05-12",
+    "modifiedAt": 1747080581954,
+    "executions": {
+      "9UbWtQKo06ePxpP3SGg8": [
+        1747062362319,
+        1747065094478
+      ],
+      "ZkSvilMx6BZ1q9d7F2pw": [
+        1747065196807,
+        1747067075558
+      ]
+    },
+    "mood": null
+  },
+  "day_j5q8EVAc9F2stxbAm78i": {
+    "date": "2025-02-25",
+    "executions": {
+      "Xr7XbtWye6mEEQoK53TH": [
+        1740502943734,
+        1740502945324
+      ]
+    },
+    "mood": null
+  },
+  "day_j5q8EVAc9F2stxbAm78N": {
+    "date": "2025-04-17",
+    "mood": {
+      "humor": 3,
+      "date": "2025-04-17",
+      "energy": 0
+    },
+    "executions": {
+      "ZkSvilMx6BZ1q9d7F2pw": [
+        1745413920952
+      ]
+    }
+  },
+  "day_j5q8EVAc9F2stxbAm78d": {
+    "date": "2025-02-16",
+    "executions": {
+      "Xr7XbtWye6mEEQoK53TH": [
+        1740319324030
+      ],
+      "YkhogTdR8uZk3gp0XtLg": [
+        1739722572210
+      ],
+      "9UbWtQKo06ePxpP3SGg8": [
+        1739722571747,
+        1739722583141,
+        1739722583391
+      ],
+      "1thHReI84pSXmgAj2tWa": [
+        1739722573086,
+        1739722574855,
+        1739722576374,
+        1739722577632
+      ]
+    },
+    "mood": null
+  },
+  "day_j5q8EVAc9F2stxbAm78D": {
+    "date": "2025-04-05",
+    "modifiedAt": 1747091704345,
+    "executions": {
+      "0JNBsuCj1E9HV2EyAC91": [
+        1743857890949,
+        1743870871255,
+        1743872277441
+      ],
+      "9UbWtQKo06ePxpP3SGg8": [
+        1743857634103,
+        1743857832011,
+        1743857885457,
+        1743857887620,
+        1743858363704,
+        1745413941130
+      ],
+      "Ww1QQQxo8lQ0jGiBrFu6": [
+        1743870866434
+      ],
+      "2UbWtQKo06ePxpP3SGg8": [
+        1747091676588
+      ],
+      "3UbWtQKo06ePxpP3SGg8": [
+        1747091681649
+      ],
+      "1UbWtQKo06ePxpP3SGg8": [
+        1747091700455,
+        1747091701385,
+        1747091701998,
+        1747091702724,
+        1747091703730,
+        1747091704345
+      ]
+    },
+    "mood": null
+  },
+  "day_ZPyDZYFPCnhWUhivBOVz": {
+    "date": "2025-05-13",
+    "modifiedAt": 1747090358105,
+    "executions": {
+      "GXDt0u9FzXb7ZJmNszBt": [
+        1747090358105
+      ]
+    },
+    "mood": null
+  },
+  "day_ptnFxw9GF6TFwfPWOmZE": {
+    "date": "2025-03-04",
+    "modifiedAt": 1747091752619,
+    "executions": {
+      "2UbWtQKo06ePxpP3SGg8": [
+        1747091676588
+      ],
+      "3UbWtQKo06ePxpP3SGg8": [
+        1747091681649
+      ],
+      "1UbWtQKo06ePxpP3SGg8": [
+        1747091752035,
+        1747091752619
+      ]
+    },
+    "mood": null
+  },
+  "day_j5q8EVAc9F2stxbAm78E": {
+    "date": "2025-04-06",
+    "modifiedAt": 1747091698942,
+    "executions": {
+      "Ww1QQQxo8lQ0jGiBrFu6": [
+        1743901156155
+      ],
+      "ZkSvilMx6BZ1q9d7F2pw": [
+        1743956256873
+      ],
+      "YkhogTdR8uZk3gp0XtLg": [
+        1745355217845
+      ],
+      "9UbWtQKo06ePxpP3SGg8": [
+        1743956272174,
+        1743956509801,
+        1743971597832
+      ],
+      "0JNBsuCj1E9HV2EyAC91": [
+        1743901296492,
+        1743965096330,
+        1743971541705
+      ],
+      "2UbWtQKo06ePxpP3SGg8": [
+        1747091676588
+      ],
+      "3UbWtQKo06ePxpP3SGg8": [
+        1747091681649
+      ],
+      "1UbWtQKo06ePxpP3SGg8": [
+        1747091696974,
+        1747091697653,
+        1747091698225,
+        1747091698942
+      ]
+    },
+    "mood": {
+      "energy": 1,
+      "note": "Test",
+      "humor": 3
+    }
+  },
+  "day_j5q8EVAc9F2stxbAm78H": {
+    "date": "2025-04-09",
+    "modifiedAt": 1747091693365,
+    "executions": {
+      "ZkSvilMx6BZ1q9d7F2pw": [
+        1745413922646
+      ],
+      "2UbWtQKo06ePxpP3SGg8": [
+        1747091676588
+      ],
+      "3UbWtQKo06ePxpP3SGg8": [
+        1747091681649
+      ],
+      "1UbWtQKo06ePxpP3SGg8": [
+        1747091692651,
+        1747091693365
+      ]
+    },
+    "mood": null
+  },
+  "day_j5q8EVAc9F2stxbAm78s": {
+    "date": "2025-03-19",
+    "mood": null,
+    "executions": {
+      "9UbWtQKo06ePxpP3SGg8": [
+        1742411706412
+      ],
+      "Xr7XbtWye6mEEQoK53TH": [
+        1742411504675
+      ],
+      "ZkSvilMx6BZ1q9d7F2pw": [
+        1742411507275
+      ],
+      "YkhogTdR8uZk3gp0XtLg": [
+        1742411506498
+      ]
+    }
+  },
+  "day_jeGzDAwu3GUyjbcExlBF": {
+    "date": "2025-03-18",
+    "modifiedAt": 1747091771502,
+    "executions": {
+      "2UbWtQKo06ePxpP3SGg8": [
+        1747091676588
+      ],
+      "3UbWtQKo06ePxpP3SGg8": [
+        1747091681649
+      ],
+      "1UbWtQKo06ePxpP3SGg8": [
+        1747091771456
+      ]
+    },
+    "mood": null
+  },
+  "day_j5q8EVAc9F2stxbAm78B": {
+    "date": "2025-04-03",
+    "modifiedAt": 1747091706938,
+    "executions": {
+      "9UbWtQKo06ePxpP3SGg8": [
+        1743956552365
+      ],
+      "2UbWtQKo06ePxpP3SGg8": [
+        1747091676588
+      ],
+      "3UbWtQKo06ePxpP3SGg8": [
+        1747091681649
+      ],
+      "1UbWtQKo06ePxpP3SGg8": [
+        1747091706392,
+        1747091706938
+      ]
+    },
+    "mood": null
+  },
+  "day_8jPLodArOLbjRGPN9umg": {
+    "date": "2025-03-17",
+    "modifiedAt": 1747091759997,
+    "executions": {
+      "2UbWtQKo06ePxpP3SGg8": [
+        1747091676588
+      ],
+      "3UbWtQKo06ePxpP3SGg8": [
+        1747091681649
+      ],
+      "1UbWtQKo06ePxpP3SGg8": [
+        1747091759949
+      ]
+    },
+    "mood": null
+  },
+  "day_j5q8EVAc9F2stxbAm78J": {
+    "date": "2025-04-11",
+    "executions": {
+      "9PhZGzGyBbp7oMYCH8HC": [
+        1744393547554,
+        1744393549623
+      ]
+    },
+    "mood": null
+  },
+  "day_j5q8EVAc9F2stxbAm78L": {
+    "date": "2025-04-15",
+    "modifiedAt": 1747091673996,
+    "executions": {
+      "Yx9wb5SvQYzjpbTyGOLB": [
+        1745416640932
+      ],
+      "2UbWtQKo06ePxpP3SGg8": [
+        1747091676588
+      ],
+      "3UbWtQKo06ePxpP3SGg8": [
+        1747091681649
+      ],
+      "1UbWtQKo06ePxpP3SGg8": [
+        1747091673996
+      ]
+    },
+    "mood": null
+  },
+  "day_j5q8EVAc9F2stxbAm78p": {
+    "date": "2025-03-15",
+    "executions": {
+      "9UbWtQKo06ePxpP3SGg8": [
+        1742125324400
+      ]
+    }
+  },
+  "day_j5q8EVAc9F2stxbAm78k": {
+    "date": "2025-03-05",
+    "modifiedAt": 1747091737746,
+    "executions": {
+      "ZkSvilMx6BZ1q9d7F2pw": [
+        1741197013710
+      ],
+      "9UbWtQKo06ePxpP3SGg8": [
+        1741196995977
+      ],
+      "Xr7XbtWye6mEEQoK53TH": [
+        1741196983833
+      ],
+      "YkhogTdR8uZk3gp0XtLg": [
+        1741197012829
+      ],
+      "Ww1QQQxo8lQ0jGiBrFu6": [
+        1741197009004
+      ],
+      "2UbWtQKo06ePxpP3SGg8": [
+        1747091676588
+      ],
+      "3UbWtQKo06ePxpP3SGg8": [
+        1747091681649
+      ],
+      "1UbWtQKo06ePxpP3SGg8": [
+        1747091737746
+      ]
+    },
+    "mood": null
+  },
+  "day_j5q8EVAc9F2stxbAm78l": {
+    "date": "2025-03-06",
+    "modifiedAt": 1747091736680,
+    "executions": {
+      "2UbWtQKo06ePxpP3SGg8": [
+        1747091676588
+      ],
+      "3UbWtQKo06ePxpP3SGg8": [
+        1747091681649
+      ],
+      "1UbWtQKo06ePxpP3SGg8": [
+        1747091736679
+      ]
+    },
+    "mood": {
+      "humor": 1,
+      "energy": 1
+    }
+  },
+  "day_386JfDJV8N6g5B6Mxwnz": {
+    "date": "2025-03-29",
+    "modifiedAt": 1747091761815,
+    "executions": {
+      "2UbWtQKo06ePxpP3SGg8": [
+        1747091676588
+      ],
+      "3UbWtQKo06ePxpP3SGg8": [
+        1747091681649
+      ],
+      "1UbWtQKo06ePxpP3SGg8": [
+        1747091761772
+      ]
+    },
+    "mood": null
+  },
+  "day_j5q8EVAc9F2stxbAm78j": {
+    "date": "2025-02-27",
+    "executions": {
+      "YkhogTdR8uZk3gp0XtLg": [
+        1740675375117
+      ],
+      "Xr7XbtWye6mEEQoK53TH": [
+        1740685277919,
+        1740685283681
+      ]
+    },
+    "mood": {
+      "humor": 1,
+      "energy": 1
+    }
+  },
+  "day_j5q8EVAc9F2stxbAm78c": {
+    "date": "2025-02-14",
+    "executions": {
+      "9UbWtQKo06ePxpP3SGg8": [
+        1740319243338
+      ]
+    },
+    "mood": null
+  },
+  "day_j5q8EVAc9F2stxbAm78T": {
+    "date": "2025-04-22",
+    "modifiedAt": 1747091719290,
+    "executions": {
+      "YkhogTdR8uZk3gp0XtLg": [
+        1745356938595
+      ],
+      "ZkSvilMx6BZ1q9d7F2pw": [
+        1745414705629
+      ],
+      "9UbWtQKo06ePxpP3SGg8": [
+        1745336488104,
+        1745357027080,
+        1745357288334,
+        1745357289549
+      ],
+      "0JNBsuCj1E9HV2EyAC91": [
+        1745356923513
+      ],
+      "Ww1QQQxo8lQ0jGiBrFu6": [
+        1745336493494
+      ],
+      "2UbWtQKo06ePxpP3SGg8": [
+        1747091676588
+      ],
+      "3UbWtQKo06ePxpP3SGg8": [
+        1747091681649
+      ],
+      "1UbWtQKo06ePxpP3SGg8": [
+        1747091718727,
+        1747091719290
+      ]
+    },
+    "mood": {
+      "humor": 2,
+      "date": "2025-04-22",
+      "energy": 1
+    }
+  },
+  "day_j5q8EVAc9F2stxbAm78h": {
+    "date": "2025-02-23",
+    "mood": {
+      "energy": 2,
+      "humor": 3,
+      "note": "Test"
+    },
+    "executions": {
+      "YkhogTdR8uZk3gp0XtLg": [
+        1740342241758
+      ],
+      "1thHReI84pSXmgAj2tWa": [
+        1740327687164
+      ],
+      "9UbWtQKo06ePxpP3SGg8": [
+        1740342244684,
+        1740342610480
+      ],
+      "Xr7XbtWye6mEEQoK53TH": [
+        1740319302882
+      ]
+    }
+  },
+  "day_j5q8EVAc9F2stxbAm78O": {
+    "date": "2025-04-18",
+    "modifiedAt": 1747091660400,
+    "executions": {
+      "2UbWtQKo06ePxpP3SGg8": [
+        1747091676588
+      ],
+      "3UbWtQKo06ePxpP3SGg8": [
+        1747091681649
+      ],
+      "1UbWtQKo06ePxpP3SGg8": [
+        1747091659616,
+        1747091660400
+      ]
+    },
+    "mood": {
+      "humor": 0,
+      "energy": 2
+    }
+  },
+  "day_j5q8EVAc9F2stxbAm78G": {
+    "date": "2025-04-08",
+    "modifiedAt": 1747091672790,
+    "executions": {
+      "0JNBsuCj1E9HV2EyAC91": [
+        1745413989181
+      ],
+      "ZkSvilMx6BZ1q9d7F2pw": [
+        1745413917685
+      ],
+      "Ww1QQQxo8lQ0jGiBrFu6": [
+        1745414035647
+      ],
+      "2UbWtQKo06ePxpP3SGg8": [
+        1747091676588
+      ],
+      "3UbWtQKo06ePxpP3SGg8": [
+        1747091681649
+      ],
+      "1UbWtQKo06ePxpP3SGg8": [
+        1747091669699,
+        1747091670452,
+        1747091671036,
+        1747091671591,
+        1747091672227,
+        1747091672790
+      ]
+    },
+    "mood": null
+  },
+  "day_j5q8EVAc9F2stxbAm78P": {
+    "date": "2025-04-19",
+    "modifiedAt": 1747091726394,
+    "executions": {
+      "2UbWtQKo06ePxpP3SGg8": [
+        1747091676588
+      ],
+      "3UbWtQKo06ePxpP3SGg8": [
+        1747091681649
+      ],
+      "1UbWtQKo06ePxpP3SGg8": [
+        1747091722728,
+        1747091723527,
+        1747091724135,
+        1747091725004,
+        1747091725852,
+        1747091726394
+      ]
+    },
+    "mood": {
+      "energy": 1,
+      "humor": 1
+    }
+  },
+  "day_XweEcMwFZ2i8CWVJjk7Y": {
+    "date": "2025-04-26",
+    "modifiedAt": 1747091687216,
+    "executions": {
+      "2UbWtQKo06ePxpP3SGg8": [
+        1747091676588
+      ],
+      "3UbWtQKo06ePxpP3SGg8": [
+        1747091681649
+      ],
+      "1UbWtQKo06ePxpP3SGg8": [
+        1747091681649,
+        1747091682334,
+        1747091682902,
+        1747091684805,
+        1747091686532,
+        1747091687216
+      ]
+    },
+    "mood": null
+  },
+  "day_j5q8EVAc9F2stxbAm78z": {
+    "date": "2025-04-02",
+    "modifiedAt": 1747091663154,
+    "executions": {
+      "YkhogTdR8uZk3gp0XtLg": [
+        1745413910719
+      ],
+      "2UbWtQKo06ePxpP3SGg8": [
+        1747091676588
+      ],
+      "3UbWtQKo06ePxpP3SGg8": [
+        1747091681649
+      ],
+      "1UbWtQKo06ePxpP3SGg8": [
+        1747091661865,
+        1747091662435,
+        1747091663154
+      ]
+    },
+    "mood": null
+  },
+  "day_cjCOvmcE193Dc2pvi5w6": {
+    "date": "2025-03-07",
+    "modifiedAt": 1747091755349,
+    "executions": {
+      "2UbWtQKo06ePxpP3SGg8": [
+        1747091676588
+      ],
+      "3UbWtQKo06ePxpP3SGg8": [
+        1747091681649
+      ],
+      "1UbWtQKo06ePxpP3SGg8": [
+        1747091755299
+      ]
+    },
+    "mood": null
+  },
+  "day_j5q8EVAc9F2stxbAm78V": {
+    "date": "2025-04-24",
+    "modifiedAt": 1747091679859,
+    "executions": {
+      "2UbWtQKo06ePxpP3SGg8": [
+        1747091676588
+      ],
+      "3UbWtQKo06ePxpP3SGg8": [
+        1747091681649
+      ],
+      "1UbWtQKo06ePxpP3SGg8": [
+        1747091676990,
+        1747091677588,
+        1747091678109,
+        1747091678717,
+        1747091679302,
+        1747091679859
+      ]
+    },
+    "mood": {
+      "energy": 1,
+      "humor": 3
+    }
+  },
+  "day_j5q8EVAc9F2stxbAm78K": {
+    "date": "2025-04-13",
+    "mood": null,
+    "executions": {
+      "qVhknUrcfKuj7IXQZFiX": [
+        1744545470853
+      ]
+    }
+  },
+  "day_j5q8EVAc9F2stxbAm78U": {
+    "date": "2025-04-23",
+    "modifiedAt": 1747091675785,
+    "executions": {
+      "EGRWKxaQMDqGYUHfvBPy": [
+        1745417256219,
+        1745417266600,
+        1745417547016
+      ],
+      "0jG9MtRUb8XRsmjoT8NT": [
+        1745417448557
+      ],
+      "4Aru65Ud3vrGnkqmzu1U": [
+        1745418811312,
+        1745418812345,
+        1745418814372
+      ],
+      "kdJGXXkZ6FoipM5NUTtO": [
+        1745416889287,
+        1745416890102
+      ],
+      "htTACmTvgBPITOeAeMXz": [
+        1745418831433,
+        1745418832326
+      ],
+      "pi1Ebteq2Q70SKsZ2JlE": [
+        1745416871294,
+        1745416872485
+      ],
+      "2UbWtQKo06ePxpP3SGg8": [
+        1747091676588
+      ],
+      "3UbWtQKo06ePxpP3SGg8": [
+        1747091681649
+      ],
+      "1UbWtQKo06ePxpP3SGg8": [
+        1747091675199,
+        1747091675785
+      ]
+    },
+    "mood": null
+  },
+  "day_j5q8EVAc9F2stxbAm78u": {
+    "date": "2025-03-23",
+    "modifiedAt": 1747091763080,
+    "executions": {
+      "0JNBsuCj1E9HV2EyAC91": [
+        1742714237776
+      ],
+      "2UbWtQKo06ePxpP3SGg8": [
+        1747091676588
+      ],
+      "3UbWtQKo06ePxpP3SGg8": [
+        1747091681649
+      ],
+      "1UbWtQKo06ePxpP3SGg8": [
+        1747091763080
+      ]
+    },
+    "mood": null
+  },
+  "day_j5q8EVAc9F2stxbAm78R": {
+    "date": "2025-04-20",
+    "modifiedAt": 1747091721531,
+    "executions": {
+      "YkhogTdR8uZk3gp0XtLg": [
+        1745413908538
+      ],
+      "2UbWtQKo06ePxpP3SGg8": [
+        1747091676588
+      ],
+      "3UbWtQKo06ePxpP3SGg8": [
+        1747091681649
+      ],
+      "1UbWtQKo06ePxpP3SGg8": [
+        1747091720800,
+        1747091721531
+      ]
+    },
+    "mood": null
+  },
+  "day_MATFQlw1rmRR1kHtvmFm": {
+    "date": "2025-03-21",
+    "modifiedAt": 1747091732809,
+    "executions": {
+      "2UbWtQKo06ePxpP3SGg8": [
+        1747091676588
+      ],
+      "3UbWtQKo06ePxpP3SGg8": [
+        1747091681649
+      ],
+      "1UbWtQKo06ePxpP3SGg8": [
+        1747091732754
+      ]
+    },
+    "mood": null
+  },
+  "day_j5q8EVAc9F2stxbAm78g": {
+    "date": "2025-02-22",
+    "executions": {
+      "Xr7XbtWye6mEEQoK53TH": [
+        1740319305845
+      ],
+      "9UbWtQKo06ePxpP3SGg8": [
+        1740318557389,
+        1740318635057
+      ]
+    },
+    "mood": null
+  },
+  "day_EyJOOZjBsoC2oTLIJI0u": {
+    "date": "2025-05-06",
+    "modifiedAt": 1747091644859,
+    "executions": {
+      "2UbWtQKo06ePxpP3SGg8": [
+        1747091676588
+      ],
+      "3UbWtQKo06ePxpP3SGg8": [
+        1747091681649
+      ],
+      "1UbWtQKo06ePxpP3SGg8": [
+        1747091641448,
+        1747091642182,
+        1747091642902,
+        1747091643580,
+        1747091644277,
+        1747091644859
+      ]
+    },
+    "mood": null
+  },
+  "day_yJkbBbMB6qBlsFmpWGLI": {
+    "date": "2025-03-03",
+    "modifiedAt": 1747091749925,
+    "executions": {
+      "2UbWtQKo06ePxpP3SGg8": [
+        1747091676588
+      ],
+      "3UbWtQKo06ePxpP3SGg8": [
+        1747091681649
+      ],
+      "1UbWtQKo06ePxpP3SGg8": [
+        1747091749346,
+        1747091749924
+      ]
+    },
+    "mood": null
+  },
+  "day_j5q8EVAc9F2stxbAm78m": {
+    "date": "2025-03-11",
+    "modifiedAt": 1747091738734,
+    "executions": {
+      "Xr7XbtWye6mEEQoK53TH": [
+        1741730363210
+      ],
+      "9UbWtQKo06ePxpP3SGg8": [
+        1741708425719
+      ],
+      "ZkSvilMx6BZ1q9d7F2pw": [
+        1741730364265
+      ],
+      "YkhogTdR8uZk3gp0XtLg": [
+        1741730363752
+      ],
+      "2UbWtQKo06ePxpP3SGg8": [
+        1747091676588
+      ],
+      "3UbWtQKo06ePxpP3SGg8": [
+        1747091681649
+      ],
+      "1UbWtQKo06ePxpP3SGg8": [
+        1747091738734
+      ]
+    },
+    "mood": null
+  },
+  "day_QTAr3SkNw0TWnzoHX58P": {
+    "date": "2025-03-20",
+    "modifiedAt": 1747091730734,
+    "executions": {
+      "2UbWtQKo06ePxpP3SGg8": [
+        1747091676588
+      ],
+      "3UbWtQKo06ePxpP3SGg8": [
+        1747091681649
+      ],
+      "1UbWtQKo06ePxpP3SGg8": [
+        1747091730687
+      ]
+    },
+    "mood": null
+  },
+  "day_h4bvaZSoW8TNetkuvYsZ": {
+    "date": "2025-03-25",
+    "modifiedAt": 1747091758683,
+    "executions": {
+      "2UbWtQKo06ePxpP3SGg8": [
+        1747091676588
+      ],
+      "3UbWtQKo06ePxpP3SGg8": [
+        1747091681649
+      ],
+      "1UbWtQKo06ePxpP3SGg8": [
+        1747091758636
+      ]
+    },
+    "mood": null
+  },
+  "day_hyhzftmpooEZJJIdQOkr": {
+    "date": "2025-05-03",
+    "modifiedAt": 1747091655321,
+    "executions": {
+      "9UbWtQKo06ePxpP3SGg8": [
+        1746295812773
+      ],
+      "2UbWtQKo06ePxpP3SGg8": [
+        1747091676588
+      ],
+      "3UbWtQKo06ePxpP3SGg8": [
+        1747091681649
+      ],
+      "1UbWtQKo06ePxpP3SGg8": [
+        1747091651463,
+        1747091652278,
+        1747091653867,
+        1747091655321
+      ]
+    },
+    "mood": null
+  },
+  "day_j5q8EVAc9F2stxbAm78w": {
+    "date": "2025-03-28",
+    "modifiedAt": 1747091769118,
+    "executions": {
+      "2UbWtQKo06ePxpP3SGg8": [
+        1747091676588
+      ],
+      "3UbWtQKo06ePxpP3SGg8": [
+        1747091681649
+      ],
+      "1UbWtQKo06ePxpP3SGg8": [
+        1747091769118
+      ]
+    },
+    "mood": {
+      "note": "wefwewef",
+      "energy": 1,
+      "humor": 4
+    }
+  },
+  "day_j5q8EVAc9F2stxbAm78b": {
+    "date": "2025-02-13",
+    "executions": {
+      "2RwDnX9M4OHEBflVDNfD": [
+        1739403456931
+      ],
+      "9UbWtQKo06ePxpP3SGg8": [
+        1739403253452,
+        1739482126437,
+        1739485773729,
+        1739486862127
+      ],
+      "YkhogTdR8uZk3gp0XtLg": [
+        1739482449353
+      ]
+    },
+    "mood": {
+      "note": "Yoo",
+      "humor": 4,
+      "energy": 1
+    }
+  },
+  "day_j5q8EVAc9F2stxbAm78C": {
+    "date": "2025-04-04",
+    "modifiedAt": 1747091668134,
+    "executions": {
+      "2UbWtQKo06ePxpP3SGg8": [
+        1747091676588
+      ],
+      "3UbWtQKo06ePxpP3SGg8": [
+        1747091681649
+      ],
+      "1UbWtQKo06ePxpP3SGg8": [
+        1747091664748,
+        1747091665462,
+        1747091666092,
+        1747091666783,
+        1747091667438,
+        1747091668134
+      ]
+    },
+    "mood": {
+      "energy": 2,
+      "humor": 1
+    }
+  },
+  "day_j5q8EVAc9F2stxbAm78I": {
+    "date": "2025-04-10",
+    "modifiedAt": 1747091715120,
+    "executions": {
+      "ZkSvilMx6BZ1q9d7F2pw": [
+        1745413924503
+      ],
+      "9UbWtQKo06ePxpP3SGg8": [
+        1745413895462
+      ],
+      "YkhogTdR8uZk3gp0XtLg": [
+        1745413905315
+      ],
+      "2UbWtQKo06ePxpP3SGg8": [
+        1747091676588
+      ],
+      "3UbWtQKo06ePxpP3SGg8": [
+        1747091681649
+      ],
+      "1UbWtQKo06ePxpP3SGg8": [
+        1747091690785,
+        1747091691479,
+        1747091712696,
+        1747091713322,
+        1747091714507,
+        1747091715120
+      ]
+    },
+    "mood": null
+  },
+  "day_pZmgSvyzKmz6u3sUu9OZ": {
+    "date": "2025-05-01",
+    "modifiedAt": 1747091637072,
+    "executions": {
+      "2UbWtQKo06ePxpP3SGg8": [
+        1747091676588
+      ],
+      "3UbWtQKo06ePxpP3SGg8": [
+        1747091681649
+      ],
+      "1UbWtQKo06ePxpP3SGg8": [
+        1747091636201,
+        1747091637072
+      ]
+    },
+    "mood": null
+  },
+  "day_j5q8EVAc9F2stxbAm78o": {
+    "date": "2025-03-14",
+    "modifiedAt": 1747091729608,
+    "executions": {
+      "Ww1QQQxo8lQ0jGiBrFu6": [
+        1742068065457
+      ],
+      "0JNBsuCj1E9HV2EyAC91": [
+        1742153123931
+      ],
+      "Xr7XbtWye6mEEQoK53TH": [
+        1742068076915
+      ],
+      "9UbWtQKo06ePxpP3SGg8": [
+        1742068036261
+      ],
+      "YkhogTdR8uZk3gp0XtLg": [
+        1742068084823
+      ],
+      "ZkSvilMx6BZ1q9d7F2pw": [
+        1742068091577
+      ],
+      "2UbWtQKo06ePxpP3SGg8": [
+        1747091676588
+      ],
+      "3UbWtQKo06ePxpP3SGg8": [
+        1747091681649
+      ],
+      "1UbWtQKo06ePxpP3SGg8": [
+        1747091729608
+      ]
+    },
+    "mood": null
+  },
+  "day_WMSInVzkIlUQso55MxvU": {
+    "date": "2025-05-03",
+    "modifiedAt": 1747091655321,
+    "executions": {
+      "9UbWtQKo06ePxpP3SGg8": [
+        1746295812773
+      ],
+      "2UbWtQKo06ePxpP3SGg8": [
+        1747091676588
+      ],
+      "3UbWtQKo06ePxpP3SGg8": [
+        1747091681649
+      ],
+      "1UbWtQKo06ePxpP3SGg8": [
+        1747091651463,
+        1747091652278,
+        1747091653867,
+        1747091655321
+      ]
+    },
+    "mood": null
+  },
+  "day_j5q8EVAc9F2stxbAm78t": {
+    "date": "2025-03-22",
+    "modifiedAt": 1747091772720,
+    "executions": {
+      "9UbWtQKo06ePxpP3SGg8": [
+        1742649414750
+      ],
+      "0JNBsuCj1E9HV2EyAC91": [
+        1742649407975,
+        1742649414745
+      ],
+      "2UbWtQKo06ePxpP3SGg8": [
+        1747091676588
+      ],
+      "3UbWtQKo06ePxpP3SGg8": [
+        1747091681649
+      ],
+      "1UbWtQKo06ePxpP3SGg8": [
+        1747091772720
+      ]
+    },
+    "mood": {
+      "energy": 1,
+      "humor": 3
+    }
+  },
+  "day_TlDpEG3A2brJjynMqyBt": {
+    "date": "2025-04-12",
+    "modifiedAt": 1747091689626,
+    "executions": {
+      "2UbWtQKo06ePxpP3SGg8": [
+        1747091676588
+      ],
+      "3UbWtQKo06ePxpP3SGg8": [
+        1747091681649
+      ],
+      "1UbWtQKo06ePxpP3SGg8": [
+        1747091688875,
+        1747091689626
+      ]
+    },
+    "mood": null
+  },
+  "day_T8PRv6qaEcPrtdJaM3em": {
+    "date": "2025-03-09",
+    "modifiedAt": 1747091756621,
+    "executions": {
+      "2UbWtQKo06ePxpP3SGg8": [
+        1747091676588
+      ],
+      "3UbWtQKo06ePxpP3SGg8": [
+        1747091681649
+      ],
+      "1UbWtQKo06ePxpP3SGg8": [
+        1747091756570
+      ]
+    },
+    "mood": null
+  },
+  "day_pEHsnjPHi1mrhg2BiLTe": {
+    "date": "2025-03-01",
+    "modifiedAt": 1747091745508,
+    "executions": {
+      "2UbWtQKo06ePxpP3SGg8": [
+        1747091676588
+      ],
+      "3UbWtQKo06ePxpP3SGg8": [
+        1747091681649
+      ],
+      "1UbWtQKo06ePxpP3SGg8": [
+        1747091741249,
+        1747091743969,
+        1747091745508
+      ]
+    },
+    "mood": null
+  },
+  "day_j5q8EVAc9F2stxbAm78y": {
+    "date": "2025-04-01",
+    "modifiedAt": 1747091711332,
+    "executions": {
+      "2UbWtQKo06ePxpP3SGg8": [
+        1747091676588
+      ],
+      "3UbWtQKo06ePxpP3SGg8": [
+        1747091681649
+      ],
+      "1UbWtQKo06ePxpP3SGg8": [
+        1747091708166,
+        1747091708724,
+        1747091709392,
+        1747091710025,
+        1747091710766,
+        1747091711332
+      ]
+    },
+    "mood": {
+      "energy": 2,
+      "humor": 1
+    }
+  },
+  "day_j5q8EVAc9F2stxbAm78S": {
+    "date": "2025-04-21",
+    "modifiedAt": 1747091717500,
+    "executions": {
+      "qVhknUrcfKuj7IXQZFiX": [
+        1745416577112,
+        1745416579939
+      ],
+      "Yx9wb5SvQYzjpbTyGOLB": [
+        1745416585494
+      ],
+      "2UbWtQKo06ePxpP3SGg8": [
+        1747091676588
+      ],
+      "3UbWtQKo06ePxpP3SGg8": [
+        1747091681649
+      ],
+      "1UbWtQKo06ePxpP3SGg8": [
+        1747091717500
+      ]
+    },
+    "mood": null
+  },
+  "day_j5q8EVAc9F2stxbAm78F": {
+    "date": "2025-04-07",
+    "modifiedAt": 1747091695797,
+    "executions": {
+      "0JNBsuCj1E9HV2EyAC91": [
+        1743990093328
+      ],
+      "2UbWtQKo06ePxpP3SGg8": [
+        1747091676588
+      ],
+      "3UbWtQKo06ePxpP3SGg8": [
+        1747091681649
+      ],
+      "1UbWtQKo06ePxpP3SGg8": [
+        1747091694589,
+        1747091695167,
+        1747091695797
+      ]
+    },
+    "mood": null
+  },
+  "day_j5q8EVAc9F2stxbAm78a": {
+    "date": "2025-02-11",
+    "executions": {
+      "YkhogTdR8uZk3gp0XtLg": [
+        1741730455243,
+        1741730457985,
+        1741730573016,
+        1741730574802
+      ],
+      "VC9SlYXpJtghlX3hSLhl": [
+        1739309478789,
+        1739310451947
+      ],
+      "X2uRogfI1pmb6up5BDX1": [
+        1739309473017
+      ],
+      "9UbWtQKo06ePxpP3SGg8": [
+        1739309835681,
+        1741730552258,
+        1741730555034,
+        1741730556672
+      ]
+    },
+    "mood": {
+      "note": "Test",
+      "energy": 0,
+      "humor": 4
+    }
+  },
+  "day_j5q8EVAc9F2stxbAm78f": {
+    "date": "2025-02-21",
+    "mood": null,
+    "executions": {
+      "Xr7XbtWye6mEEQoK53TH": [
+        1740319308392
+      ]
+    }
+  },
+  "day_Y4Yvss1ZqxbOco8afeKh": {
+    "date": "2025-05-10",
+    "modifiedAt": 1747091640220,
+    "executions": {
+      "2UbWtQKo06ePxpP3SGg8": [
+        1747091676588
+      ],
+      "3UbWtQKo06ePxpP3SGg8": [
+        1747091681649
+      ],
+      "1UbWtQKo06ePxpP3SGg8": [
+        1747091638682,
+        1747091639422,
+        1747091640220
+      ]
+    },
+    "mood": null
+  },
+  "day_j5q8EVAc9F2stxbAm78e": {
+    "date": "2025-03-16",
+    "modifiedAt": 1747091733918,
+    "executions": {
+      "0JNBsuCj1E9HV2EyAC91": [
+        1742152979881
+      ],
+      "h0icPWObaajpiC5SqsPt": [
+        1742152306039,
+        1742152310768,
+        1742152311826,
+        1742152312899
+      ],
+      "2UbWtQKo06ePxpP3SGg8": [
+        1747091676588
+      ],
+      "3UbWtQKo06ePxpP3SGg8": [
+        1747091681649
+      ],
+      "1UbWtQKo06ePxpP3SGg8": [
+        1747091733918
+      ]
+    },
+    "mood": null
+  },
+  "day_mC0esI5nSoPNf7HvNNM7": {
+    "date": "2025-05-08",
+    "modifiedAt": 1747091649974,
+    "executions": {
+      "2UbWtQKo06ePxpP3SGg8": [
+        1747091676588
+      ],
+      "3UbWtQKo06ePxpP3SGg8": [
+        1747091681649
+      ],
+      "1UbWtQKo06ePxpP3SGg8": [
+        1747091646461,
+        1747091647167,
+        1747091647782,
+        1747091648421,
+        1747091649074,
+        1747091649974
+      ]
+    },
+    "mood": null
+  },
+  "day_j5q8EVAc9F2stxbAm78x": {
+    "date": "2025-03-30",
+    "modifiedAt": 1747091764286,
+    "executions": {
+      "9UbWtQKo06ePxpP3SGg8": [
+        1743340885456,
+        1743340961816
+      ],
+      "0JNBsuCj1E9HV2EyAC91": [],
+      "YkhogTdR8uZk3gp0XtLg": [],
+      "2UbWtQKo06ePxpP3SGg8": [
+        1747091676588
+      ],
+      "3UbWtQKo06ePxpP3SGg8": [
+        1747091681649
+      ],
+      "1UbWtQKo06ePxpP3SGg8": [
+        1747091764286
+      ]
+    },
+    "mood": null
+  },
+  "day_hgwbmI4no3MlRSXPtzpz": {
+    "date": "2025-03-13",
+    "modifiedAt": 1747091739984,
+    "executions": {
+      "ZkSvilMx6BZ1q9d7F2pw": [
+        1747066039834
+      ],
+      "2UbWtQKo06ePxpP3SGg8": [
+        1747091676588
+      ],
+      "3UbWtQKo06ePxpP3SGg8": [
+        1747091681649
+      ],
+      "1UbWtQKo06ePxpP3SGg8": [
+        1747091739984
+      ]
+    },
+    "mood": null
+  },
+  "day_ZySlvpzX63OY1bXh9bv6": {
+    "date": "2025-03-31",
+    "modifiedAt": 1747091774352,
+    "executions": {
+      "2UbWtQKo06ePxpP3SGg8": [
+        1747091676588
+      ],
+      "3UbWtQKo06ePxpP3SGg8": [
+        1747091681649
+      ],
+      "1UbWtQKo06ePxpP3SGg8": [
+        1747091774308
+      ]
+    },
+    "mood": null
+  },
+  "settings_kWYItiP1ti3NEZcQC3OB": {
+    "notificationsEnabled": false,
+    "notificationsTime": "08:00",
+    "theme": "light",
+    "fontScale": 1,
+    "firstRun": false
+  }
+}

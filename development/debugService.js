@@ -87,5 +87,29 @@ export const DebugService = {
             ModalService.showError('Zrzut danych nie został zapisany.');
         }
         return false;
+    },
+
+    runBenchmark: (title, testFunction, iterations = 1) => {
+        const times = [];
+
+        for (let i = 0; i < iterations; i++) {
+            const startTime = performance.now();
+            testFunction();
+            const endTime = performance.now();
+
+            times.push(endTime - startTime);
+        }
+
+        const totalTime = times.reduce((sum, time) => sum + time, 0);
+        const minTime = Math.min(...times);
+        const avgTime = totalTime / times.length;
+        const maxTime = Math.max(...times);
+
+        console.log(`%c${title} benchmark {${iterations} iterations} => ` +
+            `minTime: ${minTime.toFixed(3)}ms, ` +
+            `avgTime: ${avgTime.toFixed(3)}ms, ` +
+            `maxTime: ${maxTime.toFixed(3)}ms`,
+            'color: darkseagreen;',
+        );
     }
 }
