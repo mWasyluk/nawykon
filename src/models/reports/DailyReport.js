@@ -2,38 +2,25 @@ import { Mood } from "@models/mood/Mood";
 import { formatDate } from "@utils/dateUtil";
 
 export class DailyReport {
-    constructor({ id, date, executions, mood }) {
+    constructor({ id, date, executions, mood, modifiedAt }) {
         this.id = id || null;
         this.date = date ? formatDate(date, 'date') : formatDate(new Date(), 'date');
+        this.modifiedAt = modifiedAt || new Date().getTime();
 
         this.executions = executions || {};
         this.mood = mood || null;
-    }
-
-    static fromHabitIds(habits, date = new Date()) {
-        const executions = {};
-        habits.forEach(habit => {
-            executions[habit.id] = [];
-        });
-        return new DailyReport({ date, executions });
     }
 
     setHabitLog(id, executions = []) {
         if (!Array.isArray(executions)) {
             throw new Error('Executions must be an array of timestamps.');
         }
-        if (executions.length === 0) {
-            delete this.executions[id];
-        } else {
-            this.executions[id] = executions;
-        }
+        this.executions[id] = executions;
+        this.modifiedAt = new Date().getTime();
     }
 
     setMood(mood) {
         this.mood = new Mood(mood);
-    }
-
-    isEmpty() {
-        return Object.keys(this.executions).length === 0 && this.mood === null;
+        this.modifiedAt = new Date().getTime();
     }
 }

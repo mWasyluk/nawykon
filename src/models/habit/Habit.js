@@ -8,7 +8,7 @@ export class Habit {
         COMPLETED: 'completed',
     };
 
-    constructor({ id, details, goal, goalHistory, reminders, createdAt, endDate }) {
+    constructor({ id, details, goal, goalHistory, reminders, createdAt, endDate, modifiedAt }) {
         this.id = id || null;
         this.details = details instanceof HabitDetails ? details : new HabitDetails({ ...details });
         this.goalHistory = Array.isArray(goalHistory) ? goalHistory : [];
@@ -20,6 +20,7 @@ export class Habit {
         this.createdAt = createdAt || new Date().getTime();
         this.endDate = endDate ? formatDate(endDate, 'date') : null;
         this.status = this.endDate && new Date(this.endDate) < new Date() ? Habit.STATUSES.COMPLETED : Habit.STATUSES.ACTIVE;
+        this.modifiedAt = modifiedAt || new Date().getTime();
     }
 
     changeGoal({ repetitions, days }) {
@@ -201,6 +202,7 @@ export class HabitBuilder {
         setGoal();
         setDetails();
         this.hasOwnProperty('endDate') && Habit.validateEndDate(this.endDate);
+        this.modifiedAt = new Date().getTime();
 
         if (this.habit) {
             return new Habit({ ...this.habit, ...this });
