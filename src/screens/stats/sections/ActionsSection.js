@@ -1,7 +1,7 @@
 import ActivityValueIcon from "@components/activity/ActivityValueIcon";
 import { SectionContainer, SectionHeader } from "@components/layout";
+import { useActivity } from "@contexts/ActivitiesContext";
 import { useHabits } from "@contexts/HabitsContext";
-import { useStateManager } from "@contexts/StateManagerContext";
 import { colors, icons } from "@styles";
 import { ActivityUtil } from "@utils/activityUtil";
 import { StyleSheet } from "react-native";
@@ -11,7 +11,7 @@ import ActionsNotesSubsection from "./ActionsNotesSubsection";
 import ActionsResultsSubsection from "./ActionsResultsSubsection";
 
 export default function ActionsSection() {
-    const { activityRegistry } = useStateManager();
+    const { activityRegistry } = useActivity();
     const { habits } = useHabits();
 
     const actionsSummary = ActivityUtil.calculateActionsSummary(activityRegistry, habits);

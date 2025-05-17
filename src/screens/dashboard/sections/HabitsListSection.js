@@ -3,9 +3,9 @@ import Button from "@components/input/Button";
 import { INPUT_VARIANTS } from "@components/input/InputContainer";
 import { SectionContainer, SectionHeader, TabToggle } from "@components/layout";
 import routes from "@constants/router";
+import { useActivity } from "@contexts/ActivitiesContext";
 import { useHabits } from "@contexts/HabitsContext";
 import { useReports } from "@contexts/ReportsContext";
-import { useStateManager } from "@contexts/StateManagerContext";
 import { Habit } from "@models/habit/Habit";
 import { ModalService } from "@services/modalService";
 import { icons } from "@styles";
@@ -16,7 +16,7 @@ import { useEffect, useMemo, useState } from "react";
 export default function HabitsListSection() {
     const { habits } = useHabits();
     const { setHabitLog } = useReports();
-    const { activityRegistry } = useStateManager();
+    const { activityRegistry } = useActivity();
 
     const [activeTabIndex, setActiveTabIndex] = useState(0);
     const [isAdding, setIsAdding] = useState(false);

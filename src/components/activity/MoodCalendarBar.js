@@ -1,10 +1,10 @@
 import MoodCalendarPage from '@components/activity/MoodCalendarPage';
-import { useStateManager } from '@contexts/StateManagerContext';
+import { useActivity } from '@contexts/ActivitiesContext';
 import { metrics } from '@styles';
 import { StyleSheet, View } from 'react-native';
 
 export default function MoodCalendarBar() {
-    const { activityRegistry } = useStateManager();
+    const { activityRegistry } = useActivity();
 
     const pages = [];
     for (let i = 5; i >= 0; i--) {

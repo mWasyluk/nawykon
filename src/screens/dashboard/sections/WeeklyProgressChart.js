@@ -1,13 +1,13 @@
 import ActivityValueIcon from "@components/activity/ActivityValueIcon";
 import PieChart from "@components/charts/PieChart";
 import { BodyBoldText } from "@components/text";
-import { useStateManager } from "@contexts/StateManagerContext";
+import { useActivity } from "@contexts/ActivitiesContext";
 import { colors, icons } from "@styles";
 import { ActivityUtil } from "@utils/activityUtil";
 import { StyleSheet, View } from "react-native";
 
 export default function WeeklyProgressChart() {
-    const { activityRegistry } = useStateManager();
+    const { activityRegistry } = useActivity();
 
     const todaysDate = new Date();
     const weekAgoDate = new Date(new Date().setDate(todaysDate.getDate() - 6));

@@ -1,6 +1,6 @@
 import { CaptionText } from "@components/text";
 import { fullDays } from "@constants/time";
-import { useStateManager } from "@contexts/StateManagerContext";
+import { useActivity } from "@contexts/ActivitiesContext";
 import { icons, metrics } from "@styles";
 import { ActivityUtil } from "@utils/activityUtil";
 import { Image, View } from "react-native";
@@ -31,7 +31,7 @@ function MoodRecord(props) {
 }
 
 export default function AverageMoodsWeekBar() {
-    const { activityRegistry } = useStateManager();
+    const { activityRegistry } = useActivity();
 
     const weeklyMoodsArray = ActivityUtil.calculateAverageMoodsWeek(activityRegistry.getRecords());
 

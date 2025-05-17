@@ -1,4 +1,5 @@
 import ProvidersWrapper from '@contexts/ProvidersWrapper';
+import { ScreenManager } from '@screens/commons/ScreenManager';
 import { colors } from '@styles';
 import { DebuggerMenu } from 'development/DebuggerMenu';
 import { ExpoRoot } from 'expo-router';
@@ -14,8 +15,10 @@ export default function App() {
             <SafeAreaView style={{ flex: 1, backgroundColor: colors.light }}>
                 <RootSiblingParent>
                     <ProvidersWrapper>
-                        <ExpoRoot context={ctx} />
-                        <DebuggerMenu />
+                        <ScreenManager>
+                            <ExpoRoot context={ctx} />
+                            <DebuggerMenu />
+                        </ScreenManager>
                     </ProvidersWrapper>
                 </RootSiblingParent>
             </SafeAreaView>

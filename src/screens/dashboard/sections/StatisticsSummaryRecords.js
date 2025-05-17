@@ -1,7 +1,7 @@
 import { BodyBoldText, BodyText } from "@components/text";
+import { useActivity } from "@contexts/ActivitiesContext";
 import { useHabits } from "@contexts/HabitsContext";
 import { useReports } from "@contexts/ReportsContext";
-import { useStateManager } from "@contexts/StateManagerContext";
 import { colors, icons, metrics } from "@styles";
 import { ActivityUtil } from "@utils/activityUtil";
 import { useMemo } from "react";
@@ -26,9 +26,9 @@ function StatisticsSummaryRecord(props) {
 export default function StatisticsSummaryRecords() {
     const { habits } = useHabits();
     const { dailyReports } = useReports();
-    const { activityRegistry } = useStateManager();
+    const { activityRegistry } = useActivity();
 
-    const habitsCount = useMemo(() => habits.length, [habits]);
+    const habitsCount = habits.length;
     const moodReportsCount = useMemo(() => dailyReports.filter(report => !!report.mood).length, [dailyReports]);
 
     const allRecords = useMemo(() => activityRegistry.getRecords(), [activityRegistry]);

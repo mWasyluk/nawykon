@@ -6,9 +6,9 @@ import { SubsectionHeader } from "@components/layout";
 import { LabelText } from "@components/text";
 import routes from "@constants/router";
 import { genitiveMonths } from "@constants/time";
+import { useActivity } from "@contexts/ActivitiesContext";
 import { useHabits } from "@contexts/HabitsContext";
 import { useReports } from "@contexts/ReportsContext";
-import { useStateManager } from "@contexts/StateManagerContext";
 import { ModalService } from "@services/modalService";
 import { colors, icons, metrics } from "@styles";
 import { formatDate, validateTimestamp } from "@utils/dateUtil";
@@ -18,7 +18,7 @@ import { Image, StyleSheet, View } from "react-native";
 
 export default function DailyActivitySubsection(props) {
     const { date, habitStatistics, moodReport, habitId } = props;
-    const { activityRegistry } = useStateManager();
+    const { activityRegistry } = useActivity();
     const { habits } = useHabits();
     const { setHabitLog } = useReports();
 

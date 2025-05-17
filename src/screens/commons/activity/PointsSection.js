@@ -1,7 +1,7 @@
-import { BarChart } from '@components/charts/BarChart';
 import ActivityValueIcon from '@components/activity/ActivityValueIcon';
+import { BarChart } from '@components/charts/BarChart';
 import { SectionContainer, SectionHeader, TabToggle } from '@components/layout';
-import { useStateManager } from '@contexts/StateManagerContext';
+import { useActivity } from '@contexts/ActivitiesContext';
 import { colors, icons, metrics, uiStyles } from '@styles';
 import { ActivityUtil } from '@utils/activityUtil';
 import { validateTimestamp } from '@utils/dateUtil';
@@ -13,7 +13,7 @@ const dateWeekAgo = new Date(new Date().setDate(todaysDate.getDate() - 7));
 const dateMonthAgo = new Date(new Date().setDate(todaysDate.getDate() - 30));
 
 export default function PointsSection({ habitId = undefined }) {
-    const { activityRegistry } = useStateManager();
+    const { activityRegistry } = useActivity();
 
     const totalPoints = ActivityUtil.calculateHabitPoints(activityRegistry.getRecords(), habitId);
 

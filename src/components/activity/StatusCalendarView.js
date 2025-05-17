@@ -1,5 +1,5 @@
-import { ActivityRegistry } from "@models/reports/ActivityRegistry";
 import { colors, metrics, uiStyles } from "@styles";
+import { ACTIVITY_STATUSES } from "@utils/activityUtil";
 import { formatDate, getFixedDayOfWeek } from "@utils/dateUtil";
 import { useState } from "react";
 import { StyleSheet, View } from "react-native";
@@ -48,13 +48,13 @@ export const StatusCalendarView = (props) => {
         if (dataRecord) {
             let variant;
             switch (dataRecord.status) {
-                case ActivityRegistry.STATUSES.COMPLETED:
+                case ACTIVITY_STATUSES.COMPLETED:
                     variant = CALENDAR_RECORD_VARIANTS.COMPLETED;
                     break;
-                case ActivityRegistry.STATUSES.FAILED:
+                case ACTIVITY_STATUSES.FAILED:
                     variant = CALENDAR_RECORD_VARIANTS.FAILED;
                     break;
-                case ActivityRegistry.STATUSES.PARTIAL:
+                case ACTIVITY_STATUSES.PARTIAL:
                     variant = CALENDAR_RECORD_VARIANTS.PARTIAL;
                     break;
                 default:

@@ -1,6 +1,6 @@
 import ActivityValueIcon from "@components/activity/ActivityValueIcon";
 import { SectionContainer, SectionHeader, TabToggle } from "@components/layout";
-import { useStateManager } from "@contexts/StateManagerContext";
+import { useActivity } from "@contexts/ActivitiesContext";
 import { icons } from "@styles";
 import { ActivityUtil } from "@utils/activityUtil";
 import { formatDate, getMonthName } from "@utils/dateUtil";
@@ -31,7 +31,7 @@ const getStatistics = (registry, habitId, startDate, endDate) => {
 
 export default function ActivitySection(props) {
     const { habitId = undefined } = props;
-    const { activityRegistry } = useStateManager();
+    const { activityRegistry } = useActivity();
 
     const [selectedDate, setSelectedDate] = useState(formatDate(today, 'date'));
 

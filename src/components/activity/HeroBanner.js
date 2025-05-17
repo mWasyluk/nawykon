@@ -3,7 +3,7 @@ import personOkSrc from '@assets/hero/person-ok.png';
 import { ProgressBar } from '@components/activity/ProgessBar';
 import BackgroundGradient from '@components/effects/BackgroundGradient';
 import { BodyBoldText, CaptionText } from '@components/text';
-import { useStateManager } from '@contexts/StateManagerContext';
+import { useActivity } from '@contexts/ActivitiesContext';
 import { colors, metrics } from '@styles';
 import { ActivityUtil } from '@utils/activityUtil';
 import { formatDate } from '@utils/dateUtil';
@@ -49,7 +49,7 @@ const heroVariants = {
 };
 
 export default function HeroBanner() {
-    const { activityRegistry } = useStateManager();
+    const { activityRegistry } = useActivity();
 
     const todaysDate = formatDate(new Date(), 'date');
     const todaysActivityStats = ActivityUtil.calculateHabitStatistics([activityRegistry.getRecord(todaysDate)]);
