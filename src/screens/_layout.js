@@ -8,6 +8,7 @@ export default function Layout() {
         <Stack screenOptions={{
             header: ({ options }) => options.customHeader || <NavHeader title={options.title} back home />,
             contentStyle: { backgroundColor: colors.light },
+            navigationBarHidden: true,
         }} >
             <Stack.Screen name="index" options={{ customHeader: <DashboardNavHeader /> }} />
             <Stack.Screen name="habits/add" options={{ title: 'Nowy Nawyk' }} />
