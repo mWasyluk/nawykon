@@ -4,24 +4,26 @@
     "slug": "nawykon",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/adaptive-icon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/images/logo.png",
+      "image": "./assets/images/splash-icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#F3F3F3"
     },
     "ios": {
+      "bundleIdentifier": "pl.mwasyluk.nawykon",
       "supportsTablet": true
     },
     "android": {
+      "package": "pl.mwasyluk.nawykon",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/logo.png",
+        "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#F3F3F3"
       },
       "splash": {
-        "image": "./assets/images/logo.png",
+        "image": "./assets/images/splash-icon.png",
         "backgroundColor": "#F3F3F3"
       }
     },
@@ -43,6 +45,12 @@
           "color": "#ffffff"
         }
       ]
-    ]
+    ],
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "3693ac01-3e3d-4b91-b94e-f1aa4a4ee342"
+      }
+    }
   }
 }

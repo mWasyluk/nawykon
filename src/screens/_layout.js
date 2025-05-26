@@ -2,8 +2,10 @@ import DashboardNavHeader from '@components/navigation/DashboardNavHeader';
 import { NavHeader } from '@components/navigation/NavHeader';
 import { colors } from '@styles';
 import { Stack } from 'expo-router';
+import { StatusBar } from 'react-native';
 
 export default function Layout() {
+    StatusBar.setBackgroundColor(colors.modalBackground);
     return (
         <Stack screenOptions={{
             header: ({ options }) => options.customHeader || <NavHeader title={options.title} back home />,
