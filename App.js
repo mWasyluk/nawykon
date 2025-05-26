@@ -3,9 +3,8 @@ import { ScreenManager } from '@screens/commons/ScreenManager';
 import { colors } from '@styles';
 import { DebuggerMenu } from 'development/DebuggerMenu';
 import { ExpoRoot } from 'expo-router';
-import { SafeAreaView } from 'react-native';
 import { RootSiblingParent } from 'react-native-root-siblings';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
 const ctx = require.context("./src/screens");
 

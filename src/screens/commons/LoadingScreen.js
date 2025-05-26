@@ -121,7 +121,7 @@ export default function LoadingScreen({ show, message }) {
                 {/* logo image */}
                 <Image style={styles.image}
                     resizeMode={Constants.expoConfig?.splash?.resizeMode || "contain"}
-                    source={require("@assets/images/icon.png")}
+                    source={require("@assets/images/splash-icon.png")}
                     onLoadEnd={hideSplashScreen}
                     fadeDuration={0}
                 />
@@ -140,18 +140,13 @@ export default function LoadingScreen({ show, message }) {
 
 const styles = StyleSheet.create({
     iconLayer: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
         zIndex: 1000,
 
-        flex: 1,
         backgroundColor: colors.light,
         alignItems: 'center',
         justifyContent: 'center',
-        gap: 20,
+
+        ...StyleSheet.absoluteFillObject,
     },
     shadowLayer: {
         position: 'absolute',
