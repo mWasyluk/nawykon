@@ -9,8 +9,7 @@ import { NavigationUtil } from '@utils/navUtil';
 import { useLocalSearchParams } from 'expo-router/build/hooks';
 import { useEffect, useMemo, useState } from 'react';
 import NoteSection from '../sections/NoteSection';
-import PickEnergySection from '../sections/PickEnergySection';
-import PickMoodSection from '../sections/PickMoodSection';
+import FettleSection from '../sections/FettleSection';
 
 export default function EditMoodScreen() {
     const { date: targetDate } = useLocalSearchParams();
@@ -28,12 +27,8 @@ export default function EditMoodScreen() {
     const buttonIcon = isSubmitting ? LOADING_ICON : icons.check;
     const buttonVariant = (isError || isSubmitting) ? INPUT_VARIANTS.DISABLED : INPUT_VARIANTS.PRIME;
 
-    const handleHumorChange = (value) => {
-        setMoodDto({ ...moodDto, humor: value });
-    }
-
-    const handleEnergyChange = (value) => {
-        setMoodDto({ ...moodDto, energy: value });
+    const handleFettleChange = (value) => {
+        setMoodDto({ ...moodDto, ...value });
     }
 
     const handleNoteChange = (value) => {
@@ -67,12 +62,9 @@ export default function EditMoodScreen() {
 
     return (
         <ScreenContainer >
-            <PickMoodSection
-                defaultValue={moodDto?.humor}
-                onChange={handleHumorChange} />
-            <PickEnergySection
-                defaultValue={moodDto?.energy}
-                onChange={handleEnergyChange} />
+            <FettleSection
+                defaultValue={moodDto || {}}
+                onChange={handleFettleChange} />
             <NoteSection
                 defaultValue={moodDto?.note}
                 onChange={handleNoteChange} />

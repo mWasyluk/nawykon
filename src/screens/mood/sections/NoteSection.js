@@ -1,5 +1,5 @@
 import TextInput from "@components/input/TextInput";
-import { SectionContainer, SectionHeader } from "@components/layout";
+import { SectionContainer, SectionHeader, SubsectionHeader } from "@components/layout";
 import { useState } from "react";
 
 export default function NoteSection(props) {
@@ -18,8 +18,9 @@ export default function NoteSection(props) {
     return (
         <SectionContainer style={{ gap: 0 }}>
             <SectionHeader
-                title="Notatka"
+                title="Dziennik"
             />
+            <SubsectionHeader title="Notatka" />
             <TextInput
                 value={note}
                 onChange={handleChange}

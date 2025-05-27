@@ -2,6 +2,7 @@ import { StyleSheet } from "react-native";
 import IconToggle from "./IconToggle";
 import { useState } from "react";
 import { View } from "react-native";
+import { metrics } from "@styles";
 
 export default function IconToggleGroup(props) {
     const {
@@ -39,7 +40,7 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between',
+        gap: metrics.spacing.sm,
         width: '100%',
     }
 });

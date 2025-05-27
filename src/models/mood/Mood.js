@@ -1,11 +1,15 @@
+import { EMOTIONS } from "@constants/mood";
+
 export class Mood {
-    constructor({ humor, energy, note }) {
+    constructor({ humor, energy, emotions = [], note }) {
         Mood.validateHumor(humor);
         Mood.validateEnergy(energy);
         Mood.validateNote(note);
+        Mood.validateEmotions(emotions);
 
         this.humor = humor;
         this.energy = energy;
+        this.emotions = emotions;
         this.note = note;
     }
 
@@ -28,6 +32,18 @@ export class Mood {
 
         if (typeof energy !== 'number' || energy < 0 || energy > 2) {
             throw new Error('Podaj wartość z zakresu 0-2.');
+        }
+
+        return true;
+    }
+
+    static validateEmotions(emotions) {
+        if (emotions && !Array.isArray(emotions)) {
+            throw new Error('Emocje muszą być podane w postaci listy.');
+        }
+
+        if (!emotions.every(emotion => Object.keys(EMOTIONS).includes(emotion))) {
+            throw new Error('Wszystkie emocje muszą pochodzić z listy dostępnych emocji.');
         }
 
         return true;
