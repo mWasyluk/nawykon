@@ -8,14 +8,13 @@ export class Habit {
         COMPLETED: 'completed',
     };
 
-    constructor({ id, details, goal, goalHistory, reminders, createdAt, endDate, modifiedAt }) {
+    constructor({ id, details, goal, goalHistory, reminders, streak, createdAt, endDate, modifiedAt }) {
         this.id = id || null;
         this.details = details instanceof HabitDetails ? details : new HabitDetails({ ...details });
         this.goalHistory = Array.isArray(goalHistory) ? goalHistory : [];
         this.goal = goal instanceof HabitGoal ? goal : new HabitGoal({ ...goal });
         this.reminders = Array.isArray(reminders) ? reminders : [];
-
-        this.streak = 0; // TODO: Streak should be a part of stats instead of habit, but already used in the app
+        this.streak = streak || 0;
 
         this.createdAt = createdAt || new Date().getTime();
         this.endDate = endDate ? formatDate(endDate, 'date') : null;

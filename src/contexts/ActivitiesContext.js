@@ -4,12 +4,13 @@ import { ModalService } from '@services/modalService';
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { useHabits } from './HabitsContext';
 import { useReports } from './ReportsContext';
+import { ActivityUtil } from '@utils/activityUtil';
 
 const ActivityContext = createContext({ activityRegistry: null });
 
 export const ActivityProvider = ({ children }) => {
     const { dailyReports } = useReports();
-    const { habits } = useHabits();
+    const { habits, saveHabit } = useHabits();
     const [activityRegistry, setActivityRegistry] = useState(null);
 
     const updateAllRecords = (registry, dailyReports, habits) => {
@@ -35,9 +36,12 @@ export const ActivityProvider = ({ children }) => {
             return;
         }
 
+        let newReg = null;
+
         const initRegistry = () => {
             try {
-                setActivityRegistry(new ActivityRegistry(dailyReports, habits));
+                newReg = new ActivityRegistry(dailyReports, habits);
+                setActivityRegistry(newReg);
             } catch (error) {
                 console.error(error);
                 ModalService.showError("Nie mogłem zainicjować rejestru aktywności. Odśwież aplikację, żebym mógł spróbować jeszcze raz.");
@@ -48,7 +52,8 @@ export const ActivityProvider = ({ children }) => {
             try {
                 let isUpdated = updateAllRecords(activityRegistry, dailyReports, habits);
                 if (isUpdated) {
-                    setActivityRegistry(activityRegistry.clone());
+                    newReg = activityRegistry.clone();
+                    setActivityRegistry(newReg);
                 }
             } catch (error) {
                 console.error(error);
@@ -62,6 +67,22 @@ export const ActivityProvider = ({ children }) => {
             DebugService.runBenchmark("Update ActivityRegistry", updateRegistry)
         }
 
+        const updateHabitsStreak = async () => {
+            for (const habit of habits) {
+                const streak = ActivityUtil.calculateHabitStreak(newReg, habit.id);
+                if (streak !== habit.streak) {
+                    habit.streak = streak;
+                    await saveHabit(habit);
+                }
+            }
+        }
+
+        if (newReg) {
+            updateHabitsStreak().catch(err => {
+                console.error("Error updating habits streak:", err);
+                ModalService.showError("Nie mogłem zaktualizować serii nawyków. Odśwież aplikację, żebym mógł spróbować jeszcze raz.");
+            });
+        }
     }, [dailyReports, habits]);
 
     const contextValue = useMemo(() => ({

@@ -30,7 +30,7 @@ const getStatistics = (registry, habitId, startDate, endDate) => {
 }
 
 export default function ActivitySection(props) {
-    const { habitId = undefined } = props;
+    const { streak = 0, habitId = undefined } = props;
     const { activityRegistry } = useActivity();
 
     const [selectedDate, setSelectedDate] = useState(formatDate(today, 'date'));
@@ -68,7 +68,7 @@ export default function ActivitySection(props) {
         <SectionContainer style={{ alignItems: 'center' }}>
             <SectionHeader title="Aktywność"
                 badge={<TabToggle name={selectedTab.name} onPress={toggleTab} />}
-                right={<ActivityValueIcon value={monthlyStatistics.streak} icon={icons.streak} />}
+                right={<ActivityValueIcon value={streak} icon={icons.streak} />}
             />
 
             <StatusCalendarSubsection

@@ -18,6 +18,31 @@ export const ActivityUtil = {
         });
     },
 
+    calculateHabitStreak: (activityRegistry, habitId) => {
+        if (!habitId) {
+            return 0;
+        }
+
+        const startDate = new Date(activityRegistry.startDate);
+        let streak = 0;
+        for (let date = new Date(); date >= startDate; date.setDate(date.getDate() - 1)) {
+            const record = activityRegistry.getRecord(formatDate(date, 'date'));
+            if (!record.habits || !record.habits[habitId]) {
+                continue; // No habit log for this date
+            }
+
+            const habitLog = record.habits[habitId];
+            if (habitLog.status === ACTIVITY_STATUSES.COMPLETED) {
+                streak += 1; // Completed status increases the streak
+            } else if (habitLog.status === ACTIVITY_STATUSES.NEUTRAL) {
+                continue; // Neutral status does not break the streak
+            } else {
+                break; // Streak is broken
+            }
+        }
+        return streak;
+    },
+
     calculateHabitStatus: (goal, completed) => {
         if (!goal) {
             return ACTIVITY_STATUSES.NEUTRAL;
