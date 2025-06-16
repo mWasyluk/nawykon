@@ -157,13 +157,14 @@ export default function DailyActivitySubsection(props) {
             <SubsectionHeader
                 title="Akcje"
                 badge={
-                    <LabelText style={styles.dateText}>
+                    <LabelText style={styles.highlightedText}>
                         {`${validDate.getDate()} ${genitiveMonths[validDate.getMonth()]}`}
                     </LabelText>
                 }
                 right={
                     <View style={styles.remainingContainer}>
-                        <LabelText style={styles.remainingText}>POZOSTAŁO {remaining}</LabelText>
+                        <LabelText style={styles.remainingText}>POZOSTAŁO</LabelText>
+                        <LabelText style={styles.highlightedText}>{remaining}</LabelText>
                         <Image source={icons.refresh} style={styles.remainingIcon} tintColor={styles.remainingIcon.color} />
                     </View>
                 }
@@ -178,7 +179,7 @@ export default function DailyActivitySubsection(props) {
 }
 
 const styles = StyleSheet.create({
-    dateText: {
+    highlightedText: {
         color: colors.primBlue,
     },
     remainingContainer: {
