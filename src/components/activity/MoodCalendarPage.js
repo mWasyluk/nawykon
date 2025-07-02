@@ -5,6 +5,7 @@ import { genitiveMonths } from '@constants/time';
 import { colors, icons, metrics } from '@styles';
 import { router } from 'expo-router';
 import { Image, StyleSheet, View } from 'react-native';
+import HabitProgressView, { PROGRESS_VIEW_SIZES } from './HabitProgressView';
 
 const todaysDate = new Date();
 const todaysDay = todaysDate.getDate();
@@ -16,12 +17,17 @@ export default function MoodCalendarPage(props) {
         day = todaysDay,
         month = todaysMonth,
         year = todaysYear,
+        completed = 0,
+        goal = 0,
         humor = undefined,
         isNote = true,
     } = props;
 
     // Date
+    const weekDayName = new Date(year, month, day).toLocaleDateString('pl-PL', { weekday: 'long' }).slice(0, 3);
+    const weekDayNameView = weekDayName.charAt(0).toUpperCase() + weekDayName.slice(1);
     const monthName = genitiveMonths[month].slice(0, 3);
+    const monthNameView = monthName.toUpperCase();
     const isToday = (day === todaysDay && month === todaysMonth);
     const variant = isToday ? INPUT_VARIANTS.PRIME : INPUT_VARIANTS.DEFAULT;
     const dayColor = isToday ? colors.light : colors.darkGray;
@@ -45,8 +51,11 @@ export default function MoodCalendarPage(props) {
 
     return (
         <InputContainer variant={variant} size={INPUT_SIZES.AUTO} style={styles.container} onPress={onPress}>
+            <CaptionText style={{ color: monthColor }}>{weekDayNameView}</CaptionText>
             <BodyBoldText style={[styles.day, { color: dayColor }]}>{day}</BodyBoldText>
-            <CaptionText style={[styles.month, { color: monthColor }]}>{monthName}</CaptionText>
+            <CaptionText style={{ color: monthColor, ...styles.dateLastLine }}>{monthNameView}</CaptionText>
+
+            <HabitProgressView completed={completed} goal={goal} size={PROGRESS_VIEW_SIZES.SMALL} />
             <View style={styles.iconsContainer}>
                 <Image source={moodIcon} style={moodIconStyle} />
                 {isNote && (
@@ -66,11 +75,10 @@ const styles = StyleSheet.create({
         borderRadius: metrics.borderRadius.sm,
     },
     day: {
-        marginBottom: -10,
+        marginVertical: -10,
     },
-    month: {
-        textTransform: 'uppercase',
-        marginBottom: -5,
+    dateLastLine: {
+        marginBottom: -3,
     },
     progress: {
         width: '100%',

@@ -3,13 +3,7 @@ import InputContainer from "@components/input/InputContainer";
 import { ActionText, BodyBoldText } from "@components/text";
 import { colors, icons, metrics } from "@styles";
 import { Image, View } from "react-native";
-
-const VARIANTS = {
-    completed: { backgroundColor: colors.lightSuccess, color: colors.light },
-    partial: { backgroundColor: colors.lightWarning, color: colors.darkGray },
-    failed: { backgroundColor: colors.lightError, color: colors.light },
-    neutral: { backgroundColor: colors.lightGray, color: colors.darkGray },
-}
+import HabitProgressView from "./HabitProgressView";
 
 export default function HabitActivityButton(props) {
     const {
@@ -21,13 +15,7 @@ export default function HabitActivityButton(props) {
         onPress = () => { },
     } = props;
 
-    const progress = (goal && completed) && completed / goal;
-    if (progress !== undefined) {
-        var variantStyle = !goal ? VARIANTS.neutral
-            : progress >= 1 ? VARIANTS.completed
-                : progress <= 0 ? VARIANTS.failed
-                    : VARIANTS.partial;
-    }
+    const isValidProgress = (goal && completed) && completed / goal;
 
     return (
         <InputContainer onPress={onPress}>
@@ -44,10 +32,8 @@ export default function HabitActivityButton(props) {
                 </View>
             )}
 
-            {progress !== undefined && (
-                <BodyBoldText style={[{ paddingHorizontal: metrics.spacing.sm, borderRadius: metrics.borderRadius.circular }, variantStyle]}>
-                    {completed || 0}/{goal || 0}
-                </BodyBoldText>
+            {isValidProgress && (
+                <HabitProgressView completed={completed} goal={goal} />
             )}
         </InputContainer>
     );

@@ -7,14 +7,23 @@ export default function MoodCalendarBar() {
     const { activityRegistry } = useActivity();
 
     const pages = [];
-    for (let i = 5; i >= 0; i--) {
+    for (let i = 6; i >= 0; i--) {
         const date = new Date();
         date.setDate(date.getDate() - i);
         const day = date.getDate();
         const month = date.getMonth();
         const year = date.getFullYear();
 
-        const { mood } = activityRegistry.getRecord(date);
+        const { mood, habits } = activityRegistry.getRecord(date);
+        var habitsEffectual, habitsGoal;
+        if (habits) {
+            habitsEffectual = Object.values(habits)
+                .map(h => h.effectual)
+                .reduce((sum, cur) => sum + cur, 0) || 0;
+            habitsGoal = Object.values(habits)
+                .map(h => h.goal)
+                .reduce((sum, cur) => sum + cur, 0) || 0;
+        }
         const humor = mood?.humor;
         const isNote = !!mood?.note;
 
@@ -24,6 +33,8 @@ export default function MoodCalendarBar() {
                 day={day}
                 month={month}
                 year={year}
+                completed={habitsEffectual}
+                goal={habitsGoal}
                 humor={humor}
                 isNote={isNote}
             />
