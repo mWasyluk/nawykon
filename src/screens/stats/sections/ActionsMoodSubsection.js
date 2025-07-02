@@ -25,31 +25,32 @@ export default function ActionsMoodSubsection({ summary, styles }) {
 
     return (
         <View>
-            <SubsectionHeader title="Nastrój" />
+            <SubsectionHeader title="Humor" />
 
             <BodyText style={styles.regularText}>
-                {'Każdego tygodnia dodajesz średnio '}
-                <BodyBoldText style={styles.summaryText}>
-                    {NumberUtil.roundToMaxOneDecimal(weekAvgReportsNumber)}{' raportów nastoju'}
-                </BodyBoldText>
-
-                {daysOfWeekString && <>
-                    {'. Najlepszy humor odnotowujesz '}
+                {bestMoodDaysOfWeek.length > 0 ? <>
+                    {'Średnio - '}
                     <BodyBoldText style={styles.summaryText}>
-                        {'w '}{daysOfWeekString}
+                        {NumberUtil.roundToMaxOneDecimal(weekAvgReportsNumber)}
+                        {' / tydzień'}
                     </BodyBoldText>
-                </>}
 
-                {bestMoodDayOfPreviousWeek
-                    ? <>
-                        {', a ostatni taki dzień w poprzednim tygodniu to '}
-                        <BodyBoldText style={styles.summaryText}>
-                            {fullDays[bestMoodDayOfPreviousWeek].toLowerCase()}
-                        </BodyBoldText>
-                        {'.'}
-                    </> : <>
-                        {'. Dodaj więcej raportów, aby zobaczyć dokładniejszą analizę.'}
-                    </>}
+                    {'\n'}
+
+                    {'Najlepszy - '}
+                    <BodyBoldText style={styles.summaryText}>
+                        {daysOfWeekString}
+                    </BodyBoldText>
+
+                    {'\n'}
+
+                    {'Najlepszy (poprz. tydzień) - '}
+                    <BodyBoldText style={styles.summaryText}>
+                        {bestMoodDayOfPreviousWeek ? fullDays[bestMoodDayOfPreviousWeek].toLowerCase() : 'brak danych'}
+                    </BodyBoldText>
+                </> : <>
+                    {'Dodaj raport, aby zobaczyć podsumowanie.'}
+                </>}
             </BodyText>
 
             {bestMoodDayOfPreviousWeekReport && (

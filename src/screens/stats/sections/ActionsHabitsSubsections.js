@@ -21,27 +21,23 @@ export default function ActionsHabitsSubsections({ summary, styles }) {
             <SubsectionHeader title="Nawyki" />
 
             <BodyText style={styles.regularText}>
-                {startDate ? <>
-                    {'Od '}
+                {firstHabit ? <>
+                    {'Suma utworzonych - '}
+                    <BodyBoldText style={styles.summaryText}>
+                        {totalNumber}
+                    </BodyBoldText>
+                </> : <>
+                    {'Dodaj nawyk, aby zobaczyć podsumowanie.'}
+                </>
+                }
+
+                {'\n'}
+
+                {firstHabit && <>
+                    {'Utworzenie pierwszego - '}
                     <BodyBoldText style={styles.summaryText}>
                         {startDate}
                     </BodyBoldText>
-                    {' utworzono '}
-                    <BodyBoldText style={styles.summaryText}>
-                        {totalNumber}{' nawyków'}
-                    </BodyBoldText>
-                </> : <>
-                    {'Jeszcze nie utworzyłeś żadengo nawyku'}
-                </>}
-
-                {firstHabit ? <>
-                    {'. Najstarszy z nich wykonałeś już '}
-                    <BodyBoldText style={styles.summaryText}>
-                        {firstHabitExecutionsNumber}{' razy'}
-                    </BodyBoldText>
-                    {'.'}
-                </> : <>
-                    {'. Dodaj pierwszy nawyk, aby zobaczyć dokładniejszą analizę.'}
                 </>
                 }
             </BodyText>

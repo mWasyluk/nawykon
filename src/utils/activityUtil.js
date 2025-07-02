@@ -1,3 +1,4 @@
+import { EMOTIONS } from "@constants/mood";
 import { formatDate, getFixedDayOfWeek, validateTimestamp } from "./dateUtil";
 
 export const ACTIVITY_STATUSES = {
@@ -193,6 +194,16 @@ export const ActivityUtil = {
                 bestMoodDayOfPreviousWeekReport: undefined,
             },
 
+            emotion: {
+                weekAvgNumber: 0,
+                counter: {},
+                mostFrequent: undefined,
+                mostFrequentType: undefined,
+                mostNegativeDayOfPreviousWeek: undefined,
+                // presentation
+                mostNegativeDayOfPreviousWeekReport: undefined,
+            },
+
             notes: {
                 weekAvgNotesNumber: 0,
                 longestNoteLength: 0,
@@ -219,8 +230,10 @@ export const ActivityUtil = {
                     habits: {}, // { [habitId]: number }
                     executionsNumber: 0,
                     moodsNumber: 0,
-                    notesNumber: 0,
                     bestHumor: undefined, // { humor: 0, moods: [] }
+                    emotionsNumber: 0,
+                    worstEmotions: undefined, // { number: 0, report: undefined }
+                    notesNumber: 0,
                 };
             }
 
@@ -269,6 +282,33 @@ export const ActivityUtil = {
                     // if current mood is as good as the best so far, add it to the best moods
                     weeks[weekNumber].bestHumor.moods.push(dailyMood);
                 }
+
+                // handle emotions
+                if (dailyMood.emotions) {
+                    weeks[weekNumber].emotionsNumber += dailyMood.emotions.length;
+                    var negativeEmotionsNumber = 0;
+                    // handle counter
+                    dailyMood.emotions.forEach(emotion => {
+                        if (!summary.emotion.counter[emotion]) {
+                            summary.emotion.counter[emotion] = 1;
+                        } else {
+                            summary.emotion.counter[emotion] += 1;
+                        }
+
+                        if (EMOTIONS[emotion].type === 'negative') {
+                            negativeEmotionsNumber += 1;
+                        }
+                    });
+
+                    // handle reports with the most number of negative emotions
+                    if (negativeEmotionsNumber > 0) {
+                        if (!weeks[weekNumber].worstEmotions) {
+                            weeks[weekNumber].worstEmotions = { number: negativeEmotionsNumber, report: dailyMood };
+                        } else if (negativeEmotionsNumber > weeks[weekNumber].worstEmotions.number) {
+                            weeks[weekNumber].worstEmotions = { number: negativeEmotionsNumber, report: dailyMood };
+                        }
+                    }
+                }
             }
         });
 
@@ -289,7 +329,11 @@ export const ActivityUtil = {
         // results summary
         const totalExecutionsNumber = Object.values(totalExecutionsByHabitId).reduce((sum, executions) => sum += executions, 0);
         summary.actionsNumber += totalExecutionsNumber;
-        summary.results.weekAvgExecutionsNumber = totalExecutionsNumber / weeksNumber;
+        if (summary.habits.firstHabit) {
+            const firstHabitStartDate = new Date(summary.habits.firstHabit.createdAt);
+            const weeksWithFirstHabit = Math.ceil((new Date().getTime() - firstHabitStartDate.getTime()) / (7 * 24 * 60 * 60 * 1000));
+            summary.results.weekAvgExecutionsNumber = totalExecutionsNumber / weeksWithFirstHabit;
+        }
 
         var favHabitId = Object.keys(totalExecutionsByHabitId)[0];
         // find favorite habit based on the number of executions
@@ -303,8 +347,12 @@ export const ActivityUtil = {
         summary.results.favHabit = habits.find(habit => habit.id === favHabitId);
         summary.results.favHabitPoints = ActivityUtil.calculateHabitPoints(allRecords, favHabitId);
 
-        const favHabitExecutionsNumber = totalExecutionsByHabitId[favHabitId];
-        summary.results.favHabitWeekAvgExecutionsNumber = favHabitExecutionsNumber / weeksNumber;
+        if (summary.results.favHabit) {
+            const favHabitExecutionsNumber = totalExecutionsByHabitId[favHabitId];
+            const favHabitStartDate = new Date(summary.habits.firstHabit.createdAt);
+            const weeksWithFavHabit = Math.ceil((new Date().getTime() - favHabitStartDate.getTime()) / (7 * 24 * 60 * 60 * 1000));
+            summary.results.favHabitWeekAvgExecutionsNumber = favHabitExecutionsNumber / weeksWithFavHabit;
+        }
 
         // mood summary
         const bestMoodByDayOfWeek = {};
@@ -312,7 +360,7 @@ export const ActivityUtil = {
 
         Object.values(weeks).forEach(week => {
             week.bestHumor?.moods.forEach(mood => {
-                const dayOfWeek = validateTimestamp(mood.date).getDay();
+                const dayOfWeek = (validateTimestamp(mood.date).getDay() + 6) % 7; // shift to start from Monday
                 if (!bestMoodByDayOfWeek[dayOfWeek]) {
                     bestMoodByDayOfWeek[dayOfWeek] = 1;
                 } else {
@@ -325,7 +373,7 @@ export const ActivityUtil = {
         summary.mood.bestMoodDaysOfWeek = Object.entries(bestMoodByDayOfWeek)
             .reduce((bestDays, [dayOfWeek, bestMoodsNumber]) => {
                 if (bestMoodsNumber === bestMoodHighestReportsNumber) {
-                    bestDays.push((dayOfWeek + 6) % 7); // shift to start from Monday
+                    bestDays.push(dayOfWeek);
                 }
                 return bestDays;
             }, []).sort();
@@ -349,6 +397,45 @@ export const ActivityUtil = {
                 summary.mood.bestMoodDayOfPreviousWeek = (bestMoodPrevWeekDate.getDay() + 6) % 7; // shift to start from Monday
             }
         }
+
+        // emotion summary
+        var positiveEmotionsCount = 0;
+        var negativeEmotionsCount = 0;
+
+        Object.entries(summary.emotion.counter).forEach(([emotion, count]) => {
+            const emotionObj = EMOTIONS[emotion];
+            if (emotionObj) {
+                if (emotionObj.type === 'positive') {
+                    positiveEmotionsCount += count;
+                } else {
+                    negativeEmotionsCount += count;
+                }
+            }
+        });
+
+        if (positiveEmotionsCount || negativeEmotionsCount) {
+            summary.emotion.mostFrequentType = positiveEmotionsCount > negativeEmotionsCount ? 'positive' : 'negative';
+        }
+
+        summary.emotion.mostFrequent = Object.entries(summary.emotion.counter)
+            .reduce((mostFrequent, [name, count]) => {
+                if (count > mostFrequent.count) {
+                    return { name, count };
+                }
+                return mostFrequent;
+            }, { name: undefined, count: 0 }).name;
+
+        if (previousWeek) {
+            if (previousWeek.worstEmotions?.report) {
+                summary.emotion.mostNegativeDayOfPreviousWeek = getFixedDayOfWeek(previousWeek.worstEmotions.report.date);
+                summary.emotion.mostNegativeDayOfPreviousWeekReport = previousWeek.worstEmotions.report;
+            }
+        }
+
+        const totalEmotionsNumber = Object.values(summary.emotion.counter)
+            .reduce((sum, count) => sum += count, 0);
+        summary.actionsNumber += totalEmotionsNumber;
+        summary.emotion.weekAvgNumber = totalEmotionsNumber / weeksNumber;
 
         // notes summary
         const totalNotesNumber = Object.values(weeks).reduce((sum, week) => sum += week.notesNumber, 0);

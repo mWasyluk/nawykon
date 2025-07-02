@@ -9,6 +9,7 @@ import ActionsHabitsSubsections from "./ActionsHabitsSubsections";
 import ActionsMoodSubsection from "./ActionsMoodSubsection";
 import ActionsNotesSubsection from "./ActionsNotesSubsection";
 import ActionsResultsSubsection from "./ActionsResultsSubsection";
+import ActionsEmotionSubsection from "./ActionsEmotionSubsection";
 
 export default function ActionsSection() {
     const { activityRegistry } = useActivity();
@@ -24,6 +25,7 @@ export default function ActionsSection() {
             <ActionsHabitsSubsections summary={actionsSummary.habits} styles={styles} />
             <ActionsResultsSubsection summary={actionsSummary.results} styles={styles} />
             <ActionsMoodSubsection summary={actionsSummary.mood} styles={styles} />
+            <ActionsEmotionSubsection summary={actionsSummary.emotion} styles={styles} />
             <ActionsNotesSubsection summary={actionsSummary.notes} styles={styles} />
         </SectionContainer >
     );

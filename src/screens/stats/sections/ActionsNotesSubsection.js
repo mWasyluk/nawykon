@@ -24,21 +24,24 @@ export default function ActionsNotesSubsection({ summary, styles }) {
             <SubsectionHeader title="Notatki" />
 
             <BodyText style={styles.regularText}>
-                {'Każdego tygodnia dodajesz średnio '}
-                <BodyBoldText style={styles.summaryText}>
-                    {NumberUtil.roundToMaxOneDecimal(weekAvgNotesNumber)}{' notatek'}
-                </BodyBoldText>
-                {longestNoteReport
-                    ? <>
-                        {'. Najdłuższa notatka miała '}
-                        <BodyBoldText style={styles.summaryText}>
-                            {longestNoteLength}{' słowa'}
-                        </BodyBoldText>
-                        {'.'}
-                    </> : <>
-                        {'. Dodaj pierwszą notatkę do raportu, aby zobaczyć dokładniejszą analizę.'}
-                    </>}
+                {longestNoteReport ? <>
+                    {'Średnio - '}
+                    <BodyBoldText style={styles.summaryText}>
+                        {NumberUtil.roundToMaxOneDecimal(weekAvgNotesNumber)}
+                        {' / tydzień'}
+                    </BodyBoldText>
+
+                    {'\n'}
+
+                    {'Najdłuższa - '}
+                    <BodyBoldText style={styles.summaryText}>
+                        {longestNoteLength}{' słowa'}
+                    </BodyBoldText>
+                </> : <>
+                    {'Dodaj notatkę, aby zobaczyć podsumowanie.'}
+                </>}
             </BodyText>
+
 
             {longestNoteReport && (
                 <View style={{ flexDirection: 'row' }}>

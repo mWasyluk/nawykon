@@ -18,23 +18,28 @@ export default function ActionsResultsSubsection({ summary, styles }) {
 
     return (
         <View>
-            <SubsectionHeader title="Rezultaty" />
+            <SubsectionHeader title="Powtórzenia" />
 
             <BodyText style={styles.regularText}>
-                {'Każdego tygodnia wykonujesz średnio '}
-                <BodyBoldText style={styles.summaryText}>
-                    {NumberUtil.roundToMaxOneDecimal(weekAvgExecutionsNumber)}{' powtórzeń'}
-                </BodyBoldText>
-                {' nawyków'}
-
                 {favHabit ? <>
-                    {', a w typ jest '}
+                    {'Średnio - '}
                     <BodyBoldText style={styles.summaryText}>
-                        {NumberUtil.roundToMaxOneDecimal(favHabitWeekAvgExecutionsNumber)}{' powtórzeń'}
+                        {NumberUtil.roundToMaxOneDecimal(weekAvgExecutionsNumber)}
+                        {' / tydzień'}
                     </BodyBoldText>
-                    {' Twojego ulubionego nawyku.'}
                 </> : <>
-                    {'. Dodaj pierwszy nawyk, aby zobaczyć dokładniejszą analizę.'}
+                    {'Dodaj nawyk, aby zobaczyć podsumowanie.'}
+                </>
+                }
+
+                {'\n'}
+
+                {favHabit && <>
+                    {'Ulubionego nawyku - '}
+                    <BodyBoldText style={styles.summaryText}>
+                        {NumberUtil.roundToMaxOneDecimal(favHabitWeekAvgExecutionsNumber)}
+                        {' / tydzień'}
+                    </BodyBoldText>
                 </>
                 }
             </BodyText>
@@ -49,6 +54,6 @@ export default function ActionsResultsSubsection({ summary, styles }) {
                     />
                 </View>
             )}
-        </View>
+        </View >
     );
 }
