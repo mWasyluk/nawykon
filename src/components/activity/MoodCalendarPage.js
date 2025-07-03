@@ -74,17 +74,13 @@ const styles = StyleSheet.create({
         paddingVertical: metrics.spacing.xs,
 
         borderRadius: metrics.borderRadius.sm,
+        paddingHorizontal: 0,
     },
     day: {
         marginVertical: -10,
     },
     dateLastLine: {
         marginBottom: -3,
-    },
-    progress: {
-        width: '100%',
-        textAlign: 'center',
-        borderRadius: metrics.borderRadius.circular,
     },
     iconsContainer: {
         flexDirection: 'row',

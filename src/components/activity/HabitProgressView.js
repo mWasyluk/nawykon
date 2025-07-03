@@ -1,4 +1,4 @@
-import { BodyBoldText, BodyText } from "@components/text";
+import { BodyBoldText, CaptionText } from "@components/text";
 import { colors, metrics } from "@styles";
 
 const VARIANTS = {
@@ -46,9 +46,9 @@ export default function HabitProgressView(props) {
     return (
         <>
             {size === PROGRESS_VIEW_SIZES.SMALL
-                ? <BodyText style={smallSizeStyle}>
+                ? <CaptionText style={smallSizeStyle} numberOfLines={1}>
                     {text}
-                </BodyText>
+                </CaptionText>
                 : <BodyBoldText style={style}>
                     {text}
                 </BodyBoldText>
