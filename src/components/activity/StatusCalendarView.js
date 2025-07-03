@@ -77,6 +77,10 @@ export const StatusCalendarView = (props) => {
         onSelectDate(date);
     };
 
+    const recordStyle = {
+        width: `${100 / 7.01}%`
+    }
+
     return (
         <View style={style.container}>
             {Array.from({ length: 7 }).map((_, index) => (
@@ -84,7 +88,7 @@ export const StatusCalendarView = (props) => {
                     key={index}
                     variant={CALENDAR_RECORD_VARIANTS.WEEKDAY}
                     weekday={index}
-                    style={{ width: `${100 / 7}%` }}
+                    style={recordStyle}
                 />
             ))}
             {calendarRecords.map(({ date, variant }, index) => {
@@ -94,7 +98,7 @@ export const StatusCalendarView = (props) => {
                         variant={variant}
                         isSelected={selectedDate === date}
                         onPress={() => date && onRecordSelect(date)}
-                        style={{ width: `${100 / 7}%` }}
+                        style={recordStyle}
                     />
                 )
             })}
