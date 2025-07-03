@@ -6,6 +6,7 @@ import { colors, icons, metrics } from '@styles';
 import { router } from 'expo-router';
 import { Image, StyleSheet, View } from 'react-native';
 import HabitProgressView, { PROGRESS_VIEW_SIZES } from './HabitProgressView';
+import { formatDate } from '@utils/dateUtil';
 
 const todaysDate = new Date();
 const todaysDay = todaysDate.getDate();
@@ -46,7 +47,7 @@ export default function MoodCalendarPage(props) {
 
     const onPress = () => {
         const targetDate = new Date(year, month, day);
-        router.navigate(routes.editMoodByDate(targetDate));
+        router.navigate({ pathname: routes.statistics, params: { date: formatDate(targetDate, 'date') } });
     }
 
     return (

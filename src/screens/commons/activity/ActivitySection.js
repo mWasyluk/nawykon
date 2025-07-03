@@ -3,7 +3,8 @@ import { SectionContainer, SectionHeader, TabToggle } from "@components/layout";
 import { useActivity } from "@contexts/ActivitiesContext";
 import { icons } from "@styles";
 import { ActivityUtil } from "@utils/activityUtil";
-import { formatDate, getMonthName } from "@utils/dateUtil";
+import { formatDate, getMonthName, validateTimestamp } from "@utils/dateUtil";
+import { useLocalSearchParams } from "expo-router";
 import { useMemo, useState } from "react";
 import DailyActivitySubsection from "./DailyActivitySubsection";
 import StatusCalendarSubsection from "./StatusCalendarSubsection";
@@ -32,8 +33,20 @@ const getStatistics = (registry, habitId, startDate, endDate) => {
 export default function ActivitySection(props) {
     const { streak = 0, habitId = undefined } = props;
     const { activityRegistry } = useActivity();
+    const { date: targetDate } = useLocalSearchParams();
 
-    const [selectedDate, setSelectedDate] = useState(formatDate(today, 'date'));
+    const validatedTargetDate = useMemo(() => {
+        try {
+            const validatedParamDate = validateTimestamp(targetDate);
+            if (!validatedParamDate || validatedParamDate > today || validatedParamDate < firstDateTwoMonthsAgo) {
+                return today;
+            }
+            return validatedParamDate;
+        } catch (error) {
+            return today;
+        }
+    }, [targetDate]);
+    const [selectedDate, setSelectedDate] = useState(formatDate(validatedTargetDate, 'date'));
 
     const tabs = [
         { name: currentMonthName, getStatistics: () => getStatistics(activityRegistry, habitId, firstDateCurrentMonth, lastDateCurrentMonth) },
@@ -41,7 +54,12 @@ export default function ActivitySection(props) {
         { name: twoMonthsAgoName, getStatistics: () => getStatistics(activityRegistry, habitId, firstDateTwoMonthsAgo, lastDateTwoMonthsAgo) },
     ]
 
-    const [selectedTabIndex, setSelectedTabIndex] = useState(0);
+    const targetTabIndex = useMemo(() => {
+        if (validatedTargetDate >= firstDateCurrentMonth) return 0;
+        if (validatedTargetDate >= firstDateOneMonthAgo) return 1;
+        return 2;
+    }, [validatedTargetDate]);
+    const [selectedTabIndex, setSelectedTabIndex] = useState(targetTabIndex);
     const selectedTab = tabs[selectedTabIndex];
 
     const toggleTab = () => {
