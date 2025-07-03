@@ -22,10 +22,10 @@ export default function EditMoodScreen() {
     }, [targetDate, dailyReports]);
 
     const [moodDto, setMoodDto] = useState(moodReport || {});
-    const [isError, setIsError] = useState(false);
+    const [error, setError] = useState(false);
 
     const buttonIcon = isSubmitting ? LOADING_ICON : icons.check;
-    const buttonVariant = (isError || isSubmitting) ? INPUT_VARIANTS.DISABLED : INPUT_VARIANTS.PRIME;
+    const buttonVariant = (error || isSubmitting) ? INPUT_VARIANTS.DISABLED : INPUT_VARIANTS.PRIME;
 
     const handleFettleChange = (value) => {
         setMoodDto({ ...moodDto, ...value });
@@ -36,11 +36,17 @@ export default function EditMoodScreen() {
     }
 
     const handleSave = async () => {
+        if (isSubmitting) return;
+        if (error) {
+            ModalService.showError(error);
+            return;
+        }
         try {
             setIsSubmitting(true);
             await setMood(targetDate, new Mood(moodDto));
         } catch (error) {
             ModalService.showError(error.message);
+            setError(error.message);
         }
     }
 
@@ -54,9 +60,9 @@ export default function EditMoodScreen() {
     useEffect(() => {
         try {
             new Mood(moodDto);
-            setIsError(false);
+            setError(false);
         } catch (error) {
-            setIsError(true);
+            setError(error.message);
         }
     }, [moodDto]);
 
