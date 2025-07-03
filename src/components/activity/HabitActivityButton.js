@@ -15,7 +15,7 @@ export default function HabitActivityButton(props) {
         onPress = () => { },
     } = props;
 
-    const isValidProgress = (goal && completed) && completed / goal;
+    const isValidProgress = Number.isInteger(goal) && Number.isInteger(completed);
 
     return (
         <InputContainer onPress={onPress}>
