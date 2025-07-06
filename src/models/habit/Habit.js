@@ -5,7 +5,7 @@ import { HabitGoal } from './HabitGoal';
 export class Habit {
     static STATUSES = {
         ACTIVE: 'active',
-        COMPLETED: 'completed',
+        INACTIVE: 'completed',
     };
 
     constructor({ id, details, goal, goalHistory, reminders, streak, createdAt, endDate, modifiedAt }) {
@@ -18,7 +18,7 @@ export class Habit {
 
         this.createdAt = createdAt || new Date().getTime();
         this.endDate = endDate ? formatDate(endDate, 'date') : null;
-        this.status = this.endDate && new Date(this.endDate) < new Date() ? Habit.STATUSES.COMPLETED : Habit.STATUSES.ACTIVE;
+        this.status = this.endDate && new Date(this.endDate) < new Date() ? Habit.STATUSES.INACTIVE : Habit.STATUSES.ACTIVE;
         this.modifiedAt = modifiedAt || new Date().getTime();
     }
 
@@ -33,10 +33,19 @@ export class Habit {
         this.goal = newGoal;
     }
 
-    getGoalForDate(date) {
+    getStatusForDate(date) {
         const formattedDate = formatDate(date, 'date');
         const startDate = formatDate(this.createdAt, 'date');
         if (startDate > formattedDate || (this.endDate && this.endDate < formattedDate)) {
+            return Habit.STATUSES.INACTIVE;
+        }
+
+        return Habit.STATUSES.ACTIVE;
+    }
+
+    getGoalForDate(date) {
+        const formattedDate = formatDate(date, 'date');
+        if (this.getStatusForDate(date) !== Habit.STATUSES.ACTIVE) {
             return null;
         }
 

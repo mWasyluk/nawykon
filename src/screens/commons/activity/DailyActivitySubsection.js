@@ -9,6 +9,7 @@ import { genitiveMonths } from "@constants/time";
 import { useActivity } from "@contexts/ActivitiesContext";
 import { useHabits } from "@contexts/HabitsContext";
 import { useReports } from "@contexts/ReportsContext";
+import { Habit } from "@models/habit/Habit";
 import { ModalService } from "@services/modalService";
 import { colors, icons, metrics } from "@styles";
 import { formatDate, validateTimestamp } from "@utils/dateUtil";
@@ -84,12 +85,14 @@ export default function DailyActivitySubsection(props) {
         } else {
             Object.keys(allDailyExecutions).forEach((dailyHabitId, i) => {
                 const habit = habits.find(habit => habit.id === dailyHabitId);
-                if (!habit) {
+                if (!habit || habit.getStatusForDate(date) !== Habit.STATUSES.ACTIVE) {
                     return;
                 }
+
                 const { type, name, color } = habit.details;
                 const { goal, completed } = allHabitsRegistryRecord[dailyHabitId];
                 const onPress = () => router.push(routes.habitDetails(dailyHabitId));
+
                 listElements.push(
                     <HabitActivityButton
                         key={`habit-button-${i}`}

@@ -25,7 +25,7 @@ export default function HabitsListSection() {
 
     const tabs = useMemo(() => [
         { name: "Aktywne", onPress: () => setActiveTabIndex(1), habitsFilter: (habit) => habit.status === Habit.STATUSES.ACTIVE },
-        { name: "Ukończone", onPress: () => setActiveTabIndex(2), habitsFilter: (habit) => habit.status === Habit.STATUSES.COMPLETED },
+        { name: "Ukończone", onPress: () => setActiveTabIndex(2), habitsFilter: (habit) => habit.status === Habit.STATUSES.INACTIVE },
         { name: "Wszystkie", onPress: () => setActiveTabIndex(0), habitsFilter: () => true },
     ], []);
 
