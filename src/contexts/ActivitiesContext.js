@@ -1,4 +1,3 @@
-import { DebugService } from '@dev/debugService';
 import { ActivityRegistry } from '@models/reports/ActivityRegistry';
 import { ModalService } from '@services/modalService';
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
@@ -62,9 +61,9 @@ export const ActivityProvider = ({ children }) => {
         }
 
         if (!activityRegistry) {
-            DebugService.runBenchmark("Init ActivityRegistry", initRegistry);
+            initRegistry();
         } else {
-            DebugService.runBenchmark("Update ActivityRegistry", updateRegistry)
+            updateRegistry();
         }
 
         const updateHabitsStreak = async () => {

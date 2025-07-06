@@ -16,7 +16,6 @@ export default function ActionsSection() {
     const { habits } = useHabits();
 
     const actionsSummary = ActivityUtil.calculateActionsSummary(activityRegistry, habits);
-    console.log(actionsSummary);
 
     return (
         <SectionContainer>

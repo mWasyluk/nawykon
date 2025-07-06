@@ -7,7 +7,7 @@ import { useHabits } from "../../contexts/HabitsContext";
 import { useReports } from "../../contexts/ReportsContext";
 import { useSettings } from "../../contexts/SettingsContext";
 
-export function ScreenManager({ children }) {
+export default function ScreenManager({ children }) {
     const { isLoading: isFontsLoading } = useFonts();
     const { settings, updateSettings } = useSettings();
     const { activityRegistry } = useActivity();

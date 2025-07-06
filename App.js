@@ -1,5 +1,5 @@
 import ProvidersWrapper from '@contexts/ProvidersWrapper';
-import { ScreenManager } from '@screens/commons/ScreenManager';
+import ScreenManager from '@screens/commons/ScreenManager';
 import { colors } from '@styles';
 import { DebuggerMenu } from 'development/DebuggerMenu';
 import { ExpoRoot } from 'expo-router';
