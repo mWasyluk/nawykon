@@ -15,6 +15,7 @@ export default function HabitActivityButton(props) {
         onPress = () => { },
     } = props;
 
+    const isValidPoints = Number.isInteger(points);
     const isValidProgress = Number.isInteger(goal) && Number.isInteger(completed);
 
     return (
@@ -23,7 +24,7 @@ export default function HabitActivityButton(props) {
 
             <ActionText style={{ color: colors.midGray }}>{name}</ActionText>
 
-            {points && (
+            {isValidPoints && (
                 <View style={{ flexDirection: 'row', alignItems: 'center', gap: 0, backgroundColor: colors.light, paddingHorizontal: metrics.spacing.sm, borderRadius: metrics.borderRadius.circular }}>
                     <BodyBoldText>
                         {points}
