@@ -9,6 +9,7 @@ export default function HabitActivityButton(props) {
     const {
         type,
         name,
+        color,
         points = undefined,
         goal = undefined,
         completed = undefined,
@@ -20,7 +21,7 @@ export default function HabitActivityButton(props) {
 
     return (
         <InputContainer onPress={onPress}>
-            <HabitAvatar type={type} style={{ height: metrics.imageSize.xs, width: metrics.imageSize.xs }} />
+            <HabitAvatar type={type} color={color} style={{ height: metrics.imageSize.sm, width: metrics.imageSize.sm }} />
 
             <ActionText style={{ color: colors.midGray }}>{name}</ActionText>
 

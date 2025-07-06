@@ -87,13 +87,14 @@ export default function DailyActivitySubsection(props) {
                 if (!habit) {
                     return;
                 }
-                const { type, name } = habit.details;
+                const { type, name, color } = habit.details;
                 const { goal, completed } = allHabitsRegistryRecord[dailyHabitId];
                 const onPress = () => router.push(routes.habitDetails(dailyHabitId));
                 listElements.push(
                     <HabitActivityButton
                         key={`habit-button-${i}`}
                         type={type}
+                        color={color}
                         name={name}
                         goal={goal}
                         completed={completed}

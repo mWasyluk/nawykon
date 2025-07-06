@@ -49,6 +49,7 @@ export default function ActionsResultsSubsection({ summary, styles }) {
                     <HabitActivityButton
                         type={favHabit.details.type}
                         name={favHabit.details.name}
+                        color={favHabit.details.color}
                         points={favHabitPoints}
                         onPress={favHabitOnPress}
                     />
