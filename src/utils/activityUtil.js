@@ -19,9 +19,37 @@ export const ActivityUtil = {
         });
     },
 
+    calculateAllHabitsStreak: (activityRegistry) => {
+        if (!activityRegistry) {
+            throw new Error('Activity registry is required to calculate streak.');
+        }
+
+        const startDate = new Date(activityRegistry.startDate);
+        const today = new Date();
+        var streak = 0;
+
+        for (let date = today; date >= startDate; date.setDate(date.getDate() - 1)) {
+            const record = activityRegistry.getRecord(date);
+            if (!record.habits || Object.keys(record.habits).length === 0) {
+                continue; // No habit log for this date means that it was not active 
+            }
+
+            const allStatuses = Object.values(record.habits).map(habit => habit.status);
+            const status = combineStatuses(allStatuses);
+            if (status === ACTIVITY_STATUSES.COMPLETED) {
+                streak += 1; // Completed status increases the streak
+            } else if (status === ACTIVITY_STATUSES.NEUTRAL) {
+                continue; // Neutral status does not break the streak
+            } else {
+                break; // Streak is broken
+            }
+        }
+        return streak;
+    },
+
     calculateHabitStreak: (activityRegistry, habitId) => {
-        if (!habitId) {
-            return 0;
+        if (!activityRegistry || !habitId) {
+            throw new Error('Activity registry and habitId are required to calculate streak.');
         }
 
         const startDate = new Date(activityRegistry.startDate);

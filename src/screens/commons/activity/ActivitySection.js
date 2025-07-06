@@ -8,6 +8,7 @@ import { useLocalSearchParams } from "expo-router";
 import { useMemo, useState } from "react";
 import DailyActivitySubsection from "./DailyActivitySubsection";
 import StatusCalendarSubsection from "./StatusCalendarSubsection";
+import { useHabits } from "@contexts/HabitsContext";
 
 const today = new Date();
 const currentMonth = today.getMonth();
@@ -31,9 +32,22 @@ const getStatistics = (registry, habitId, startDate, endDate) => {
 }
 
 export default function ActivitySection(props) {
-    const { streak = 0, habitId = undefined } = props;
+    const { habitId = undefined } = props;
+    const { habits } = useHabits();
     const { activityRegistry } = useActivity();
     const { date: targetDate } = useLocalSearchParams();
+
+    const targetHabit = useMemo(() => {
+        return habits.find((habit) => habit.id === habitId);
+    }, [habits, habitId]);
+
+    const streak = useMemo(() => {
+        if (targetHabit) {
+            return targetHabit.streak;
+        }
+
+        return ActivityUtil.calculateAllHabitsStreak(activityRegistry);
+    }, [targetHabit, activityRegistry]);
 
     const validatedTargetDate = useMemo(() => {
         try {

@@ -27,7 +27,7 @@ export default function HabitDetailsScreen() {
                     habit={currentHabit}
                 />
             )}
-            <ActivitySection streak={currentHabit.streak} habitId={id} />
+            <ActivitySection habitId={id} />
             <PointsSection habitId={id} />
             <View style={{ height: metrics.spacing.md }} />
         </ScrollView>
