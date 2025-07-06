@@ -37,9 +37,11 @@ export const StatusCalendarView = (props) => {
     for (let i = 1; i <= lastDateOfDataMonth.getDate(); i++) {
         const date = formatDate(new Date(dataYear, dataMonth, i), 'date');
         if (isDataFromCurrentMonth && i === currentDay) {
+            const currentDateFormatted = formatDate(currentDate, 'date');
             calendarRecords.push({
-                date: formatDate(currentDate, 'date'),
-                variant: CALENDAR_RECORD_VARIANTS.CURRENT
+                date: currentDateFormatted,
+                variant: CALENDAR_RECORD_VARIANTS.CURRENT,
+                isReport: data[currentDateFormatted] && data[currentDateFormatted].isReport
             });
             continue;
         }
@@ -61,7 +63,7 @@ export const StatusCalendarView = (props) => {
                     variant = CALENDAR_RECORD_VARIANTS.UNDEFINED;
                     break;
             }
-            calendarRecords.push({ date, variant });
+            calendarRecords.push({ date, variant, isReport: dataRecord.isReport });
             continue;
         }
 
@@ -91,12 +93,13 @@ export const StatusCalendarView = (props) => {
                     style={recordStyle}
                 />
             ))}
-            {calendarRecords.map(({ date, variant }, index) => {
+            {calendarRecords.map(({ date, variant, isReport }, index) => {
                 return (
                     <StatusCalendarRecord
                         key={index + 7}
                         variant={variant}
                         isSelected={selectedDate === date}
+                        isReport={isReport}
                         onPress={() => date && onRecordSelect(date)}
                         style={recordStyle}
                     />

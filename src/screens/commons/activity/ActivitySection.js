@@ -80,9 +80,19 @@ export default function ActivitySection(props) {
         setSelectedTabIndex((selectedTabIndex + 1) % tabs.length);
     }
 
-    const monthlyStatistics = useMemo(() => (
-        selectedTab.getStatistics()
-    ), [selectedTab, activityRegistry, habitId]);
+    const monthlyStatistics = useMemo(() => {
+        const stats = selectedTab.getStatistics();
+        const updatedCalendar = Object.entries(stats.calendar).reduce((acc, [date, record]) => {
+            acc[date] = {
+                ...record,
+                isReport: !!activityRegistry.records[date]?.mood,
+            };
+            return acc;
+        }, {});
+
+        stats.calendar = updatedCalendar;
+        return stats;
+    }, [selectedTab, activityRegistry, habitId]);
 
     const dailyStatistics = useMemo(() => (
         monthlyStatistics.calendar[selectedDate]

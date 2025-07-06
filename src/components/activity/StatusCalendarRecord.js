@@ -4,10 +4,14 @@ import { colors, metrics } from '@styles';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
 const POINT_SIZE = 12;
-const SELECTION_RING_WIDTH = 2;
+const SELECTION_RING_WIDTH = 3;
 const SELECTION_RING_PADDING = 4;
 const MIN_WIDTH = 20;
 const MIN_HEIGHT = 20;
+
+const REPORT_BADGE_SIZE = 7;
+const REPORT_BADGE_OFFSET = 4;
+const REPORT_BADGE_BORDER_WIDTH = 2;
 
 export const CALENDAR_RECORD_VARIANTS = {
     DISABLED: 'DISABLED',
@@ -24,6 +28,7 @@ export default function StatusCalendarRecord(props) {
         variant = CALENDAR_RECORD_VARIANTS.UNDEFINED,
         weekday = 0,
         isSelected = false,
+        isReport = false,
         onPress = () => { },
         style = {},
     } = props;
@@ -58,6 +63,7 @@ export default function StatusCalendarRecord(props) {
                 : <>
                     {isSelected && <View style={styles.selection} />}
                     <View style={[styles.point, { backgroundColor: pointColor }]} />
+                    {isReport && <View style={styles.reportBadge} />}
                 </>}
         </TouchableOpacity>
     );
@@ -77,6 +83,18 @@ const styles = StyleSheet.create({
         width: POINT_SIZE,
         height: POINT_SIZE,
         borderRadius: metrics.borderRadius.sm,
+    },
+    reportBadge: {
+        position: 'absolute',
+        transform: [{ translateX: REPORT_BADGE_OFFSET }, { translateY: -REPORT_BADGE_OFFSET }],
+
+        width: REPORT_BADGE_SIZE,
+        height: REPORT_BADGE_SIZE,
+
+        borderRadius: metrics.borderRadius.circular,
+        backgroundColor: colors.lightWarning,
+        borderColor: colors.darkWarning,
+        borderWidth: REPORT_BADGE_BORDER_WIDTH
     },
     selection: {
         position: 'absolute',
