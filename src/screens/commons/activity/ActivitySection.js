@@ -82,15 +82,18 @@ export default function ActivitySection(props) {
 
     const monthlyStatistics = useMemo(() => {
         const stats = selectedTab.getStatistics();
-        const updatedCalendar = Object.entries(stats.calendar).reduce((acc, [date, record]) => {
-            acc[date] = {
-                ...record,
-                isReport: !!activityRegistry.records[date]?.mood,
-            };
-            return acc;
-        }, {});
+        // Do not update calendar records with isReport flags if the activity section is destined for a single habit
+        if (!habitId) {
+            const updatedCalendar = Object.entries(stats.calendar).reduce((acc, [date, record]) => {
+                acc[date] = {
+                    ...record,
+                    isReport: !!activityRegistry.records[date]?.mood,
+                };
+                return acc;
+            }, {});
 
-        stats.calendar = updatedCalendar;
+            stats.calendar = updatedCalendar;
+        }
         return stats;
     }, [selectedTab, activityRegistry, habitId]);
 
