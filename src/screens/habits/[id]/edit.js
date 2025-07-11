@@ -12,6 +12,7 @@ import EditAvatarSection from '../sections/EditAvatarSection';
 import EditDetailsSection from '../sections/EditDetailsSection';
 import EditGoalSection from '../sections/EditGoalSection';
 import EditRemindersSection from '../sections/EditRemindersSection';
+import { NavigationUtil } from '@utils/navUtil';
 
 export default function EditHabitScreen() {
     const { id } = useLocalSearchParams();
@@ -56,7 +57,11 @@ export default function EditHabitScreen() {
     useEffect(() => {
         if (isUpdated && !isLoading) {
             setIsUpdated(false);
-            router.replace(routes.habitDetails(id));
+            if (!!currentHabit) {
+                NavigationUtil.goBackOrHome();
+            } else {
+                router.navigate(routes.habitDetails(id));
+            }
         }
     }, [isUpdated, isLoading]);
 
