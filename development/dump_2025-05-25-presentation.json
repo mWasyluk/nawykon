@@ -1,0 +1,865 @@
+{
+  "habit_ZW6rQkLFQdUIRE3ov2Ij": {
+    "details": {
+      "type": "diet",
+      "name": "Przygotować zdrową kolację ",
+      "color": "#28A745",
+      "description": "Żeby zacząć się zdrowo odżywiać, zacznę od przygotowania zdrowej kolacji co najmniej 5 razy w tygodniu."
+    },
+    "goalHistory": [
+      {
+        "repetitions": 1,
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "startDate": "2025-04-22",
+        "endDate": "2025-05-25"
+      }
+    ],
+    "goal": {
+      "repetitions": 1,
+      "days": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        6
+      ],
+      "startDate": "2025-05-25"
+    },
+    "reminders": [
+      "17:11"
+    ],
+    "streak": 0,
+    "createdAt": 1745334645838,
+    "endDate": null,
+    "status": "active",
+    "modifiedAt": 1748189592181
+  },
+  "habit_YkhogTdR8uZk3gp0XtLg": {
+    "details": {
+      "type": "hydration",
+      "name": "Wypić witaminki",
+      "color": "#FFC107",
+      "description": ""
+    },
+    "goalHistory": [
+      {
+        "repetitions": 1,
+        "days": [
+          1,
+          2,
+          3,
+          6,
+          4,
+          0
+        ],
+        "startDate": "2025-02-11",
+        "endDate": "2025-05-25"
+      }
+    ],
+    "goal": {
+      "repetitions": 1,
+      "days": [
+        1,
+        2,
+        3,
+        6,
+        4,
+        0
+      ],
+      "startDate": "2025-05-25"
+    },
+    "reminders": [],
+    "streak": 0,
+    "createdAt": 1739265662000,
+    "endDate": null,
+    "status": "active",
+    "modifiedAt": 1748189653527
+  },
+  "habit_Ww1QQQxo8lQ0jGiBrFu6": {
+    "endDate": "2025-04-21",
+    "reminders": [
+      "22:30",
+      "08:21"
+    ],
+    "createdAt": 1740572462000,
+    "status": "active",
+    "streak": 0,
+    "goalHistory": [
+      {
+        "repetitions": 1,
+        "startDate": "2025-03-15",
+        "endDate": "2025-03-26",
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      {
+        "repetitions": 1,
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "startDate": "2025-03-05",
+        "endDate": "2025-03-15"
+      },
+      {
+        "repetitions": 2,
+        "endDate": "2025-03-05",
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "startDate": "2025-02-26"
+      },
+      {
+        "endDate": "2025-04-22",
+        "days": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "startDate": "2025-03-26",
+        "repetitions": 1
+      }
+    ],
+    "details": {
+      "description": "",
+      "name": "23",
+      "type": "productivity",
+      "color": "#DC3545"
+    },
+    "goal": {
+      "startDate": "2025-04-22",
+      "days": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "repetitions": 1
+    }
+  },
+  "day_CAjO4umX0fSEhBd96iEt": {
+    "date": "2025-05-19",
+    "modifiedAt": 1748189554644,
+    "executions": {
+      "YkhogTdR8uZk3gp0XtLg": [
+        1748189554638
+      ]
+    },
+    "mood": null
+  },
+  "day_j5q8EVAc9F2stxbAm78z": {
+    "date": "2025-04-02",
+    "executions": {
+      "YkhogTdR8uZk3gp0XtLg": [
+        1745413910719
+      ]
+    },
+    "mood": null
+  },
+  "day_j5q8EVAc9F2stxbAm78V": {
+    "date": "2025-04-24",
+    "executions": {},
+    "mood": {
+      "energy": 1,
+      "humor": 3
+    }
+  },
+  "day_j5q8EVAc9F2stxbAm78K": {
+    "date": "2025-04-13",
+    "mood": null,
+    "executions": {
+      "qVhknUrcfKuj7IXQZFiX": [
+        1744545470853
+      ]
+    }
+  },
+  "day_j5q8EVAc9F2stxbAm78U": {
+    "date": "2025-04-23",
+    "executions": {
+      "EGRWKxaQMDqGYUHfvBPy": [
+        1745417256219,
+        1745417266600,
+        1745417547016
+      ],
+      "0jG9MtRUb8XRsmjoT8NT": [
+        1745417448557
+      ],
+      "4Aru65Ud3vrGnkqmzu1U": [
+        1745418811312,
+        1745418812345,
+        1745418814372
+      ],
+      "kdJGXXkZ6FoipM5NUTtO": [
+        1745416889287,
+        1745416890102
+      ],
+      "htTACmTvgBPITOeAeMXz": [
+        1745418831433,
+        1745418832326
+      ],
+      "pi1Ebteq2Q70SKsZ2JlE": [
+        1745416871294,
+        1745416872485
+      ]
+    },
+    "mood": null
+  },
+  "day_j5q8EVAc9F2stxbAm78M": {
+    "date": "2025-04-16",
+    "mood": null,
+    "executions": {
+      "qVhknUrcfKuj7IXQZFiX": [
+        1745416544978,
+        1745416546385
+      ]
+    }
+  },
+  "day_j5q8EVAc9F2stxbAm78v": {
+    "date": "2025-03-26",
+    "mood": null,
+    "executions": {
+      "9UbWtQKo06ePxpP3SGg8": [
+        1743014257321
+      ]
+    }
+  },
+  "day_j5q8EVAc9F2stxbAm78i": {
+    "date": "2025-02-25",
+    "executions": {
+      "Xr7XbtWye6mEEQoK53TH": [
+        1740502943734,
+        1740502945324
+      ]
+    },
+    "mood": null
+  },
+  "day_j5q8EVAc9F2stxbAm78u": {
+    "date": "2025-03-23",
+    "executions": {
+      "0JNBsuCj1E9HV2EyAC91": [
+        1742714237776
+      ]
+    },
+    "mood": null
+  },
+  "day_j5q8EVAc9F2stxbAm78N": {
+    "date": "2025-04-17",
+    "mood": {
+      "humor": 3,
+      "date": "2025-04-17",
+      "energy": 0
+    },
+    "executions": {
+      "ZkSvilMx6BZ1q9d7F2pw": [
+        1745413920952
+      ]
+    }
+  },
+  "day_j5q8EVAc9F2stxbAm78R": {
+    "date": "2025-04-20",
+    "mood": null,
+    "executions": {
+      "YkhogTdR8uZk3gp0XtLg": [
+        1745413908538
+      ]
+    }
+  },
+  "day_uj32qPuAXsuJa9lWUVWc": {
+    "date": "2025-05-20",
+    "modifiedAt": 1748189553561,
+    "executions": {
+      "YkhogTdR8uZk3gp0XtLg": [
+        1748189553556
+      ]
+    },
+    "mood": null
+  },
+  "day_j5q8EVAc9F2stxbAm78d": {
+    "date": "2025-02-16",
+    "executions": {
+      "Xr7XbtWye6mEEQoK53TH": [
+        1740319324030
+      ],
+      "YkhogTdR8uZk3gp0XtLg": [
+        1739722572210
+      ],
+      "9UbWtQKo06ePxpP3SGg8": [
+        1739722571747,
+        1739722583141,
+        1739722583391
+      ],
+      "1thHReI84pSXmgAj2tWa": [
+        1739722573086,
+        1739722574855,
+        1739722576374,
+        1739722577632
+      ]
+    },
+    "mood": null
+  },
+  "day_j5q8EVAc9F2stxbAm78D": {
+    "date": "2025-04-05",
+    "mood": null,
+    "executions": {
+      "0JNBsuCj1E9HV2EyAC91": [
+        1743857890949,
+        1743870871255,
+        1743872277441
+      ],
+      "9UbWtQKo06ePxpP3SGg8": [
+        1743857634103,
+        1743857832011,
+        1743857885457,
+        1743857887620,
+        1743858363704,
+        1745413941130
+      ],
+      "Ww1QQQxo8lQ0jGiBrFu6": [
+        1743870866434
+      ]
+    }
+  },
+  "day_j5q8EVAc9F2stxbAm78g": {
+    "date": "2025-02-22",
+    "executions": {
+      "Xr7XbtWye6mEEQoK53TH": [
+        1740319305845
+      ],
+      "9UbWtQKo06ePxpP3SGg8": [
+        1740318557389,
+        1740318635057
+      ]
+    },
+    "mood": null
+  },
+  "day_j5q8EVAc9F2stxbAm78E": {
+    "date": "2025-04-06",
+    "mood": {
+      "energy": 1,
+      "note": "Test",
+      "humor": 3
+    },
+    "executions": {
+      "Ww1QQQxo8lQ0jGiBrFu6": [
+        1743901156155
+      ],
+      "ZkSvilMx6BZ1q9d7F2pw": [
+        1743956256873
+      ],
+      "YkhogTdR8uZk3gp0XtLg": [
+        1745355217845
+      ],
+      "9UbWtQKo06ePxpP3SGg8": [
+        1743956272174,
+        1743956509801,
+        1743971597832
+      ],
+      "0JNBsuCj1E9HV2EyAC91": [
+        1743901296492,
+        1743965096330,
+        1743971541705
+      ]
+    }
+  },
+  "day_j5q8EVAc9F2stxbAm78H": {
+    "date": "2025-04-09",
+    "mood": null,
+    "executions": {
+      "ZkSvilMx6BZ1q9d7F2pw": [
+        1745413922646
+      ]
+    }
+  },
+  "day_j5q8EVAc9F2stxbAm78m": {
+    "date": "2025-03-11",
+    "executions": {
+      "Xr7XbtWye6mEEQoK53TH": [
+        1741730363210
+      ],
+      "9UbWtQKo06ePxpP3SGg8": [
+        1741708425719
+      ],
+      "ZkSvilMx6BZ1q9d7F2pw": [
+        1741730364265
+      ],
+      "YkhogTdR8uZk3gp0XtLg": [
+        1741730363752
+      ]
+    },
+    "mood": null
+  },
+  "day_dpTQRMYcptjWzi3rfCqg": {
+    "date": "2025-05-22",
+    "modifiedAt": 1748189579486,
+    "executions": {
+      "YkhogTdR8uZk3gp0XtLg": [],
+      "ZW6rQkLFQdUIRE3ov2Ij": []
+    },
+    "mood": null
+  },
+  "day_j5q8EVAc9F2stxbAm78s": {
+    "date": "2025-03-19",
+    "mood": null,
+    "executions": {
+      "9UbWtQKo06ePxpP3SGg8": [
+        1742411706412
+      ],
+      "Xr7XbtWye6mEEQoK53TH": [
+        1742411504675
+      ],
+      "ZkSvilMx6BZ1q9d7F2pw": [
+        1742411507275
+      ],
+      "YkhogTdR8uZk3gp0XtLg": [
+        1742411506498
+      ]
+    }
+  },
+  "day_hyhzftmpooEZJJIdQOkr": {
+    "date": "2025-05-03",
+    "executions": {
+      "9UbWtQKo06ePxpP3SGg8": [
+        1746295812773
+      ]
+    },
+    "mood": null
+  },
+  "day_Y9d3wnruJ6itJQ0vHPSo": {
+    "date": "2025-05-25",
+    "modifiedAt": 1748189545205,
+    "executions": {
+      "YkhogTdR8uZk3gp0XtLg": [
+        1748189545204
+      ]
+    },
+    "mood": null
+  },
+  "day_j5q8EVAc9F2stxbAm78w": {
+    "date": "2025-03-28",
+    "executions": {},
+    "mood": {
+      "note": "wefwewef",
+      "energy": 1,
+      "humor": 4
+    }
+  },
+  "day_L1HXHKK9BE7GBWQiB87p": {
+    "date": "2025-05-21",
+    "modifiedAt": 1748189561945,
+    "executions": {
+      "ZW6rQkLFQdUIRE3ov2Ij": [
+        1748189561940
+      ]
+    },
+    "mood": null
+  },
+  "day_j5q8EVAc9F2stxbAm78b": {
+    "date": "2025-02-13",
+    "executions": {
+      "2RwDnX9M4OHEBflVDNfD": [
+        1739403456931
+      ],
+      "9UbWtQKo06ePxpP3SGg8": [
+        1739403253452,
+        1739482126437,
+        1739485773729,
+        1739486862127
+      ],
+      "YkhogTdR8uZk3gp0XtLg": [
+        1739482449353
+      ]
+    },
+    "mood": {
+      "note": "Yoo",
+      "humor": 4,
+      "energy": 1
+    }
+  },
+  "day_j5q8EVAc9F2stxbAm78B": {
+    "date": "2025-04-03",
+    "executions": {
+      "9UbWtQKo06ePxpP3SGg8": [
+        1743956552365
+      ]
+    },
+    "mood": null
+  },
+  "day_j5q8EVAc9F2stxbAm78C": {
+    "date": "2025-04-04",
+    "executions": {},
+    "mood": {
+      "energy": 2,
+      "humor": 1
+    }
+  },
+  "day_j5q8EVAc9F2stxbAm78I": {
+    "date": "2025-04-10",
+    "mood": null,
+    "executions": {
+      "ZkSvilMx6BZ1q9d7F2pw": [
+        1745413924503
+      ],
+      "9UbWtQKo06ePxpP3SGg8": [
+        1745413895462
+      ],
+      "YkhogTdR8uZk3gp0XtLg": [
+        1745413905315
+      ]
+    }
+  },
+  "day_j5q8EVAc9F2stxbAm78o": {
+    "date": "2025-03-14",
+    "mood": null,
+    "executions": {
+      "Ww1QQQxo8lQ0jGiBrFu6": [
+        1742068065457
+      ],
+      "0JNBsuCj1E9HV2EyAC91": [
+        1742153123931
+      ],
+      "Xr7XbtWye6mEEQoK53TH": [
+        1742068076915
+      ],
+      "9UbWtQKo06ePxpP3SGg8": [
+        1742068036261
+      ],
+      "YkhogTdR8uZk3gp0XtLg": [
+        1742068084823
+      ],
+      "ZkSvilMx6BZ1q9d7F2pw": [
+        1742068091577
+      ]
+    }
+  },
+  "day_j5q8EVAc9F2stxbAm78J": {
+    "date": "2025-04-11",
+    "executions": {
+      "9PhZGzGyBbp7oMYCH8HC": [
+        1744393547554,
+        1744393549623
+      ]
+    },
+    "mood": null
+  },
+  "day_j5q8EVAc9F2stxbAm78L": {
+    "date": "2025-04-15",
+    "executions": {
+      "Yx9wb5SvQYzjpbTyGOLB": [
+        1745416640932
+      ]
+    },
+    "mood": null
+  },
+  "day_j5q8EVAc9F2stxbAm78p": {
+    "date": "2025-03-15",
+    "executions": {
+      "9UbWtQKo06ePxpP3SGg8": [
+        1742125324400
+      ]
+    }
+  },
+  "day_WMSInVzkIlUQso55MxvU": {
+    "date": "2025-05-03",
+    "executions": {
+      "9UbWtQKo06ePxpP3SGg8": [
+        1746295812773
+      ]
+    },
+    "mood": null
+  },
+  "day_j5q8EVAc9F2stxbAm78k": {
+    "date": "2025-03-05",
+    "executions": {
+      "ZkSvilMx6BZ1q9d7F2pw": [
+        1741197013710
+      ],
+      "9UbWtQKo06ePxpP3SGg8": [
+        1741196995977
+      ],
+      "Xr7XbtWye6mEEQoK53TH": [
+        1741196983833
+      ],
+      "YkhogTdR8uZk3gp0XtLg": [
+        1741197012829
+      ],
+      "Ww1QQQxo8lQ0jGiBrFu6": [
+        1741197009004
+      ]
+    },
+    "mood": null
+  },
+  "day_j5q8EVAc9F2stxbAm78l": {
+    "date": "2025-03-06",
+    "mood": {
+      "humor": 1,
+      "energy": 1
+    },
+    "executions": {}
+  },
+  "day_j5q8EVAc9F2stxbAm78t": {
+    "date": "2025-03-22",
+    "mood": {
+      "energy": 1,
+      "humor": 3
+    },
+    "executions": {
+      "9UbWtQKo06ePxpP3SGg8": [
+        1742649414750
+      ],
+      "0JNBsuCj1E9HV2EyAC91": [
+        1742649407975,
+        1742649414745
+      ]
+    }
+  },
+  "day_j5q8EVAc9F2stxbAm78j": {
+    "date": "2025-02-27",
+    "executions": {
+      "YkhogTdR8uZk3gp0XtLg": [
+        1740675375117
+      ],
+      "Xr7XbtWye6mEEQoK53TH": [
+        1740685277919,
+        1740685283681
+      ]
+    },
+    "mood": {
+      "humor": 1,
+      "energy": 1
+    }
+  },
+  "day_j5q8EVAc9F2stxbAm78c": {
+    "date": "2025-02-14",
+    "executions": {
+      "9UbWtQKo06ePxpP3SGg8": [
+        1740319243338
+      ]
+    },
+    "mood": null
+  },
+  "day_TVETX4kLnqhCO36qIvCn": {
+    "date": "2025-05-23",
+    "modifiedAt": 1748189560152,
+    "executions": {
+      "YkhogTdR8uZk3gp0XtLg": [
+        1748189551160
+      ],
+      "ZW6rQkLFQdUIRE3ov2Ij": [
+        1748189560152
+      ]
+    },
+    "mood": null
+  },
+  "day_j5q8EVAc9F2stxbAm78y": {
+    "date": "2025-04-01",
+    "mood": {
+      "energy": 2,
+      "humor": 1
+    },
+    "executions": {}
+  },
+  "day_j5q8EVAc9F2stxbAm78S": {
+    "date": "2025-04-21",
+    "executions": {
+      "qVhknUrcfKuj7IXQZFiX": [
+        1745416577112,
+        1745416579939
+      ],
+      "Yx9wb5SvQYzjpbTyGOLB": [
+        1745416585494
+      ]
+    },
+    "mood": null
+  },
+  "day_j5q8EVAc9F2stxbAm78F": {
+    "date": "2025-04-07",
+    "executions": {
+      "0JNBsuCj1E9HV2EyAC91": [
+        1743990093328
+      ]
+    },
+    "mood": null
+  },
+  "day_XokxVCRBUiG9GEy21k3C": {
+    "date": "2025-05-17",
+    "modifiedAt": 1747501309351,
+    "executions": {},
+    "mood": null
+  },
+  "day_j5q8EVAc9F2stxbAm78h": {
+    "date": "2025-02-23",
+    "mood": {
+      "energy": 2,
+      "humor": 3,
+      "note": "Test"
+    },
+    "executions": {
+      "YkhogTdR8uZk3gp0XtLg": [
+        1740342241758
+      ],
+      "1thHReI84pSXmgAj2tWa": [
+        1740327687164
+      ],
+      "9UbWtQKo06ePxpP3SGg8": [
+        1740342244684,
+        1740342610480
+      ],
+      "Xr7XbtWye6mEEQoK53TH": [
+        1740319302882
+      ]
+    }
+  },
+  "day_j5q8EVAc9F2stxbAm78T": {
+    "date": "2025-04-22",
+    "mood": {
+      "humor": 2,
+      "date": "2025-04-22",
+      "energy": 1
+    },
+    "executions": {
+      "YkhogTdR8uZk3gp0XtLg": [
+        1745356938595
+      ],
+      "ZkSvilMx6BZ1q9d7F2pw": [
+        1745414705629
+      ],
+      "9UbWtQKo06ePxpP3SGg8": [
+        1745336488104,
+        1745357027080,
+        1745357288334,
+        1745357289549
+      ],
+      "0JNBsuCj1E9HV2EyAC91": [
+        1745356923513
+      ],
+      "Ww1QQQxo8lQ0jGiBrFu6": [
+        1745336493494
+      ]
+    }
+  },
+  "day_j5q8EVAc9F2stxbAm78a": {
+    "date": "2025-02-11",
+    "executions": {
+      "YkhogTdR8uZk3gp0XtLg": [
+        1741730455243,
+        1741730457985,
+        1741730573016,
+        1741730574802
+      ],
+      "VC9SlYXpJtghlX3hSLhl": [
+        1739309478789,
+        1739310451947
+      ],
+      "X2uRogfI1pmb6up5BDX1": [
+        1739309473017
+      ],
+      "9UbWtQKo06ePxpP3SGg8": [
+        1739309835681,
+        1741730552258,
+        1741730555034,
+        1741730556672
+      ]
+    },
+    "mood": {
+      "note": "Test",
+      "energy": 0,
+      "humor": 4
+    }
+  },
+  "day_j5q8EVAc9F2stxbAm78f": {
+    "date": "2025-02-21",
+    "mood": null,
+    "executions": {
+      "Xr7XbtWye6mEEQoK53TH": [
+        1740319308392
+      ]
+    }
+  },
+  "day_j5q8EVAc9F2stxbAm78O": {
+    "date": "2025-04-18",
+    "mood": {
+      "humor": 0,
+      "energy": 2
+    },
+    "executions": {}
+  },
+  "day_j5q8EVAc9F2stxbAm78G": {
+    "date": "2025-04-08",
+    "mood": null,
+    "executions": {
+      "0JNBsuCj1E9HV2EyAC91": [
+        1745413989181
+      ],
+      "ZkSvilMx6BZ1q9d7F2pw": [
+        1745413917685
+      ],
+      "Ww1QQQxo8lQ0jGiBrFu6": [
+        1745414035647
+      ]
+    }
+  },
+  "day_j5q8EVAc9F2stxbAm78e": {
+    "date": "2025-03-16",
+    "executions": {
+      "0JNBsuCj1E9HV2EyAC91": [
+        1742152979881
+      ],
+      "h0icPWObaajpiC5SqsPt": [
+        1742152306039,
+        1742152310768,
+        1742152311826,
+        1742152312899
+      ]
+    },
+    "mood": null
+  },
+  "day_j5q8EVAc9F2stxbAm78x": {
+    "date": "2025-03-30",
+    "executions": {
+      "9UbWtQKo06ePxpP3SGg8": [
+        1743340885456,
+        1743340961816
+      ],
+      "0JNBsuCj1E9HV2EyAC91": [],
+      "YkhogTdR8uZk3gp0XtLg": []
+    },
+    "mood": null
+  },
+  "day_j5q8EVAc9F2stxbAm78P": {
+    "date": "2025-04-19",
+    "executions": {},
+    "mood": {
+      "energy": 1,
+      "humor": 1
+    }
+  },
+  "settings_2Xr3Sehjpu3GTFqUJ7Ym": {
+    "notificationsEnabled": false,
+    "notificationsTime": "08:00",
+    "theme": "light",
+    "fontScale": 1,
+    "firstRun": false
+  }
+}
