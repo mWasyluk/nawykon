@@ -30,8 +30,14 @@ export default function DailyActivitySubsection(props) {
     const allDailyExecutions = habitStatistics && habitStatistics.executions;
     const listElements = [];
 
+    const isDateInFuture = date > formatDate(new Date(), 'date');
+
     if (!habitId) {
         const handleMoodButtonPress = () => {
+            if (isDateInFuture) {
+                ModalService.showError('Nie możesz dodać aktywności w przyszłości.');
+                return;
+            }
             router.navigate(routes.editMoodByDate(date));
         }
 
@@ -42,6 +48,7 @@ export default function DailyActivitySubsection(props) {
                 energy={moodReport?.energy}
                 isNote={!!moodReport?.note}
                 isEmpty={!moodReport}
+                disabled={isDateInFuture}
                 onPress={handleMoodButtonPress}
             />
         );
@@ -116,11 +123,10 @@ export default function DailyActivitySubsection(props) {
         if (!habit) {
             break skipme;
         }
-        const isFuture = date > formatDate(new Date(), 'date');
         const wasActive = (!habit.endDate || habit.endDate >= date) && formatDate(habit.createdAt, 'date') <= date;
 
         const handleAddExecution = async () => {
-            if (isFuture) {
+            if (isDateInFuture) {
                 ModalService.showError('Nie możesz dodać aktywności w przyszłości.');
                 return;
             }
@@ -139,7 +145,7 @@ export default function DailyActivitySubsection(props) {
         }
 
         const buttonIcon = isAdding ? LOADING_ICON : icons.plus;
-        const buttonVariant = wasActive && !isFuture && !isAdding ? INPUT_VARIANTS.PRIME : INPUT_VARIANTS.DISABLED;
+        const buttonVariant = wasActive && !isDateInFuture && !isAdding ? INPUT_VARIANTS.PRIME : INPUT_VARIANTS.DISABLED;
 
         listElements.push(
             <Button

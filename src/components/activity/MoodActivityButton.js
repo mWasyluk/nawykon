@@ -1,4 +1,4 @@
-import InputContainer from "@components/input/InputContainer";
+import InputContainer, { INPUT_VARIANTS } from "@components/input/InputContainer";
 import { ActionText } from "@components/text";
 import { colors, icons, metrics } from "@styles";
 import { Image, StyleSheet, View } from "react-native";
@@ -10,14 +10,17 @@ export default function MoodActivityButton(props) {
         isNote = false,
         date = null,
         isEmpty = false,
+
+        disabled = false,
         onPress = () => { },
     } = props;
 
+    const buttonVariant = disabled ? INPUT_VARIANTS.DISABLED : INPUT_VARIANTS.DEFAULT;
     const actionTextStyle = isEmpty ? styles.emptyText : styles.text;
     const actionTextValue = !date ? "Raport dzienny" : date;
 
     return (
-        <InputContainer onPress={onPress}>
+        <InputContainer onPress={onPress} variant={buttonVariant}>
             {isEmpty ? (
                 <Image source={icons.mood} style={[styles.image, { filter: 'grayscale(100%)' }]} />
             ) : (

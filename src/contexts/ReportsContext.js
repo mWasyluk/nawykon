@@ -12,6 +12,12 @@ export const DailyReportsProvider = ({ children }) => {
 
     const setMood = async (date, mood) => {
         setIsLoading(true);
+        if (date > formatDate(new Date(), 'date')) {
+            ModalService.showError("Nie możesz dodać aktywności w przyszłości.");
+            setIsLoading(false);
+            return;
+        }
+
         try {
             var isFound = false;
             const newReports = await Promise.all(dailyReports.map(async (report) => {
