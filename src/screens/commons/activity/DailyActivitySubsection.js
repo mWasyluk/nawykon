@@ -91,7 +91,10 @@ export default function DailyActivitySubsection(props) {
 
                 const { type, name, color } = habit.details;
                 const { goal, completed } = allHabitsRegistryRecord[dailyHabitId];
-                const onPress = () => router.push(routes.habitDetails(dailyHabitId));
+                const onPress = () => router.navigate({
+                    pathname: routes.habitDetails(dailyHabitId),
+                    params: { date: formatDate(date, 'date') }
+                });
 
                 listElements.push(
                     <HabitActivityButton
