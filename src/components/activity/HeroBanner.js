@@ -69,7 +69,7 @@ export default function HeroBanner() {
             <BodyBoldText style={{ color: colors.light }}>{currentVarian.title}</BodyBoldText>
             <CaptionText style={{ color: colors.light }}>{currentVarian.description}</CaptionText>
             {currentVarian !== heroVariants.noneGoal
-                && <ProgressBar progress={effectual / goal} />
+                && <ProgressBar value={effectual} maxValue={goal} />
             }
             <Image source={currentVarian.imgSrc} style={[styles.image, { right: imgPadding, width: imgWidth }]} resizeMode='contain' resizeMethod='scale' />
         </View>
