@@ -1,8 +1,8 @@
 import { LoadingIndicator } from '@components/layout';
 import { TitleText } from '@components/text';
 import { colors, metrics, uiStyles } from '@styles';
-import { useEffect, useRef, useState } from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { useEffect, useRef } from 'react';
+import { Animated, Easing, Platform, StyleSheet, TouchableOpacity, View } from 'react-native';
 import Svg, { Circle } from 'react-native-svg';
 
 const BUTTON_SIZE = 50;
@@ -10,64 +10,38 @@ const STROKE_WIDTH = 5;
 const RADIUS = (BUTTON_SIZE - STROKE_WIDTH) / 2;
 const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
 const ANIMATION_DURATION = 200;
-const ANIMATION_STEPS = 20;
 
-const PieButton = (props) => {
-    const {
-        count = 0,
-        maxCount = 1,
-        onPress = () => { },
-        isLoading = false,
-    } = props;
+const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
-    const [dashOffset, setDashOffset] = useState(CIRCUMFERENCE.toString());
-    const animationRef = useRef(null);
-    const prevCountRef = useRef(count);
+export default function PieButton({
+    count = 0,
+    maxCount = 1,
+    onPress = () => { },
+    isLoading = false,
+}) {
+    const initialRatio = maxCount > 0 ? count / maxCount : 0;
+    const ratio = useRef(new Animated.Value(initialRatio)).current;
 
     useEffect(() => {
-        const prevRatio = maxCount > 0 ? prevCountRef.current / maxCount : 0;
         const targetRatio = maxCount > 0 ? count / maxCount : 0;
+        ratio.stopAnimation();
+        Animated.timing(ratio, {
+            toValue: targetRatio,
+            duration: ANIMATION_DURATION,
+            easing: Easing.linear,
+            useNativeDriver: Platform.OS !== 'web',
+        }).start();
+    }, [count, maxCount, ratio]);
 
-        const startOffset = CIRCUMFERENCE * (1 - prevRatio);
-        const endOffset = CIRCUMFERENCE * (1 - targetRatio);
-
-        if (animationRef.current) {
-            clearInterval(animationRef.current);
-        }
-
-        const step = (endOffset - startOffset) / ANIMATION_STEPS;
-        let currentStep = 0;
-        let currentOffset = startOffset;
-
-        const animate = () => {
-            currentStep++;
-
-            if (currentStep <= ANIMATION_STEPS) {
-                currentOffset = startOffset + step * currentStep;
-                setDashOffset(currentOffset.toString());
-            } else {
-                setDashOffset(endOffset.toString());
-                clearInterval(animationRef.current);
-            }
-        };
-
-        const intervalTime = ANIMATION_DURATION / ANIMATION_STEPS;
-        animationRef.current = setInterval(animate, intervalTime);
-
-        prevCountRef.current = count;
-
-        return () => {
-            if (animationRef.current) {
-                clearInterval(animationRef.current);
-            }
-        };
-    }, [count, maxCount]);
+    const dashOffset = ratio.interpolate({
+        inputRange: [0, 1],
+        outputRange: [CIRCUMFERENCE, 0],
+    });
 
     const textStyle = {
-        color: count && count >= maxCount ? colors.darkSuccess : colors.midGray,
+        color: count >= maxCount ? colors.darkSuccess : colors.midGray,
         position: 'absolute',
-    }
-
+    };
 
     return (
         <TouchableOpacity onPress={onPress} activeOpacity={0.8}>
@@ -81,7 +55,7 @@ const PieButton = (props) => {
                         r={RADIUS}
                         strokeWidth={STROKE_WIDTH}
                     />
-                    <Circle
+                    <AnimatedCircle
                         stroke={colors.lightSuccess}
                         fill="none"
                         cx={BUTTON_SIZE / 2}
@@ -95,14 +69,19 @@ const PieButton = (props) => {
                     />
                 </Svg>
                 {isLoading ? (
-                    <LoadingIndicator size={metrics.imageSize.sm} style={{ position: 'absolute' }} />
+                    <LoadingIndicator
+                        size={metrics.imageSize.sm}
+                        style={{ position: 'absolute' }}
+                    />
                 ) : (
-                    <TitleText style={textStyle}>{count}/{maxCount}</TitleText>
+                    <TitleText style={textStyle}>
+                        {count}/{maxCount}
+                    </TitleText>
                 )}
             </View>
         </TouchableOpacity>
     );
-};
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -113,5 +92,3 @@ const styles = StyleSheet.create({
         ...uiStyles.lightShadow,
     }
 });
-
-export default PieButton;
