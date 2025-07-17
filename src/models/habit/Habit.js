@@ -98,7 +98,9 @@ export class Habit {
             throw new Error(`Data zakończenia ma nieprawidłowy format.`);
         }
 
-        if (endDate < new Date()) {
+        const today = new Date();
+        const todayMidnight = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+        if (endDate < todayMidnight) {
             throw new Error('Data zakończenia nie może być wcześniejsza niż dzisiaj.');
         }
 
