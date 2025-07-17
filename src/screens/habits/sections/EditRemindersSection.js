@@ -1,6 +1,6 @@
 import Button from '@components/input/Button';
+import TimePicker from '@components/input/datetime/TimePicker';
 import { INPUT_VARIANTS } from '@components/input/InputContainer';
-import TextInput from '@components/input/TextInput';
 import { SectionContainer, SectionHeader } from '@components/layout';
 import { BodyText, OptionalErrorText } from '@components/text';
 import { useSettings } from '@contexts/SettingsContext';
@@ -68,15 +68,13 @@ export default function EditRemindersSection({ habitBuilder }) {
                 />}
             />
             {reminders.map((reminder, i) => (
-                <View key={`reminder-${i}`} style={{ flex: 1, flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+                <View key={`reminder-${reminder}-${i}`} style={{ flex: 1, flexDirection: 'row', alignItems: 'center', gap: 10 }}>
                     <BodyText style={{ color: colors.midGray }}>O godzinie</BodyText>
                     <View style={{ width: 120 }}>
-                        <TextInput
-                            value={reminder}
-                            onChange={(value) => changeReminder(i, value)}
-                            maxLength={5}
-                            error={reminderError}
-                            textStyle={{ textAlign: 'center' }}
+                        <TimePicker
+                            hours={reminder.split(":")[0]}
+                            minutes={reminder.split(":")[1]}
+                            onChange={(time) => changeReminder(i, time)}
                         />
                     </View>
                     <Button
@@ -87,9 +85,6 @@ export default function EditRemindersSection({ habitBuilder }) {
                     />
                 </View>
             ))}
-
-
-
             <OptionalErrorText>{reminderError}</OptionalErrorText>
         </SectionContainer>
     );

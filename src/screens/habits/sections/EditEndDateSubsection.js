@@ -1,6 +1,5 @@
-import { INPUT_VARIANTS } from '@components/input/InputContainer';
+import DatePicker from '@components/input/datetime/DatePicker';
 import Switch from '@components/input/Switch';
-import TextInput from '@components/input/TextInput';
 import { formatDate } from '@utils/dateUtil';
 import { useState } from 'react';
 import { View } from 'react-native';
@@ -10,7 +9,6 @@ const nextWeekDate = formatDate(new Date(new Date().setDate(new Date().getDate()
 export default function EditEndDateSubsection(props) {
     const {
         endDate = undefined,
-        error = null,
         onChange = () => { },
         style = {},
     } = props;
@@ -25,16 +23,12 @@ export default function EditEndDateSubsection(props) {
     return (
         <View style={style}>
             <Switch isOn={isOn} onChange={handleSwitchChange} />
-            <View style={{ width: 120 }}>
-                <TextInput
-                    value={endDate}
+            <View style={{ width: 120, opacity: isOn ? 1 : 0 }}>
+                <DatePicker
+                    date={endDate}
+                    minDate={new Date()}
                     onChange={onChange}
-                    maxLength={10}
-                    error={error}
-                    textStyle={{ textAlign: 'center' }}
-
-                    variant={isOn ? undefined : INPUT_VARIANTS.DISABLED}
-                    style={{ opacity: isOn ? 1 : 0 }}
+                    disabled={!isOn}
                 />
             </View>
         </View>
