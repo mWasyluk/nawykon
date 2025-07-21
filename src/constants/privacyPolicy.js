@@ -1,13 +1,13 @@
-export const privacyPolicyMarkdown = (
-    `Data wejścia w życie: 17.05.2025
+export const privacyPolicyMarkdown = (`
+Data wejścia w życie: **20.07.2025**
 
 ## 1. Postanowienia ogólne
 
-Niniejsza Polityka Prywatności dotyczy aplikacji mobilnej Nawykon (dalej: "Aplikacja"), udostępnionej przez Marka Wasyluka (dalej: "Usługodawca").
+Niniejsza Polityka prywatności dotyczy aplikacji mobilnej **Nawykon (dalej: "Aplikacja")**, udostępnionej przez **Marka Wasyluka (dalej: "Usługodawca")**.
 
 ## 2. Zakres przetwarzania danych
 
-Aplikacja nie zbiera, nie przetwarza ani nie przesyła żadnych danych osobowych użytkownika.
+**Aplikacja nie zbiera, nie przetwarza ani nie przesyła żadnych danych osobowych użytkownika.**
 
 Wszystkie informacje wprowadzane przez użytkownika (np. lista nawyków, postępy, statystyki) przechowywane są lokalnie w urządzeniu użytkownika i nie są w żaden sposób przesyłane do Usługodawcy ani żadnych zewnętrznych serwerów.
 
@@ -17,21 +17,21 @@ Aplikacja może wyświetlać lokalne powiadomienia przypominające o zaplanowany
 
 ## 4. Dane techniczne
 
-Aplikacja nie śledzi aktywności użytkownika, nie korzysta z narzędzi analitycznych, nie gromadzi informacji o lokalizacji, adresie IP ani nie integruje się z zewnętrznymi bazami danych.
+**Aplikacja nie śledzi aktywności użytkownika**, nie korzysta z narzędzi analitycznych, nie gromadzi informacji o lokalizacji, adresie IP ani nie integruje się z zewnętrznymi bazami danych.
 
 ## 5. Bezpieczeństwo danych
 
-Ponieważ dane nie są przesyłane poza urządzenie, użytkownik zachowuje pełną kontrolę nad ich treścią i bezpieczeństwem. Zalecamy korzystanie z zabezpieczeń oferowanych przez system operacyjny (np. blokada ekranu, szyfrowanie).
+Ponieważ **dane nie są przesyłane poza urządzenie**, użytkownik zachowuje pełną kontrolę nad ich treścią i bezpieczeństwem. Dane nie są dodatkowo szyfrowane, a wbudowane mechanizmy twórców urządzenia, z którego korzysta użytkownik stanowią jedyne zabezpieczenie przed ich odczytaniem. Zalecamy korzystanie z zabezpieczeń oferowanych przez system operacyjny (np. blokada ekranu zabezpieczona hasłem).
 
 ## 6. Prawa użytkownika
 
-W związku z brakiem przetwarzania danych osobowych przez Usługodawcę, prawa wynikające z RODO (np. dostęp, sprostowanie, usunięcie danych) nie mają zastosowania. Użytkownik może samodzielnie zarządzać danymi wprowadzonymi do Aplikacji, w tym usunąć je poprzez odinstalowanie Aplikacji.
+W związku z brakiem przetwarzania danych osobowych przez Usługodawcę, prawa wynikające z RODO (np. dostęp, sprostowanie, usunięcie danych) nie mają zastosowania. Użytkownik może samodzielnie zarządzać danymi wprowadzonymi do Aplikacji, w tym usunąć je poprzez funkcję dostępną na ekranie ustawień wewnątrz Aplikacji lub odinstalowanie całej Aplikacji.
 
 ## 7. Kontakt
 
-W razie pytań dotyczących prywatności lub funkcjonowania Aplikacji, można skontaktować się z Usługodawcą pod adresem: marek.damian.wasyluk@gmail.com (proszę umieścić "Nawykon" w tytule wiadomości).
+W razie pytań dotyczących prywatności lub funkcjonowania Aplikacji, **można skontaktować się z Usługodawcą pod adresem: marek.damian.wasyluk@gmail.com (proszę umieścić "Nawykon" w tytule wiadomości)**.
 
 ## 8. Zmiany Polityki
 
-W przypadku wprowadzenia nowych funkcjonalności, Polityka może ulec zmianie. Aktualna wersja będzie zawsze dostępna w Aplikacji.`
-);
+W przypadku wprowadzenia nowych funkcjonalności, Polityka może ulec zmianie. Aktualna wersja będzie zawsze dostępna w Aplikacji.
+`);
